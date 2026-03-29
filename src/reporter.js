@@ -581,7 +581,12 @@ function renderIndicatorTable(items, months, showChange, cm) {
       <tbody>
         ${items.map(i => `
         <tr>
-          <td class="td-name st-col st-1">${esc(i.label)}</td>
+          <td class="td-name st-col st-1">${esc(i.label)}${(function(l){
+            if(l.includes('医事服务费')) return '<span class="tip-icon" title="按本科室执行的核算提取规则：检查化验类30%，手术麻醉类50%，其他类100%，且剔除药耗。">?</span>';
+            if(l.includes('运营收入合计')) return '<span class="tip-icon" title="科室全口径实际业务收入：包含计奖收入 + 折算后的其他收入分摊比例 + 医事服务费。">?</span>';
+            if(l.includes('计奖收入')) return '<span class="tip-icon" title="纯医疗项目服务类开单与执行产生的直接绩效基数收入，不含药耗材料。">?</span>';
+            return '';
+          })(i.label)}</td>
           <td class="c num st-col st-2">${i.prev_year_avg == null ? '0' : fmtNum(i.prev_year_avg)}</td>
           <td class="c num st-col st-3 st-divider">${i.current_year_avg == null ? '0' : fmtNum(i.current_year_avg)}</td>
           ${months.map((m, idx) => `<td class="c num ${(idx+1)===cm ? 'col-highlight' : ''}">${i.monthly[m] == null ? '0' : fmtNum(i.monthly[m])}</td>`).join('')}
