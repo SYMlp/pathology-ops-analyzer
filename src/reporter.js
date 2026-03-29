@@ -1,7 +1,7 @@
 
 const ML = ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'];
 
-function fmtMoney(num) { return num == null ? '--' : num >= 10000 ? (num/10000).toFixed(2)+'万' : num.toLocaleString('zh-CN', { style: 'currency', currency: 'CNY' }).replace('¥', '') + '元'; }
+function fmtMoney(num) { return fmtNum(num); }
 function fmtNum(num) { 
   if (num == null) return '--'; 
   if (typeof num === 'string') { num = parseFloat(num.replace(/,/g, '')); if (isNaN(num)) return '--'; }
@@ -291,14 +291,13 @@ function chartScripts(analysis) {
     return {value: p.amount, itemStyle: {color: colors[i], borderRadius: [0,4,4,0]}};
   });
   
-  const suppDist = analysis.procurement?.supplier_distribution || {};
-  const suppArr = Object.entries(suppDist).map(([k, v]) => ({supplier: k, amount: v})).sort((a,b)=>b.amount-a.amount);
-  const suppPieData = suppArr.slice(0, 5).map((s,i) => {
-    const colors = ['#2563eb','#059669','#d97706','#7c3aed','#0891b2'];
-    return {name: s.supplier, value: s.amount, itemStyle: {color: colors[i]}};
+  const disps = analysis.dispatch?.top_items || [];
+  const dispTop10 = [...disps].sort((a,b)=>b.amount-a.amount).slice(0,10);
+  const dispYData = dispTop10.map(p => p.name);
+  const dispSData = dispTop10.map((p,i) => {
+    const colors = ['#dc2626','#ea580c','#d97706','#ca8a04','#65a30d','#16a34a','#0891b2','#0284c7','#4f46e5','#9333ea'];
+    return {value: p.amount, itemStyle: {color: colors[i], borderRadius: [0,4,4,0]}};
   });
-  
-  if (suppPieData.length === 0) suppPieData.push({name:'暂无数据', value:1, itemStyle:{color:"#ccc"}});
 
   return `
 <script src="https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js"></script>
@@ -361,17 +360,17 @@ echarts.init(document.getElementById('chart-procurement-top')).setOption({
     label:{show:true,position:'right',fontSize:11,color:'#475569',formatter:function(p){return p.value>=10000?(p.value/10000).toFixed(1)+'万':p.value.toLocaleString()}}}]
 });
 
-echarts.init(document.getElementById('chart-supplier')).setOption({
-  tooltip:{trigger:'item',formatter:function(p){return p.marker+p.name+'<br/>金额: '+(p.value>=10000?(p.value/10000).toFixed(2)+'万':p.value.toLocaleString()+'元')+'<br/>占比: '+p.percent.toFixed(1)+'%'}},
-  legend:{type:'scroll',bottom:0,itemGap:12,textStyle:{fontSize:11,color:'#475569'}},
-  series:[{
-    type:'pie',radius:'58%',center:['50%','45%'],
-    avoidLabelOverlap:true,
-    label:{show:true,formatter:'{b}\\n{d}%',fontSize:11,color:'#334155',lineHeight:15,overflow:'break'},
-    labelLine:{show:true,length:10,length2:14,lineStyle:{color:'#94a3b8'}},
-    emphasis:{label:{fontSize:13,fontWeight:'bold'},itemStyle:{shadowBlur:10,shadowColor:'rgba(0,0,0,0.15)'}},
-    data:${JSON.stringify(suppPieData)}
-  }]
+echarts.init(document.getElementById('chart-dispatch-top')).setOption({
+  tooltip:{trigger:'axis',axisPointer:{type:'shadow'},
+    formatter:function(p){var d=p[0];return d.name+'<br/>金额: <b>'+(d.value>=10000?(d.value/10000).toFixed(2)+'万':d.value.toLocaleString()+'元')+'</b>'}},
+  grid:{top:10,right:30,bottom:10,left:10,containLabel:true},
+  xAxis:{type:'value',axisLabel:{color:'#64748b',formatter:fmtV},splitLine:{lineStyle:{color:'#f1f5f9'}},axisLine:{show:false},axisTick:{show:false}},
+  yAxis:{type:'category',data:${JSON.stringify(dispYData)},inverse:true,
+    axisLabel:{color:'#334155',fontSize:12,width:120,overflow:'truncate',ellipsis:'..'},
+    axisTick:{show:false},axisLine:{lineStyle:{color:'#e2e8f0'}},
+    triggerEvent:true},
+  series:[{type:'bar',barWidth:'60%',data:${JSON.stringify(dispSData)},
+    label:{show:true,position:'right',fontSize:11,color:'#475569',formatter:function(p){return p.value>=10000?(p.value/10000).toFixed(1)+'万':p.value.toLocaleString()}}}]
 });
 
 (function(){
@@ -727,7 +726,7 @@ function rankingsSection(analysis) {
     <div class="ranking-grid ranking-grid-dense">
       <div class="rank-card">
         <div class="rank-label">患者满意度<span class="tip-icon" title="基于当月出院及门诊的患者医患关系问卷口碑转化评分（满分5分）。">?</span></div>
-        <div class="rank-value">${r.satisfaction_score ?? '--'}</div>
+        <div class="rank-value">${r.satisfaction_score != null ? Number(r.satisfaction_score).toFixed(2) : '--'}</div>
       </div>
       <div class="rank-card">
         <div class="rank-label">满意度排名</div>
@@ -767,12 +766,12 @@ function materialsSection(analysis) {
     </div>
     <div class="grid-2 grid-tight">
       <div class="chart-card chart-card-sm">
-        <h3>采购核心 TOP</h3>
+        <h3>采购入库 TOP</h3>
         <div id="chart-procurement-top" class="chart-box" style="height: 280px;"></div>
       </div>
       <div class="chart-card chart-card-sm">
-        <h3>渠道分布</h3>
-        <div id="chart-supplier" class="chart-box" style="height: 320px;"></div>
+        <h3>领用出库 TOP</h3>
+        <div id="chart-dispatch-top" class="chart-box" style="height: 280px;"></div>
       </div>
     </div>
   </section>`;
