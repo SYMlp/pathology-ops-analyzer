@@ -30,7 +30,7 @@ const upload = multer({
 });
 
 let latestAnalysis = null;
-
+app.get('/favicon.ico', (req, res) => res.status(204).end());
 app.get('/', (req, res) => {
   let reportBody = null;
   if (latestAnalysis) reportBody = generateReportBody(latestAnalysis);
