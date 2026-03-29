@@ -164,8 +164,11 @@ function buildEfficiencyAnalysis(indicators, rankings, cm, pm) {
 
   const personnelCost = sum(salary, bonus, nightFee, profCost);
 
+  const totalAwardIncome = v(indicators, 'total_award_income', cm);
+
   return {
     cost_revenue_ratio: safeDiv(totalExpense, totalIncome),
+    award_cost_ratio: safeDiv(totalExpense, totalAwardIncome),
     personnel_cost_ratio: safeDiv(personnelCost, totalIncome),
     consumable_per_100_income: totalIncome ? (consumableTotal / totalIncome) * 100 : null,
     per_capita_income: safeDiv(totalIncome, staffCount),

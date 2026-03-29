@@ -661,9 +661,9 @@ function efficiencySection(analysis) {
         <div class="eff-status"></div><div class="eff-label">运营利润率<span class="tip-icon" title="科室最终运营结余 ÷ 运营总收入。体现科室实际纯利水平。">?</span></div>
         <div class="eff-value">${fmtPct(ef.operation_margin)}</div><div class="eff-bench">&gt;10%</div>
       </div>
-      <div class="eff-card eff-info">
-        <div class="eff-status"></div><div class="eff-label">人均月收入<span class="tip-icon" title="运营总收入 ÷ 科室总在职人数（含医生及技师等所有人员）。">?</span></div>
-        <div class="eff-value">${fmtMoney(ef.per_capita_income)}</div>
+      <div class="eff-card eff-${statusOf(ef.award_cost_ratio, 0.7, 0.8)}">
+        <div class="eff-status"></div><div class="eff-label">全成本支收比<span class="tip-icon" title="科室支出合计 ÷ 科室计奖收入合计。医院标红核心指标，反映科室全口径成本对计奖收入的消耗比率。">?</span></div>
+        <div class="eff-value">${fmtPct(ef.award_cost_ratio)}</div><div class="eff-bench">≤70%</div>
       </div>
       <div class="eff-card eff-${ef.per_capita_surplus > 0 ? 'good' : 'bad'}">
         <div class="eff-status"></div><div class="eff-label">人均月结余<span class="tip-icon" title="最终利润结余 ÷ 科室总在职人数。体现全员平均创造的正收益。">?</span></div>
