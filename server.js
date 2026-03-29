@@ -76,8 +76,17 @@ app.get('/preview', (req, res) => {
   res.send(html);
 });
 
-app.get('/template', (req, res) => {
-  res.download(path.join(__dirname, 'public', 'template.xlsx'), '病理科月度运营数据模板.xlsx');
+app.get('/template', async (req, res) => {
+  try {
+    const templateDir = process.env.VERCEL ? os.tmpdir() : path.join(__dirname, 'templates');
+    const filePath = path.join(templateDir, '月度运营数据模板.xlsx');
+    
+    // Always regenerate to stay up to date
+    await generateTemplate(filePath);
+    res.download(filePath, '病理科月度运营数据模板.xlsx');
+  } catch (err) {
+    res.status(500).send('模板生成失败: ' + err.message);
+  }
 });
 
 app.get('/api/analysis', (req, res) => {

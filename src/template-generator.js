@@ -120,8 +120,8 @@ function buildOperationsSheet(wb) {
 function buildRankingsSheet(wb) {
   const ws = wb.addWorksheet('全院排名');
   const headers = [
-    '科室字典', '5分满意度', '满意度排名', '支收比',
-    '支收比增量', '预约效率增量', '增量和(上四分位,下四分位)', '增量排序',
+    '科室代码', '科室字典', '门急诊患者满意度', '满意度排名',
+    '支收比', '支收比增量', '预约效率', '增量(上下四分位)'
   ];
 
   ws.columns = headers.map(h => ({ header: h, width: 18 }));
@@ -130,27 +130,26 @@ function buildRankingsSheet(wb) {
   headerRow.eachCell(c => { c.border = BORDER_THIN; });
 
   const dataRow = ws.getRow(2);
-  dataRow.getCell(1).value = '病理科';
+  dataRow.getCell(1).value = 'C0123';
+  dataRow.getCell(2).value = '病理科';
   dataRow.eachCell(c => { c.border = BORDER_THIN; });
 }
 
 function buildProcurementSheet(wb) {
   const ws = wb.addWorksheet('采购入库');
   const headers = [
-    '订单号', '耗材名称', '规格', '供应商', '数量', '单价', '金额', '入库日期', '科室对应',
+    '订单号', '资产大类', '订单类型代码', '订单行', '耗材代码',
+    '耗材名称', '资产特征', '规格', '供应商代码', '供应商',
+    '入库数量', '单位', '采购员', '交货模式', '单价',
+    '入库金额', '税额', '小计金额', '入库批次', '入库时间',
+    '接收金额', '院区', '科室对应'
   ];
 
-  ws.columns = [
-    { header: headers[0], width: 16 },
-    { header: headers[1], width: 28 },
-    { header: headers[2], width: 20 },
-    { header: headers[3], width: 20 },
-    { header: headers[4], width: 10 },
-    { header: headers[5], width: 12 },
-    { header: headers[6], width: 14 },
-    { header: headers[7], width: 14 },
-    { header: headers[8], width: 14 },
-  ];
+  ws.columns = headers.map(h => ({ header: h, width: 14 }));
+  
+  ws.getColumn(6).width = 28; // 耗材名称
+  ws.getColumn(8).width = 20; // 规格
+  ws.getColumn(10).width = 20; // 供应商
 
   const headerRow = ws.getRow(1);
   headerRow.font = FONT_HEADER;
@@ -160,22 +159,16 @@ function buildProcurementSheet(wb) {
 function buildDispatchSheet(wb) {
   const ws = wb.addWorksheet('出库领用');
   const headers = [
-    '序号', '物品名称', '规格', '出库科室', '收费科室',
-    '数量', '金额', '使用日期', '生产厂家', '科室对应',
+    '序号', '科室代码', '出库科室', '一级科室', '使用日期', 
+    '物料', '物料说明', '规格', '物料类别', '出库数量', 
+    '单位', '单位成本', '总成本', '申领单号', '申领单行', 
+    '申领人', '发出仓库', '账户别名', '参考单据', '院区', '科室对应'
   ];
 
-  ws.columns = [
-    { header: headers[0], width: 8 },
-    { header: headers[1], width: 28 },
-    { header: headers[2], width: 20 },
-    { header: headers[3], width: 14 },
-    { header: headers[4], width: 14 },
-    { header: headers[5], width: 10 },
-    { header: headers[6], width: 14 },
-    { header: headers[7], width: 14 },
-    { header: headers[8], width: 20 },
-    { header: headers[9], width: 14 },
-  ];
+  ws.columns = headers.map(h => ({ header: h, width: 14 }));
+  
+  ws.getColumn(7).width = 28; // 物料说明
+  ws.getColumn(8).width = 20; // 规格
 
   const headerRow = ws.getRow(1);
   headerRow.font = FONT_HEADER;
