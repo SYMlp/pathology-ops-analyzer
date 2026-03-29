@@ -7,7 +7,6 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/css/style.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.2/html2pdf.bundle.min.js" defer></script>
 </head>
 <body>
 <div class="app">
@@ -123,10 +122,10 @@
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 6px;"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
         下载HTML报告
       </a>
-      <button id="btnPdf" class="btn btn-lg" style="padding: 14px 32px; background: #7c3a2d; color: #fff; border: none; cursor: pointer;">
+      <a href="/pdf" target="_blank" class="btn btn-lg" style="padding: 14px 32px; background: #7c3a2d; color: #fff; text-decoration: none;">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 6px;"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
         导出PDF
-      </button>
+      </a>
     </section>
 
     <div class="embedded-report-container" style="background: #f8fafc; border-radius: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.06); border: 1px solid #e2e8f0; margin-bottom: 40px; overflow: hidden;">
@@ -184,53 +183,6 @@ document.getElementById('uploadForm')?.addEventListener('submit', function (e) {
   btn.style.pointerEvents = 'none';
   btn.style.opacity = '0.7';
 });
-
-// PDF export
-var pdfBtn = document.getElementById('btnPdf');
-if (pdfBtn) {
-  pdfBtn.addEventListener('click', function () {
-    var el = document.querySelector('.embedded-report-container');
-    if (!el) return alert('暂无报告内容');
-    var labelHtml = pdfBtn.innerHTML;
-    pdfBtn.textContent = '生成中…';
-    pdfBtn.disabled = true;
-    pdfBtn.style.opacity = '0.6';
-
-    // Expand all <details> so content appears in PDF
-    var details = el.querySelectorAll('details');
-    details.forEach(function(d){ d.setAttribute('open',''); });
-
-    // Clone into a temp container with fixed width to prevent clipping
-    var clone = el.cloneNode(true);
-    var wrap = document.createElement('div');
-    wrap.style.cssText = 'position:fixed;left:-9999px;top:0;width:1120px;background:#fff;z-index:-1;';
-    wrap.appendChild(clone);
-    document.body.appendChild(wrap);
-
-    var opt = {
-      margin:       [6, 6, 6, 6],
-      filename:     '运营分析报告.pdf',
-      image:        { type: 'jpeg', quality: 0.92 },
-      html2canvas:  { scale: 1.5, useCORS: true, scrollY: 0, width: 1120, windowWidth: 1120 },
-      jsPDF:        { unit: 'mm', format: 'a4', orientation: 'landscape' },
-      pagebreak:    { mode: ['avoid-all', 'css', 'legacy'] }
-    };
-
-    html2pdf().set(opt).from(clone).save().then(function(){
-      document.body.removeChild(wrap);
-      pdfBtn.innerHTML = labelHtml;
-      pdfBtn.disabled = false;
-      pdfBtn.style.opacity = '';
-    }).catch(function(err){
-      console.error(err);
-      document.body.removeChild(wrap);
-      pdfBtn.innerHTML = labelHtml;
-      pdfBtn.disabled = false;
-      pdfBtn.style.opacity = '';
-      alert('PDF 导出失败: ' + err.message);
-    });
-  });
-}
 </script>
 </body>
 </html>

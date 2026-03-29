@@ -76,6 +76,34 @@ app.get('/preview', (req, res) => {
   res.send(html);
 });
 
+app.get('/pdf', (req, res) => {
+  if (!latestAnalysis) return res.redirect('/');
+  const body = generateReportBody(latestAnalysis);
+  // Render report with all <details> forced open and auto-print trigger
+  const html = `<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><title>运营分析报告 - PDF</title>
+<style>
+body{background:#fff;margin:0}
+details{display:block!important}
+details>summary{display:none!important}
+details .fold-body,details .insight-fold-body{display:block!important;padding:8px 0}
+.btn-action,.header-actions{display:none!important}
+@media print{
+  @page{size:A4 landscape;margin:8mm}
+  body{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
+</style>
+</head><body>
+${body}
+<script>
+window.addEventListener('load',function(){
+  // Wait for ECharts to finish rendering
+  setTimeout(function(){ window.print(); }, 1500);
+});
+<\/script>
+</body></html>`;
+  res.send(html);
+});
+
 app.get('/template', async (req, res) => {
   try {
     const templateDir = process.env.VERCEL ? os.tmpdir() : path.join(__dirname, 'templates');
