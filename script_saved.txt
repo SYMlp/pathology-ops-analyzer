@@ -1,0 +1,90 @@
+var fmtV=function(v){return v>=10000?(v/10000).toFixed(1)+'万':v>=1000?v.toLocaleString():v};
+
+echarts.init(document.getElementById('chart-revenue-expense')).setOption({
+  tooltip:{trigger:'axis',backgroundColor:'rgba(15,23,42,0.92)',borderColor:'transparent',textStyle:{color:'#fff',fontSize:13},
+    formatter:function(p){var h=p[0].axisValue;p.forEach(function(i){h+='<br/>'+i.marker+i.seriesName+': '+(i.value>=10000?(i.value/10000).toFixed(2)+'万':i.value.toLocaleString()+'元')});return h}},
+  legend:{bottom:0,itemGap:24,textStyle:{fontSize:12,color:'#475569'}},
+  grid:{top:20,right:20,bottom:50,left:60,containLabel:false},
+  xAxis:{type:'category',data:["1月","2月","3月","4月","5月","6月","7月","8月","9月","10月","11月","12月"],axisLine:{lineStyle:{color:'#e2e8f0'}},axisTick:{show:false},axisLabel:{color:'#64748b'}},
+  yAxis:{type:'value',scale:true,axisLabel:{color:'#64748b',formatter:fmtV},splitLine:{lineStyle:{color:'#f1f5f9'}},axisLine:{show:false},axisTick:{show:false}},
+  series:[
+    {name:'计奖收入',type:'line',data:[0,0,0,0,0,0,0,0,0,0,0,0],
+     smooth:true,symbol:'circle',symbolSize:8,lineStyle:{width:2.5,color:'#059669'},
+     itemStyle:{color:'#059669'},areaStyle:{color:{type:'linear',x:0,y:0,x2:0,y2:1,colorStops:[{offset:0,color:'rgba(5,150,105,0.12)'},{offset:1,color:'rgba(5,150,105,0)'}]}}},
+    {name:'科室支出',type:'line',data:[0,0,0,0,0,0,0,0,0,0,0,0],
+     smooth:true,symbol:'circle',symbolSize:8,lineStyle:{width:2.5,color:'#dc2626'},
+     itemStyle:{color:'#dc2626'},areaStyle:{color:{type:'linear',x:0,y:0,x2:0,y2:1,colorStops:[{offset:0,color:'rgba(220,38,38,0.08)'},{offset:1,color:'rgba(220,38,38,0)'}]}}}
+  ]
+});
+
+echarts.init(document.getElementById('chart-expense-composition')).setOption({
+  tooltip:{trigger:'item',formatter:function(p){return p.marker+p.name+'<br/>金额: '+(p.value>=10000?(p.value/10000).toFixed(2)+'万':p.value.toLocaleString()+'元')+'<br/>占比: '+p.percent.toFixed(1)+'%'}},
+  legend:{bottom:0,itemGap:16,textStyle:{fontSize:12,color:'#475569'}},
+  series:[{
+    type:'pie',radius:['38%','62%'],center:['50%','45%'],
+    avoidLabelOverlap:true,
+    label:{show:true,formatter:'{b}\n{d}%',fontSize:11,color:'#334155',lineHeight:16},
+    labelLine:{show:true,length:12,length2:16,lineStyle:{color:'#94a3b8'}},
+    emphasis:{label:{fontSize:13,fontWeight:'bold'},itemStyle:{shadowBlur:10,shadowColor:'rgba(0,0,0,0.15)'}},
+    data:[{"name":"各类消耗","value":1833121.689,"itemStyle":{"color":"#2563eb"}},{"name":"人员成本","value":571819.77,"itemStyle":{"color":"#059669"}},{"name":"设备支出","value":533882.57855,"itemStyle":{"color":"#d97706"}},{"name":"第三方费用","value":11574.8,"itemStyle":{"color":"#7c3aed"}}]
+  }]
+});
+
+echarts.init(document.getElementById('chart-workload')).setOption({
+  tooltip:{trigger:'axis',formatter:function(p){return p[0].axisValue+'<br/>门诊量: <b>'+p[0].value+'</b> 人次'}},
+  grid:{top:20,right:20,bottom:40,left:50},
+  xAxis:{type:'category',data:["1月","2月","3月","4月","5月","6月","7月","8月","9月","10月","11月","12月"],axisLine:{lineStyle:{color:'#e2e8f0'}},axisTick:{show:false},axisLabel:{color:'#64748b'}},
+  yAxis:{type:'value',axisLabel:{color:'#64748b'},splitLine:{lineStyle:{color:'#f1f5f9'}},axisLine:{show:false},axisTick:{show:false}},
+  series:[{type:'bar',barWidth:'50%',data:[{"value":663,"itemStyle":{"color":"#93c5fd","borderRadius":[4,4,0,0]}},{"value":475,"itemStyle":{"color":"#2563eb","borderRadius":[4,4,0,0]}},{"value":0,"itemStyle":{"color":"#93c5fd","borderRadius":[4,4,0,0]}},{"value":0,"itemStyle":{"color":"#93c5fd","borderRadius":[4,4,0,0]}},{"value":0,"itemStyle":{"color":"#93c5fd","borderRadius":[4,4,0,0]}},{"value":0,"itemStyle":{"color":"#93c5fd","borderRadius":[4,4,0,0]}},{"value":0,"itemStyle":{"color":"#93c5fd","borderRadius":[4,4,0,0]}},{"value":0,"itemStyle":{"color":"#93c5fd","borderRadius":[4,4,0,0]}},{"value":0,"itemStyle":{"color":"#93c5fd","borderRadius":[4,4,0,0]}},{"value":0,"itemStyle":{"color":"#93c5fd","borderRadius":[4,4,0,0]}},{"value":0,"itemStyle":{"color":"#93c5fd","borderRadius":[4,4,0,0]}},{"value":0,"itemStyle":{"color":"#93c5fd","borderRadius":[4,4,0,0]}}],
+    label:{show:true,position:'top',fontSize:11,color:'#475569',formatter:'{c}'}}]
+});
+
+echarts.init(document.getElementById('chart-gauge')).setOption({
+  series:[{
+    type:'gauge',startAngle:180,endAngle:0,min:0,max:100,
+    splitNumber:5,
+    pointer:{show:true,length:'60%',width:6,itemStyle:{color:'#059669'}},
+    progress:{show:true,width:16,itemStyle:{color:'#059669'}},
+    axisLine:{lineStyle:{width:16,color:[[0.7,'#059669'],[0.8,'#d97706'],[1,'#dc2626']]}},
+    axisTick:{show:false},
+    splitLine:{length:8,lineStyle:{width:2,color:'#94a3b8'}},
+    axisLabel:{distance:22,fontSize:11,color:'#94a3b8',formatter:function(v){return v%50===0||v===70||v===80?v+'%':''}},
+    detail:{valueAnimation:true,formatter:'{value}%',fontSize:22,fontWeight:'bold',color:'#059669',offsetCenter:[0,'18%']},
+    title:{show:true,offsetCenter:[0,'38%'],fontSize:12,color:'#64748b'},
+    data:[{value:0,name:'支收比'}]
+  }]
+});
+
+echarts.init(document.getElementById('chart-procurement-top')).setOption({
+  tooltip:{trigger:'axis',axisPointer:{type:'shadow'},
+    formatter:function(p){var d=p[0];return d.name+'<br/>金额: <b>'+(d.value>=10000?(d.value/10000).toFixed(2)+'万':d.value.toLocaleString()+'元')+'</b>'}},
+  grid:{top:10,right:30,bottom:10,left:10,containLabel:true},
+  xAxis:{type:'value',axisLabel:{color:'#64748b',formatter:fmtV},splitLine:{lineStyle:{color:'#f1f5f9'}},axisLine:{show:false},axisTick:{show:false}},
+  yAxis:{type:'category',data:["粘附载玻片","Film封片机胶带","一次性刀片","病理级载玻片","盖玻片","载玻片","医用橡胶检查手套（灭菌）","医用检查手套(非灭菌）","一次性使用检查手套（聚乙烯）","一次性尖接管（滴管）"],inverse:true,
+    axisLabel:{color:'#334155',fontSize:12,width:120,overflow:'truncate',ellipsis:'..'},
+    axisTick:{show:false},axisLine:{lineStyle:{color:'#e2e8f0'}},
+    triggerEvent:true},
+  series:[{type:'bar',barWidth:'60%',data:[{"value":29440,"itemStyle":{"color":"#2563eb","borderRadius":[0,4,4,0]}},{"value":23000,"itemStyle":{"color":"#059669","borderRadius":[0,4,4,0]}},{"value":21000,"itemStyle":{"color":"#d97706","borderRadius":[0,4,4,0]}},{"value":11200,"itemStyle":{"color":"#7c3aed","borderRadius":[0,4,4,0]}},{"value":4464,"itemStyle":{"color":"#0891b2","borderRadius":[0,4,4,0]}},{"value":950,"itemStyle":{"color":"#be123c","borderRadius":[0,4,4,0]}},{"value":600,"itemStyle":{"color":"#4f46e5","borderRadius":[0,4,4,0]}},{"value":250,"itemStyle":{"color":"#0d9488","borderRadius":[0,4,4,0]}},{"value":80,"itemStyle":{"color":"#2563eb","borderRadius":[0,4,4,0]}},{"value":65,"itemStyle":{"color":"#059669","borderRadius":[0,4,4,0]}}],
+    label:{show:true,position:'right',fontSize:11,color:'#475569',formatter:function(p){return p.value>=10000?(p.value/10000).toFixed(1)+'万':p.value.toLocaleString()}}}]
+});
+
+echarts.init(document.getElementById('chart-supplier')).setOption({
+  tooltip:{trigger:'item',formatter:function(p){return p.marker+p.name+'<br/>金额: '+(p.value>=10000?(p.value/10000).toFixed(2)+'万':p.value.toLocaleString()+'元')+'<br/>占比: '+p.percent.toFixed(1)+'%'}},
+  legend:{type:'scroll',bottom:0,itemGap:12,textStyle:{fontSize:11,color:'#475569'}},
+  series:[{
+    type:'pie',radius:'58%',center:['50%','45%'],
+    avoidLabelOverlap:true,
+    label:{show:true,formatter:'{b}\n{d}%',fontSize:11,color:'#334155',lineHeight:15,overflow:'break'},
+    labelLine:{show:true,length:10,length2:14,lineStyle:{color:'#94a3b8'}},
+    emphasis:{label:{fontSize:13,fontWeight:'bold'},itemStyle:{shadowBlur:10,shadowColor:'rgba(0,0,0,0.15)'}},
+    data:[{"name":"海安康健（北京）科技有限公司","value":67119,"itemStyle":{"color":"#2563eb"}},{"name":"通用技术集团北京永正医药有限公司","value":23000,"itemStyle":{"color":"#059669"}},{"name":"国药集团北京医疗器械有限公司","value":680,"itemStyle":{"color":"#d97706"}},{"name":"上海华椿源贸易中心","value":250,"itemStyle":{"color":"#7c3aed"}},{"name":"国药控股北京天星普信生物医药有限公司","value":21,"itemStyle":{"color":"#0891b2"}}]
+  }]
+});
+
+(function(){
+  function resizeAll(){ document.querySelectorAll('[id^="chart-"]').forEach(function(el){ var c=echarts.getInstanceByDom(el); if(c) c.resize(); }); }
+  window.addEventListener('resize', resizeAll);
+  document.querySelectorAll('details.report-fold').forEach(function(d){
+    d.addEventListener('toggle', function(){ if(d.open) setTimeout(resizeAll, 80); });
+  });
+})();

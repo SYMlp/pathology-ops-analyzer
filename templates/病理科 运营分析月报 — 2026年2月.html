@@ -1,0 +1,881 @@
+<!DOCTYPE html>
+<!-- saved from url=(0029)http://localhost:3200/preview -->
+<html lang="zh-CN" data-eusoft-scrollable-element="1"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>病理科 运营分析月报 — 2026年2月</title>
+<link rel="preconnect" href="https://fonts.googleapis.com/">
+<link href="./病理科 运营分析月报 — 2026年2月_files/css2" rel="stylesheet">
+<script src="./病理科 运营分析月报 — 2026年2月_files/echarts.min.js.下载"></script>
+<style>
+:root{
+  --bg:#eef1f4;--bg-paper:#f7f8fa;--surface:#fff;--surface-2:#eef2f6;--border:#d8dee6;--ink:#0c1222;--muted:#5c6578;--faint:#8b95a8;
+  --teal:#0d6e5c;--teal-dim:#e6f4f1;--coral:#c45c4a;--coral-dim:#fbeae7;--indigo:#3d4f7c;--indigo-dim:#e8ebf5;
+  --radius:10px;--radius-sm:8px;
+  --shadow:0 1px 2px rgba(12,18,34,.06),0 4px 16px rgba(12,18,34,.04);
+  --font-sans:'IBM Plex Sans',system-ui,sans-serif;--font-serif:'Noto Serif SC',serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+  font-family:var(--font-sans);background:var(--bg);color:var(--ink);line-height:1.45;font-size:14px;
+  -webkit-font-smoothing:antialiased;
+  background-image:radial-gradient(ellipse 120% 80% at 50% -20%,rgba(61,79,124,.08),transparent),url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+}
+.report{max-width:1120px;margin:0 auto;padding:16px 18px 28px}
+small{font-size:.65em;font-weight:500;color:var(--faint)}
+
+.report-header{
+  position:relative;padding:22px 26px 20px;background:linear-gradient(118deg,#0f1729 0%,#1a2744 42%,#243a5c 100%);
+  color:#f0f3f8;border-radius:var(--radius);margin-bottom:14px;overflow:hidden;border:1px solid rgba(255,255,255,.06);
+  box-shadow:var(--shadow);
+}
+.header-bg{position:absolute;inset:0;opacity:.35;background:radial-gradient(circle at 85% 20%,rgba(255,255,255,.12),transparent 45%)}
+.header-content{position:relative;z-index:1}
+.header-badge{display:inline-block;padding:3px 12px;background:rgba(255,255,255,.1);border-radius:999px;font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;margin-bottom:10px;border:1px solid rgba(255,255,255,.12)}
+.report-header h1{font-family:var(--font-serif);font-size:clamp(1.35rem,3.5vw,1.75rem);font-weight:700;letter-spacing:.02em;margin-bottom:8px}
+.header-meta{display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px;font-size:13px;opacity:.88}
+.header-tag{padding:3px 10px;background:rgba(255,255,255,.1);border-radius:6px;font-weight:500}
+.header-divider{width:1px;height:14px;background:rgba(255,255,255,.25)}
+.header-actions{position:absolute;top:18px;right:22px;z-index:1}
+.btn-action{display:inline-flex;align-items:center;gap:6px;padding:8px 14px;background:rgba(255,255,255,.1);color:#fff;border:1px solid rgba(255,255,255,.2);border-radius:8px;cursor:pointer;font-size:12px;font-weight:500;transition:background .2s,border-color .2s}
+.btn-action:hover{background:rgba(255,255,255,.18)}
+
+.exec-summary{background:var(--surface);border-radius:var(--radius);padding:14px 16px 16px;margin-bottom:12px;border:1px solid var(--border);box-shadow:var(--shadow)}
+.exec-summary-head{display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin-bottom:12px;padding-bottom:10px;border-bottom:1px solid var(--border)}
+.exec-title{font-family:var(--font-serif);font-size:1.05rem;font-weight:700;color:var(--ink)}
+.exec-sub{font-size:11px;color:var(--faint);letter-spacing:.04em;text-transform:uppercase}
+
+.kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.kpi-card{
+  background:var(--bg-paper);border-radius:var(--radius-sm);padding:10px 12px;display:flex;flex-direction:column;gap:2px;
+  border:1px solid var(--border);transition:transform .15s,box-shadow .15s;position:relative;overflow:hidden;
+}
+.kpi-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--indigo);opacity:.35}
+.kpi-card:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(12,18,34,.07)}
+.kpi-icon{width:32px;height:32px;border-radius:8px;margin-bottom:4px;display:flex;align-items:center;justify-content:center;color:var(--indigo);background:var(--indigo-dim)}
+.kpi-icon svg{width:18px;height:18px}
+.kpi-icon-income{color:var(--teal);background:var(--teal-dim)}.kpi-icon-expense{color:var(--coral);background:var(--coral-dim)}
+.kpi-icon-surplus{color:var(--indigo);background:var(--indigo-dim)}.kpi-icon-ratio{color:#b45309;background:#fff7ed}
+.kpi-icon-workload{color:#1d4ed8;background:#eff6ff}.kpi-icon-percapita{color:#6d28d9;background:#f5f3ff}
+.kpi-icon-satisfaction{color:#ca8a04;background:#fefce8}.kpi-icon-team{color:var(--muted);background:var(--surface-2)}
+.kpi-label{font-size:11px;color:var(--faint);font-weight:600;letter-spacing:.02em}
+.kpi-value{font-size:clamp(1rem,2.2vw,1.2rem);font-weight:700;color:var(--ink);font-variant-numeric:tabular-nums;line-height:1.2}
+.kpi-sub{font-size:10px;font-weight:600;margin-top:2px}
+.val-pos{color:var(--teal)}.val-neg{color:var(--coral)}
+.gauge-bar{height:4px;background:var(--surface-2);border-radius:2px;margin-top:6px;position:relative}
+.gauge-fill{height:100%;border-radius:2px;transition:width .5s ease}
+.gauge-marks{position:absolute;inset:0}.gauge-marks span{position:absolute;top:-2px;width:1px;height:8px;background:var(--faint);opacity:.5}
+.gauge-marks .mark-danger{background:var(--coral);opacity:.8}
+
+.report-body{display:flex;flex-direction:column;gap:12px}
+
+.section{background:var(--surface);border-radius:var(--radius);padding:14px 16px;border:1px solid var(--border);box-shadow:var(--shadow)}
+.section-compact{padding:12px 14px}
+.section-header{margin-bottom:10px}
+.section-header-inline{display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px;margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid var(--border)}
+.section-header-inline h2{font-family:var(--font-serif);font-size:1rem;font-weight:700;color:var(--ink);margin:0}
+.section-desc{font-size:10px;color:var(--faint);text-transform:uppercase;letter-spacing:.08em}
+.section-strip{font-size:12px;color:var(--muted);margin-left:auto;flex:1 1 auto;text-align:right;min-width:min(100%,200px)}
+.section-strip strong{font-weight:700;color:var(--ink);font-variant-numeric:tabular-nums}
+.strip-sep{opacity:.45;margin:0 4px}
+
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:10px}
+.grid-tight{gap:10px;margin-bottom:8px}
+.chart-card{background:var(--bg-paper);border-radius:var(--radius-sm);padding:10px 12px;border:1px solid var(--border)}
+.chart-card-sm .chart-box{min-height:0}
+.chart-card h3{font-size:12px;color:var(--muted);font-weight:700;margin-bottom:8px;letter-spacing:.02em}
+.chart-gauge-aside{max-width:220px;margin:0 auto}
+
+.efficiency-wrap{display:grid;grid-template-columns:1fr minmax(180px,220px);gap:12px;align-items:start}
+@media(max-width:900px){.efficiency-wrap{grid-template-columns:1fr}}
+
+.efficiency-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.efficiency-grid-dense{grid-template-columns:repeat(3,1fr);gap:6px}
+.eff-card{background:var(--bg-paper);border-radius:var(--radius-sm);padding:10px 12px;border:1px solid var(--border);border-left:3px solid transparent}
+.eff-good{border-left-color:var(--teal)}.eff-warn{border-left-color:#d97706}.eff-bad{border-left-color:var(--coral)}.eff-info{border-left-color:var(--indigo)}.eff-na{border-left-color:var(--faint)}
+.eff-label{font-size:10px;color:var(--faint);font-weight:600;margin-bottom:2px}
+.eff-value{font-size:1rem;font-weight:700;font-variant-numeric:tabular-nums}
+.eff-bench{font-size:10px;color:var(--faint);margin-top:2px}
+
+.stat-panel{background:var(--bg-paper);border-radius:var(--radius-sm);padding:10px 12px;border:1px solid var(--border)}
+.stat-panel-dense h3{font-size:12px;color:var(--muted);font-weight:700;margin-bottom:6px}
+.stat-row{display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid var(--border);font-size:12px}
+.stat-row.sub{padding:4px 0;border-bottom:1px dashed var(--border);font-size:11px}
+.stat-row.sub span:first-child{color:var(--muted)}
+.stat-big{font-size:1rem;font-weight:700;font-variant-numeric:tabular-nums}
+.stat-divider{height:1px;background:var(--border);margin:6px 0}
+
+.mini-cards{display:flex;gap:8px;margin-bottom:10px;flex-wrap:wrap}
+.mini-cards-row{margin-bottom:8px}
+.mini-card{flex:1;min-width:100px;background:var(--bg-paper);border-radius:var(--radius-sm);padding:8px 10px;border:1px solid var(--border);display:flex;flex-direction:column;gap:2px}
+.mini-card.sm{padding:6px 8px;min-width:88px}
+.mini-label{font-size:10px;color:var(--faint);font-weight:600;text-transform:uppercase;letter-spacing:.04em}
+.mini-value{font-size:1rem;font-weight:700;font-variant-numeric:tabular-nums}
+.mini-sub{font-size:10px;color:var(--faint)}
+
+.ranking-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.ranking-grid-dense{gap:6px}
+.rank-card{background:var(--bg-paper);border-radius:var(--radius-sm);padding:10px 12px;text-align:center;position:relative;border:1px solid var(--border)}
+.rank-top{background:linear-gradient(135deg,#eff6ff,#e0e7ff);border-color:#c7d2fe}
+.rank-label{font-size:10px;color:var(--faint);font-weight:600;margin-bottom:4px}
+.rank-value{font-size:1.05rem;font-weight:700;font-variant-numeric:tabular-nums}
+.rank-badge{position:absolute;top:8px;right:8px;width:24px;height:24px;border-radius:50%;background:var(--indigo);color:#fff;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center}
+
+.report-fold{border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--bg-paper);margin-top:8px;overflow:hidden}
+.report-fold>.fold-summary{
+  list-style:none;cursor:pointer;display:flex;align-items:center;gap:10px;padding:10px 12px;font-size:13px;font-weight:600;color:var(--ink);
+  background:linear-gradient(90deg,rgba(61,79,124,.06),transparent);user-select:none;
+}
+.report-fold>.fold-summary::-webkit-details-marker{display:none}
+.fold-chevron{flex-shrink:0;width:8px;height:8px;border-right:2px solid var(--muted);border-bottom:2px solid var(--muted);transform:rotate(-45deg);transition:transform .2s;margin-top:-2px}
+.report-fold[open]>.fold-summary .fold-chevron{transform:rotate(45deg);margin-top:2px}
+.fold-title-text{font-family:var(--font-serif);font-size:13px}
+.fold-hint{margin-left:auto;font-size:11px;font-weight:500;color:var(--faint);text-align:right;max-width:55%}
+.fold-body{padding:0 12px 12px}
+.appendix-wrap .report-fold{margin-top:0}
+
+.table-wrap{margin-top:0}
+.table-wrap.tight{margin-top:10px}
+.table-wrap.tight:first-child{margin-top:0}
+.table-inline-title{font-size:11px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px}
+.data-table{width:100%;border-collapse:separate;border-spacing:0;font-size:12px;border:1px solid var(--border);border-radius:var(--radius-sm);overflow:hidden}
+.data-table-dense th,.data-table-dense td{padding:6px 8px}
+.data-table th{background:var(--surface-2);color:var(--muted);padding:8px 10px;font-weight:700;font-size:10px;text-transform:uppercase;letter-spacing:.04em;border-bottom:1px solid var(--border)}
+.data-table td{padding:7px 10px;border-bottom:1px solid var(--border)}
+.data-table tr:last-child td{border-bottom:none}
+.data-table tr:hover td{background:rgba(61,79,124,.05)}
+.data-table .td-name{font-weight:600}
+.data-table .td-ellipsis{max-width:220px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.data-table .r{text-align:right}
+.data-table .c{text-align:center}
+.data-table .num{font-variant-numeric:tabular-nums;font-family:ui-monospace,'IBM Plex Sans',monospace}
+.data-table tr.row-not-parsed td{color:var(--faint)}
+.data-table .td-hint{font-weight:400;font-size:10px;color:var(--faint)}
+.data-table .rank-num{text-align:center;font-weight:800;color:var(--indigo);font-size:11px}
+
+.insights-section .insight-group{margin-bottom:12px}
+.insight-group-title{display:flex;align-items:center;gap:8px;font-size:12px;font-weight:700;margin-bottom:8px;color:var(--muted)}
+.ig-ico{flex-shrink:0;opacity:.85}
+.insight-count{margin-left:auto;font-size:10px;background:var(--surface-2);padding:2px 8px;border-radius:999px;color:var(--faint);font-weight:600}
+.group-risk .insight-group-title{color:var(--coral)}.group-highlight .insight-group-title{color:var(--teal)}.group-suggestion .insight-group-title{color:var(--indigo)}
+.insight-grid{display:grid;gap:6px}
+.insight-fold{border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--bg-paper);overflow:hidden;border-left-width:3px;border-left-color:var(--border)}
+.insight-tone-danger{border-left-color:var(--coral);background:linear-gradient(90deg,var(--coral-dim),var(--bg-paper))}
+.insight-tone-warning{border-left-color:#d97706;background:linear-gradient(90deg,#fffbeb,var(--bg-paper))}
+.insight-tone-positive{border-left-color:var(--teal);background:linear-gradient(90deg,var(--teal-dim),var(--bg-paper))}
+.insight-tone-info{border-left-color:var(--indigo);background:linear-gradient(90deg,var(--indigo-dim),var(--bg-paper))}
+.insight-fold-sum{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:8px 10px;font-size:12px;font-weight:700}
+.insight-fold-sum::-webkit-details-marker{display:none}
+.insight-fold-sum .insight-metric{font-size:13px;font-variant-numeric:tabular-nums;color:var(--ink)}
+.insight-fold-body{padding:0 10px 10px;border-top:1px dashed var(--border)}
+.insight-body{font-size:12px;color:var(--muted);line-height:1.55;margin-top:8px}
+.insight-bench{font-size:10px;color:var(--faint);margin-top:6px;display:block}
+
+.formula-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.formula-grid-dense{gap:6px}
+.formula-item{padding:8px 10px;background:var(--surface);border-radius:var(--radius-sm);border:1px solid var(--border);font-size:12px;line-height:1.5}
+.formula-item strong{display:block;color:var(--ink);font-size:11px;margin-bottom:2px;font-family:var(--font-serif)}
+.formula-item span{color:var(--muted);font-size:11px}
+
+.report-footer{text-align:center;padding:20px 0 12px;font-size:11px;color:var(--faint)}
+.footer-line{width:48px;height:2px;background:linear-gradient(90deg,var(--teal),var(--indigo));border-radius:2px;margin:0 auto 12px;opacity:.7}
+.footer-note{margin-top:2px;font-size:10px}
+.no-data{text-align:center;color:var(--faint);padding:24px;font-size:13px}
+
+@media print{
+  body{background:#fff!important;background-image:none!important}
+  .report{padding:0;max-width:100%}
+  .btn-action{display:none}
+  .section,.kpi-card,.report-header{box-shadow:none;break-inside:avoid}
+  .report-header{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  details.report-fold,details.insight-fold{display:block!important}
+  details.report-fold>summary,details.insight-fold>summary{display:none!important}
+  details.report-fold .fold-body,details.insight-fold .insight-fold-body{display:block!important;padding:8px 0}
+  .insight-fold{border:none}
+}
+@media(max-width:900px){
+  .kpi-grid{grid-template-columns:repeat(2,1fr)}
+  .grid-2,.efficiency-grid,.efficiency-grid-dense,.ranking-grid,.formula-grid{grid-template-columns:1fr}
+  .section-strip{text-align:left;margin-left:0;width:100%}
+  .report-header h1{font-size:1.25rem}
+  .header-actions{position:static;margin-top:10px}
+}
+@media(max-width:520px){
+  .kpi-grid{grid-template-columns:1fr}
+  .report{padding:12px}
+}</style>
+<style>.eudic-tippy-content-container[_ngcontent-ng-c2546567076]{max-width:250px!important}.eusoft-chrome-extension-popup-menu[_ngcontent-ng-c2546567076]{position:fixed;z-index:2147483647;top:50%}.eusoft-chrome-extension-popup-menu.eusoft-chrome-extension-popup-menu-left[_ngcontent-ng-c2546567076]{left:4px}.eusoft-chrome-extension-popup-menu.eusoft-chrome-extension-popup-menu-right[_ngcontent-ng-c2546567076]{right:4px}.eusoft-chrome-extension-mask-container[_ngcontent-ng-c2546567076]{background-color:transparent;position:fixed;top:0;right:0;bottom:0;left:0;z-index:2147483646}</style><style>.eusoft-eudic-translate-failed-container[_ngcontent-ng-c3081775404]{position:fixed!important;bottom:50px!important;right:50px!important;border-radius:5px!important;box-shadow:0 6px 24px #00000014!important;z-index:2147483647!important}.eusoft-eudic-translate-failed-content-script[_ngcontent-ng-c3081775404]{border:1px solid #E8E8E8!important;background-color:#f8fafe!important}html.light-en   [_nghost-ng-c3081775404]   .eusoft-eudic-translate-failed-container[_ngcontent-ng-c3081775404]{border:1px solid #E8E8E8!important;background-color:#f8fafe!important}html.light-fr   [_nghost-ng-c3081775404]   .eusoft-eudic-translate-failed-container[_ngcontent-ng-c3081775404]{border:1px solid #E8E8E8!important;background-color:#f8fafe!important}html.light-de   [_nghost-ng-c3081775404]   .eusoft-eudic-translate-failed-container[_ngcontent-ng-c3081775404]{border:1px solid #E8E8E8!important;background-color:#f8fafe!important}html.light-es   [_nghost-ng-c3081775404]   .eusoft-eudic-translate-failed-container[_ngcontent-ng-c3081775404]{border:1px solid #E8E8E8!important;background-color:#f8fafe!important}html.dark-en   [_nghost-ng-c3081775404]   .eusoft-eudic-translate-failed-container[_ngcontent-ng-c3081775404]{border:1px solid #595959!important;background-color:#212125!important}html.dark-fr   [_nghost-ng-c3081775404]   .eusoft-eudic-translate-failed-container[_ngcontent-ng-c3081775404]{border:1px solid #595959!important;background-color:#212125!important}html.dark-de   [_nghost-ng-c3081775404]   .eusoft-eudic-translate-failed-container[_ngcontent-ng-c3081775404]{border:1px solid #595959!important;background-color:#212125!important}html.dark-es   [_nghost-ng-c3081775404]   .eusoft-eudic-translate-failed-container[_ngcontent-ng-c3081775404]{border:1px solid #595959!important;background-color:#212125!important}html.sepia-en   [_nghost-ng-c3081775404]   .eusoft-eudic-translate-failed-container[_ngcontent-ng-c3081775404]{border:1px solid #E8E8E8!important;background-color:#f8fafe!important}html.sepia-fr   [_nghost-ng-c3081775404]   .eusoft-eudic-translate-failed-container[_ngcontent-ng-c3081775404]{border:1px solid #E8E8E8!important;background-color:#f8fafe!important}html.sepia-de   [_nghost-ng-c3081775404]   .eusoft-eudic-translate-failed-container[_ngcontent-ng-c3081775404]{border:1px solid #E8E8E8!important;background-color:#f8fafe!important}html.sepia-es   [_nghost-ng-c3081775404]   .eusoft-eudic-translate-failed-container[_ngcontent-ng-c3081775404]{border:1px solid #E8E8E8!important;background-color:#f8fafe!important}html.green-en   [_nghost-ng-c3081775404]   .eusoft-eudic-translate-failed-container[_ngcontent-ng-c3081775404]{border:1px solid #E8E8E8!important;background-color:#f8fafe!important}html.green-fr   [_nghost-ng-c3081775404]   .eusoft-eudic-translate-failed-container[_ngcontent-ng-c3081775404]{border:1px solid #E8E8E8!important;background-color:#f8fafe!important}html.green-de   [_nghost-ng-c3081775404]   .eusoft-eudic-translate-failed-container[_ngcontent-ng-c3081775404]{border:1px solid #E8E8E8!important;background-color:#f8fafe!important}html.green-es   [_nghost-ng-c3081775404]   .eusoft-eudic-translate-failed-container[_ngcontent-ng-c3081775404]{border:1px solid #E8E8E8!important;background-color:#f8fafe!important}</style><style>.eudic-chrome-extension-inner-icon[_ngcontent-ng-c3424759930]{display:flex;width:100%;height:100%}</style><style>g.inner[_ngcontent-ng-c3362076685]{fill:#d8d8d8}g.inner.checked[_ngcontent-ng-c3362076685]{fill:#1890ff}</style><style>svg[_ngcontent-ng-c1076576952]{width:100%;height:100%}</style></head>
+<body>
+<div class="report">
+  
+  <header class="report-header">
+    <div class="header-bg"></div>
+    <div class="header-content">
+      <div class="header-badge">2026</div>
+      <h1>病理科 运营分析月报</h1>
+      <div class="header-meta">
+        <span class="header-tag">2026年2月</span>
+        <span class="header-divider"></span>
+        <span class="header-gen">生成于 2026-03-29 20:17</span>
+      </div>
+    </div>
+    <div class="header-actions">
+      <button onclick="window.print()" class="btn-action">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9V2h12v7M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+        打印
+      </button>
+    </div>
+  </header>
+  
+  <section class="exec-summary" aria-label="运营概览">
+    <div class="exec-summary-head">
+      <h2 class="exec-title">运营概览</h2>
+      <span class="exec-sub">Executive · 本月核心指标</span>
+    </div>
+    <div class="kpi-grid">
+      
+      <div class="kpi-card ">
+        <div class="kpi-icon kpi-icon-income" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1.41 16.09V20h-2.67v-1.93c-1.71-.36-3.16-1.46-3.27-3.4h1.96c.1 1.05.82 1.87 2.65 1.87 1.96 0 2.4-.98 2.4-1.59 0-.83-.44-1.61-2.67-2.14-2.48-.6-4.18-1.62-4.18-3.67 0-1.72 1.39-2.84 3.11-3.21V4h2.67v1.95c1.86.45 2.79 1.86 2.85 3.39H14.3c-.05-1.11-.64-1.87-2.22-1.87-1.5 0-2.4.68-2.4 1.64 0 .84.65 1.39 2.67 1.91s4.18 1.39 4.18 3.91c-.01 1.83-1.38 2.83-3.12 3.16z"></path></svg></div>
+        <div class="kpi-content" data-eusoft-scrollable-element="1">
+          <div class="kpi-label">计奖收入</div>
+          <div class="kpi-value" data-eusoft-scrollable-element="1">0元</div>
+          
+        </div>
+        
+      </div>
+      <div class="kpi-card ">
+        <div class="kpi-icon kpi-icon-expense" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M11.8 10.9c-2.27-.59-3-1.2-3-2.15 0-1.09 1.01-1.85 2.7-1.85 1.78 0 2.44.85 2.5 2.1h2.21c-.07-1.72-1.12-3.3-3.21-3.81V3h-3v2.16c-1.94.42-3.5 1.68-3.5 3.61 0 2.31 1.91 3.46 4.7 4.13 2.5.6 3 1.48 3 2.41 0 .69-.49 1.79-2.7 1.79-2.06 0-2.87-.92-2.98-2.1h-2.2c.12 2.19 1.76 3.42 3.68 3.83V21h3v-2.15c1.95-.37 3.5-1.5 3.5-3.55 0-2.84-2.43-3.81-4.7-4.4z"></path></svg></div>
+        <div class="kpi-content" data-eusoft-scrollable-element="1">
+          <div class="kpi-label">科室支出</div>
+          <div class="kpi-value" data-eusoft-scrollable-element="1">0元</div>
+          
+        </div>
+        
+      </div>
+      <div class="kpi-card ">
+        <div class="kpi-icon kpi-icon-surplus" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M16 6l2.29 2.29-4.88 4.88-4-4L2 16.59 3.41 18l6-6 4 4 6.3-6.29L22 12V6h-6z"></path></svg></div>
+        <div class="kpi-content" data-eusoft-scrollable-element="1">
+          <div class="kpi-label">运营结余</div>
+          <div class="kpi-value" data-eusoft-scrollable-element="1">0元</div>
+          
+        </div>
+        
+      </div>
+      <div class="kpi-card kpi-gauge">
+        <div class="kpi-icon kpi-icon-ratio" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 3c1.93 0 3.5 1.57 3.5 3.5S13.93 13 12 13s-3.5-1.57-3.5-3.5S10.07 6 12 6zm7 13H5v-.23c0-.62.36-1.2.97-1.63C7.25 15.8 9.47 15 12 15s4.75.8 6.03 2.14c.59.43.97 1.01.97 1.63V19z"></path></svg></div>
+        <div class="kpi-content">
+          <div class="kpi-label">支收比</div>
+          <div class="kpi-value" data-eusoft-scrollable-element="1">0.0%</div>
+          <div class="kpi-sub ">≤ 基准70% ✓</div>
+        </div>
+        <div class="gauge-bar" data-eusoft-scrollable-element="1"><div class="gauge-fill" style="width:0%;background:#059669"></div><div class="gauge-marks" data-eusoft-scrollable-element="1"><span style="left:70%"></span><span style="left:80%" class="mark-danger"></span></div></div>
+      </div>
+      <div class="kpi-card ">
+        <div class="kpi-icon kpi-icon-workload" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5s-3 1.34-3 3 1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"></path></svg></div>
+        <div class="kpi-content">
+          <div class="kpi-label">门诊量</div>
+          <div class="kpi-value" data-eusoft-scrollable-element="1">475 <small>人次</small></div>
+          <div class="kpi-sub val-neg">环比 ↓ 28.4%</div>
+        </div>
+        
+      </div>
+      <div class="kpi-card ">
+        <div class="kpi-icon kpi-icon-percapita" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"></path></svg></div>
+        <div class="kpi-content">
+          <div class="kpi-label">人均产出</div>
+          <div class="kpi-value" data-eusoft-scrollable-element="1">0元</div>
+          <div class="kpi-sub ">人均月收入</div>
+        </div>
+        
+      </div>
+      <div class="kpi-card ">
+        <div class="kpi-icon kpi-icon-satisfaction" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm3.5-9c.83 0 1.5-.67 1.5-1.5S16.33 8 15.5 8 14 8.67 14 9.5s.67 1.5 1.5 1.5zm-7 0c.83 0 1.5-.67 1.5-1.5S9.33 8 8.5 8 7 8.67 7 9.5 7.67 11 8.5 11zm3.5 6.5c2.33 0 4.31-1.46 5.11-3.5H6.89c.8 2.04 2.78 3.5 5.11 3.5z"></path></svg></div>
+        <div class="kpi-content">
+          <div class="kpi-label">满意度</div>
+          <div class="kpi-value" data-eusoft-scrollable-element="1">0.904</div>
+          <div class="kpi-sub ">全院第11名</div>
+        </div>
+        
+      </div>
+      <div class="kpi-card ">
+        <div class="kpi-icon kpi-icon-team" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"></path></svg></div>
+        <div class="kpi-content" data-eusoft-scrollable-element="1">
+          <div class="kpi-label">科室人数</div>
+          <div class="kpi-value" data-eusoft-scrollable-element="1">47 <small>人</small></div>
+          
+        </div>
+        
+      </div>
+    </div>
+  </section>
+  <div class="report-body">
+    
+  <section class="section section-compact">
+    <div class="section-header section-header-inline">
+      <h2>一、经济运行</h2>
+      <span class="section-desc">Financial</span>
+      <div class="section-strip">
+        <span class="strip-item">计奖 <strong>0元</strong></span>
+        <span class="strip-sep">·</span>
+        <span class="strip-item">支出 <strong>0元</strong></span>
+        <span class="strip-sep">·</span>
+        <span class="strip-item">结余 <strong class="val-pos">0元</strong></span>
+      </div>
+    </div>
+    <div class="grid-2 grid-tight">
+      <div class="chart-card chart-card-sm">
+        <h3>收入支出趋势</h3>
+        <div id="chart-revenue-expense" class="chart-box" style="height: 220px; user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); position: relative;" _echarts_instance_="ec_1774786639417"><div style="position: relative; width: 729px; height: 220px; padding: 0px; margin: 0px; border-width: 0px; cursor: pointer;"><canvas data-zr-dom-id="zr_0" width="1629" height="491" style="position: absolute; left: 0px; top: 0px; width: 729px; height: 220px; user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); padding: 0px; margin: 0px; border-width: 0px;"></canvas></div><div class="" style="position: absolute; display: block; border-style: solid; white-space: nowrap; z-index: 9999999; box-shadow: rgba(0, 0, 0, 0.2) 1px 2px 10px; transition: opacity 0.2s cubic-bezier(0.23, 1, 0.32, 1), visibility 0.2s cubic-bezier(0.23, 1, 0.32, 1), transform 0.4s cubic-bezier(0.23, 1, 0.32, 1); background-color: rgba(15, 23, 42, 0.92); border-width: 1px; border-radius: 4px; color: rgb(255, 255, 255); font: 13px / 20px &quot;Microsoft YaHei&quot;; padding: 10px; top: 0px; left: 0px; transform: translate3d(286px, 61px, 0px); border-color: transparent; pointer-events: none; visibility: hidden; opacity: 0;">6月<br><span style="display:inline-block;margin-right:4px;border-radius:10px;width:10px;height:10px;background-color:#059669;"></span>计奖收入: 0元<br><span style="display:inline-block;margin-right:4px;border-radius:10px;width:10px;height:10px;background-color:#dc2626;"></span>科室支出: 0元</div></div>
+      </div>
+      <div class="chart-card chart-card-sm">
+        <h3>支出结构 2月</h3>
+        <div id="chart-expense-composition" class="chart-box" style="height: 260px; user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); position: relative;" _echarts_instance_="ec_1774786639418"><div style="position: relative; width: 729px; height: 260px; padding: 0px; margin: 0px; border-width: 0px; cursor: default;"><canvas data-zr-dom-id="zr_0" width="1629" height="581" style="position: absolute; left: 0px; top: 0px; width: 729px; height: 260px; user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); padding: 0px; margin: 0px; border-width: 0px;"></canvas></div><div class="" style="position: absolute; display: block; border-style: solid; white-space: nowrap; z-index: 9999999; box-shadow: rgba(0, 0, 0, 0.2) 1px 2px 10px; transition: opacity 0.2s cubic-bezier(0.23, 1, 0.32, 1), visibility 0.2s cubic-bezier(0.23, 1, 0.32, 1), transform 0.4s cubic-bezier(0.23, 1, 0.32, 1); background-color: rgb(255, 255, 255); border-width: 1px; border-radius: 4px; color: rgb(102, 102, 102); font: 14px / 21px &quot;Microsoft YaHei&quot;; padding: 10px; top: 0px; left: 0px; transform: translate3d(376px, 59px, 0px); border-color: rgb(37, 99, 235); pointer-events: none; visibility: hidden; opacity: 0;"><span style="display:inline-block;margin-right:4px;border-radius:10px;width:10px;height:10px;background-color:#2563eb;"></span>各类消耗<br>金额: 183.31万<br>占比: 62.1%</div></div>
+      </div>
+    </div>
+    <div class="mini-cards mini-cards-row">
+      <div class="mini-card sm"><span class="mini-label">收入同比</span><span class="mini-value val-neg">-100.0%</span></div>
+      <div class="mini-card sm"><span class="mini-label">支出同比</span><span class="mini-value val-pos">-100.0%</span></div>
+      <div class="mini-card sm"><span class="mini-label">运营结余</span><span class="mini-value val-pos">0元</span></div>
+    </div>
+    <details class="report-fold">
+  <summary class="fold-summary"><span class="fold-chevron"></span><span class="fold-title-text">逐指标明细表（收入 · 支出）</span><span class="fold-hint">同比 收入 -100.0% · 支出 -100.0% · 展开查看逐指标月表</span></summary>
+  <div class="fold-body">
+    <div class="table-wrap tight"><h4 class="table-inline-title">收入明细</h4>
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>指标</th><th class="r">上年均值</th><th class="r">本年均值</th>
+        <th class="r">1月</th><th class="r">2月</th><th class="r">3月</th><th class="r">4月</th><th class="r">5月</th><th class="r">6月</th><th class="r">7月</th><th class="r">8月</th><th class="r">9月</th><th class="r">10月</th><th class="r">11月</th><th class="r">12月</th>
+        <th class="r">环比</th><th class="r">同比</th>
+      </tr>
+    </thead>
+    <tbody>
+      
+      <tr>
+        <td class="td-name">门诊计奖收入总计</td>
+        <td class="r num">8,332,410.60</td>
+        <td class="r num">0</td>
+        <td class="r num">6,675,288.05</td><td class="r num">5,044,467.25</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td>
+        <td class="r val-neg">-24.4%</td><td class="r val-neg">-39.5%</td>
+      </tr>
+      <tr>
+        <td class="td-name">门诊医事服务费</td>
+        <td class="r num">32,395.83</td>
+        <td class="r num">0</td>
+        <td class="r num">37,650</td><td class="r num">26,400</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td>
+        <td class="r val-neg">-29.9%</td><td class="r val-neg">-18.5%</td>
+      </tr>
+      <tr>
+        <td class="td-name">门诊运营收入总计</td>
+        <td class="r num">0</td>
+        <td class="r num">0</td>
+        <td class="r num">0</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td>
+        <td class="r ">--</td><td class="r ">--</td>
+      </tr>
+      <tr>
+        <td class="td-name">门诊流水收入总计</td>
+        <td class="r num">1,273,623.36</td>
+        <td class="r num">0</td>
+        <td class="r num">1,445,912.72</td><td class="r num">1,174,945.60</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td>
+        <td class="r val-neg">-18.7%</td><td class="r val-neg">-7.7%</td>
+      </tr>
+      <tr>
+        <td class="td-name">门诊材料费</td>
+        <td class="r num">249.48</td>
+        <td class="r num">0</td>
+        <td class="r num">129.22</td><td class="r num">108.10</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td>
+        <td class="r val-neg">-16.3%</td><td class="r val-neg">-56.7%</td>
+      </tr>
+      <tr>
+        <td class="td-name">门诊药费</td>
+        <td class="r num">0</td>
+        <td class="r num">0</td>
+        <td class="r num">0</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td>
+        <td class="r ">--</td><td class="r ">--</td>
+      </tr>
+    </tbody>
+  </table></div>
+    <div class="table-wrap tight"><h4 class="table-inline-title">支出明细</h4>
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>指标</th><th class="r">上年均值</th><th class="r">本年均值</th>
+        <th class="r">1月</th><th class="r">2月</th><th class="r">3月</th><th class="r">4月</th><th class="r">5月</th><th class="r">6月</th><th class="r">7月</th><th class="r">8月</th><th class="r">9月</th><th class="r">10月</th><th class="r">11月</th><th class="r">12月</th>
+        <th class="r">环比</th><th class="r">同比</th>
+      </tr>
+    </thead>
+    <tbody>
+      
+      <tr>
+        <td class="td-name">非收费耗材</td>
+        <td class="r num">97,960.36</td>
+        <td class="r num">0</td>
+        <td class="r num">138,318</td><td class="r num">91,070</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td>
+        <td class="r val-neg">-34.2%</td><td class="r val-neg">-7.0%</td>
+      </tr>
+      <tr>
+        <td class="td-name">办公耗材</td>
+        <td class="r num">6,362.55</td>
+        <td class="r num">0</td>
+        <td class="r num">6,107.30</td><td class="r num">1,231.40</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td>
+        <td class="r val-neg">-79.8%</td><td class="r val-neg">-80.6%</td>
+      </tr>
+      <tr>
+        <td class="td-name">试剂领用</td>
+        <td class="r num">4,673,312.04</td>
+        <td class="r num">0</td>
+        <td class="r num">2,197,356.94</td><td class="r num">1,736,904.56</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td>
+        <td class="r val-neg">-21.0%</td><td class="r val-neg">-62.8%</td>
+      </tr>
+      <tr>
+        <td class="td-name">医疗垃圾</td>
+        <td class="r num">4,581.96</td>
+        <td class="r num">0</td>
+        <td class="r num">4,494.26</td><td class="r num">3,915.73</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td>
+        <td class="r val-neg">-12.9%</td><td class="r val-neg">-14.5%</td>
+      </tr>
+      <tr>
+        <td class="td-name">氧气</td>
+        <td class="r num">0</td>
+        <td class="r num">0</td>
+        <td class="r num">0</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td>
+        <td class="r ">--</td><td class="r ">--</td>
+      </tr>
+      <tr>
+        <td class="td-name">设备类耗材</td>
+        <td class="r num">0</td>
+        <td class="r num">0</td>
+        <td class="r num">0</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td>
+        <td class="r ">--</td><td class="r ">--</td>
+      </tr>
+      <tr>
+        <td class="td-name">第三方费用</td>
+        <td class="r num">12,124.78</td>
+        <td class="r num">0</td>
+        <td class="r num">11,574.80</td><td class="r num">11,574.80</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td>
+        <td class="r val-pos">+0.0%</td><td class="r val-neg">-4.5%</td>
+      </tr>
+      <tr>
+        <td class="td-name">人员工资</td>
+        <td class="r num">370,765.84</td>
+        <td class="r num">0</td>
+        <td class="r num">384,426.61</td><td class="r num">390,329.77</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td>
+        <td class="r val-pos">+1.5%</td><td class="r val-pos">+5.3%</td>
+      </tr>
+      <tr>
+        <td class="td-name">兼职教授成本</td>
+        <td class="r num">0</td>
+        <td class="r num">0</td>
+        <td class="r num">0</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td>
+        <td class="r ">--</td><td class="r ">--</td>
+      </tr>
+      <tr>
+        <td class="td-name">设备折旧</td>
+        <td class="r num">341,025.05</td>
+        <td class="r num">0</td>
+        <td class="r num">380,228.25</td><td class="r num">376,703.25</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td>
+        <td class="r val-neg">-0.9%</td><td class="r val-pos">+10.5%</td>
+      </tr>
+      <tr>
+        <td class="td-name">设备维修费</td>
+        <td class="r num">148,345.15</td>
+        <td class="r num">0</td>
+        <td class="r num">157,179.33</td><td class="r num">157,179.33</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td>
+        <td class="r val-pos">+0.0%</td><td class="r val-pos">+6.0%</td>
+      </tr>
+      <tr>
+        <td class="td-name">基本奖金</td>
+        <td class="r num">0</td>
+        <td class="r num">0</td>
+        <td class="r num">174,600</td><td class="r num">174,600</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td>
+        <td class="r val-pos">+0.0%</td><td class="r ">--</td>
+      </tr>
+      <tr>
+        <td class="td-name">夜班费</td>
+        <td class="r num">0</td>
+        <td class="r num">0</td>
+        <td class="r num">9,490</td><td class="r num">6,890</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td>
+        <td class="r val-neg">-27.4%</td><td class="r ">--</td>
+      </tr>
+    </tbody>
+  </table></div></div>
+</details>
+  </section>
+    
+  <section class="section section-compact">
+    <div class="section-header section-header-inline">
+      <h2>二、运营效率</h2>
+      <span class="section-desc">Efficiency</span>
+      <div class="section-strip"><span class="strip-item">支收比 <strong>0.0%</strong> · 人力占比 --</span></div>
+    </div>
+    <div class="efficiency-wrap">
+      <div class="efficiency-grid efficiency-grid-dense">
+        
+        <div class="eff-card eff-good">
+          <div class="eff-status"></div>
+          <div class="eff-label">支收比</div>
+          <div class="eff-value">0.0%</div>
+          <div class="eff-bench">≤70%</div>
+        </div>
+        <div class="eff-card eff-na">
+          <div class="eff-status"></div>
+          <div class="eff-label">人力成本占比</div>
+          <div class="eff-value">--</div>
+          <div class="eff-bench">≤35%</div>
+        </div>
+        <div class="eff-card eff-na">
+          <div class="eff-status"></div>
+          <div class="eff-label">百元收入卫材消耗</div>
+          <div class="eff-value">--</div>
+          <div class="eff-bench">≤25元</div>
+        </div>
+        <div class="eff-card eff-bad">
+          <div class="eff-status"></div>
+          <div class="eff-label">运营利润率</div>
+          <div class="eff-value">0.0%</div>
+          <div class="eff-bench">&gt;10%</div>
+        </div>
+        <div class="eff-card eff-info">
+          <div class="eff-status"></div>
+          <div class="eff-label">人均月收入</div>
+          <div class="eff-value">0元</div>
+          
+        </div>
+        <div class="eff-card eff-bad">
+          <div class="eff-status"></div>
+          <div class="eff-label">人均月结余</div>
+          <div class="eff-value">0元</div>
+          
+        </div>
+      </div>
+      <div class="chart-card chart-card-sm chart-gauge-aside">
+        <h3>支收比</h3>
+        <div id="chart-gauge" class="chart-box gauge-box" style="height: 180px; user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);" _echarts_instance_="ec_1774786639420"><div style="position: relative; width: 37px; height: 180px; padding: 0px; margin: 0px; border-width: 0px;"><canvas data-zr-dom-id="zr_0" width="82" height="402" style="position: absolute; left: 0px; top: 0px; width: 37px; height: 180px; user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); padding: 0px; margin: 0px; border-width: 0px;"></canvas></div></div>
+      </div>
+    </div>
+  </section>
+    
+  <section class="section section-compact">
+    <div class="section-header section-header-inline">
+      <h2>三、工作量</h2>
+      <span class="section-desc">Workload</span>
+      <div class="section-strip">
+        <span class="strip-item">合计 <strong>475</strong> 人次</span>
+        <span class="strip-sep">·</span>
+        <span class="strip-item">环比 <strong class="val-neg">-28.4%</strong></span>
+      </div>
+    </div>
+    <div class="grid-2 grid-tight">
+      <div class="chart-card chart-card-sm">
+        <h3>门诊量趋势</h3>
+        <div id="chart-workload" class="chart-box" style="height: 220px; user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); position: relative;" _echarts_instance_="ec_1774786639419"><div style="position: relative; width: 729px; height: 220px; padding: 0px; margin: 0px; border-width: 0px; cursor: default;"><canvas data-zr-dom-id="zr_0" width="1629" height="491" style="position: absolute; left: 0px; top: 0px; width: 729px; height: 220px; user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); padding: 0px; margin: 0px; border-width: 0px;"></canvas></div><div class="" style="position: absolute; display: block; border-style: solid; white-space: nowrap; z-index: 9999999; box-shadow: rgba(0, 0, 0, 0.2) 1px 2px 10px; transition: opacity 0.2s cubic-bezier(0.23, 1, 0.32, 1), visibility 0.2s cubic-bezier(0.23, 1, 0.32, 1), transform 0.4s cubic-bezier(0.23, 1, 0.32, 1); background-color: rgb(255, 255, 255); border-width: 1px; border-radius: 4px; color: rgb(102, 102, 102); font: 14px / 21px &quot;Microsoft YaHei&quot;; padding: 10px; top: 0px; left: 0px; transform: translate3d(270px, 68px, 0px); border-color: rgb(255, 255, 255); pointer-events: none; visibility: hidden; opacity: 0;">10月<br>门诊量: <b>0</b> 人次</div></div>
+      </div>
+      <div class="stat-panel stat-panel-dense">
+        <h3>本月构成</h3>
+        <div class="stat-row"><span>总门诊</span><span class="stat-big">475<small>人次</small></span></div>
+        <div class="stat-row"><span>人均</span><span class="stat-big">10.1<small>人次/人</small></span></div>
+        <div class="stat-divider"></div>
+        <div class="stat-row sub"><span>专家门诊量</span><span>0</span></div><div class="stat-row sub"><span>特需门诊量</span><span>0</span></div><div class="stat-row sub"><span>普通门诊量</span><span>475</span></div>
+      </div>
+    </div>
+    <details class="report-fold" open="">
+  <summary class="fold-summary"><span class="fold-chevron"></span><span class="fold-title-text">工作量明细表（逐月分项）</span><span class="fold-hint">总门诊 475 人次 · 环比 -28.4% · 展开逐月分项表</span></summary>
+  <div class="fold-body"><div class="table-wrap tight"><h4 class="table-inline-title">工作量逐月</h4>
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>指标</th><th class="r">上年均值</th><th class="r">本年均值</th>
+        <th class="r">1月</th><th class="r">2月</th><th class="r">3月</th><th class="r">4月</th><th class="r">5月</th><th class="r">6月</th><th class="r">7月</th><th class="r">8月</th><th class="r">9月</th><th class="r">10月</th><th class="r">11月</th><th class="r">12月</th>
+        
+      </tr>
+    </thead>
+    <tbody>
+      
+      <tr>
+        <td class="td-name">专家门诊量</td>
+        <td class="r num">0</td>
+        <td class="r num">0</td>
+        <td class="r num">0</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td>
+        
+      </tr>
+      <tr>
+        <td class="td-name">特需门诊量</td>
+        <td class="r num">0.17</td>
+        <td class="r num">0</td>
+        <td class="r num">0</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td>
+        
+      </tr>
+      <tr>
+        <td class="td-name">普通门诊量</td>
+        <td class="r num">574.75</td>
+        <td class="r num">0</td>
+        <td class="r num">663</td><td class="r num">475</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td><td class="r num">0</td>
+        
+      </tr>
+    </tbody>
+  </table></div></div>
+</details>
+  </section>
+    
+  <section class="section section-compact">
+    <div class="section-header section-header-inline">
+      <h2>四、全院排名</h2>
+      <span class="section-desc">Rankings</span>
+      <div class="section-strip"><span class="strip-item">综合排名 <strong>第9名</strong></span></div>
+    </div>
+    <div class="ranking-grid ranking-grid-dense">
+      
+      <div class="rank-card ">
+        <div class="rank-label">患者满意度</div>
+        <div class="rank-value">0.904 <small>/ 5.0</small></div>
+        <div class="rank-badge">#11</div>
+      </div>
+      <div class="rank-card ">
+        <div class="rank-label">支收比</div>
+        <div class="rank-value">0.694 <small></small></div>
+        
+      </div>
+      <div class="rank-card ">
+        <div class="rank-label">支收比增量</div>
+        <div class="rank-value">+0.042 <small></small></div>
+        
+      </div>
+      <div class="rank-card ">
+        <div class="rank-label">预约效率增量</div>
+        <div class="rank-value">无数据 <small></small></div>
+        
+      </div>
+      <div class="rank-card ">
+        <div class="rank-label">增量和</div>
+        <div class="rank-value">0.042 <small></small></div>
+        
+      </div>
+      <div class="rank-card ">
+        <div class="rank-label">综合增量排名</div>
+        <div class="rank-value">第9名 <small>/ 全院</small></div>
+        <div class="rank-badge">#9</div>
+      </div>
+    </div>
+  </section>
+    
+  <section class="section section-compact">
+    <div class="section-header section-header-inline">
+      <h2>五、耗材与采购</h2>
+      <span class="section-desc">Materials</span>
+      <div class="section-strip">
+        <span class="strip-item">采 <strong>9.11万</strong></span>
+        <span class="strip-sep">·</span>
+        <span class="strip-item">出 <strong>1,231元</strong></span>
+        <span class="strip-sep">·</span>
+        <span class="strip-item"><strong>5</strong> 供应商</span>
+      </div>
+    </div>
+    <div class="mini-cards mini-cards-row">
+      <div class="mini-card sm"><span class="mini-label">采购</span><span class="mini-value">9.11万</span><span class="mini-sub">18 笔</span></div>
+      <div class="mini-card sm"><span class="mini-label">出库</span><span class="mini-value">1,231元</span><span class="mini-sub">6 笔</span></div>
+      <div class="mini-card sm"><span class="mini-label">供应商</span><span class="mini-value">5</span><span class="mini-sub">活跃</span></div>
+    </div>
+    <div class="grid-2 grid-tight">
+      <div class="chart-card chart-card-sm">
+        <h3>采购 TOP 10</h3>
+        <div id="chart-procurement-top" class="chart-box" style="height: 280px; user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); position: relative;" _echarts_instance_="ec_1774786639421"><div style="position: relative; width: 729px; height: 280px; padding: 0px; margin: 0px; border-width: 0px; cursor: default;"><canvas data-zr-dom-id="zr_0" width="1629" height="625" style="position: absolute; left: 0px; top: 0px; width: 729px; height: 280px; user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); padding: 0px; margin: 0px; border-width: 0px;"></canvas></div><div class="" style="position: absolute; display: block; border-style: solid; white-space: nowrap; z-index: 9999999; box-shadow: rgba(0, 0, 0, 0.2) 1px 2px 10px; transition: opacity 0.2s cubic-bezier(0.23, 1, 0.32, 1), visibility 0.2s cubic-bezier(0.23, 1, 0.32, 1), transform 0.4s cubic-bezier(0.23, 1, 0.32, 1); background-color: rgb(255, 255, 255); border-width: 1px; border-radius: 4px; color: rgb(102, 102, 102); font: 14px / 21px &quot;Microsoft YaHei&quot;; padding: 10px; top: 0px; left: 0px; transform: translate3d(187px, 160px, 0px); border-color: rgb(255, 255, 255); pointer-events: none; visibility: hidden; opacity: 0;">一次性尖接管（滴管）<br>金额: <b>65元</b></div></div>
+      </div>
+      <div class="chart-card chart-card-sm">
+        <h3>供应商分布</h3>
+        <div id="chart-supplier" class="chart-box" style="height: 320px; user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); position: relative;" _echarts_instance_="ec_1774786639422"><div style="position: relative; width: 729px; height: 320px; padding: 0px; margin: 0px; border-width: 0px; cursor: default;"><canvas data-zr-dom-id="zr_0" width="1629" height="715" style="position: absolute; left: 0px; top: 0px; width: 729px; height: 320px; user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); padding: 0px; margin: 0px; border-width: 0px;"></canvas></div><div class="" style="position: absolute; display: block; border-style: solid; white-space: nowrap; z-index: 9999999; box-shadow: rgba(0, 0, 0, 0.2) 1px 2px 10px; transition: opacity 0.2s cubic-bezier(0.23, 1, 0.32, 1), visibility 0.2s cubic-bezier(0.23, 1, 0.32, 1), transform 0.4s cubic-bezier(0.23, 1, 0.32, 1); background-color: rgb(255, 255, 255); border-width: 1px; border-radius: 4px; color: rgb(102, 102, 102); font: 14px / 21px &quot;Microsoft YaHei&quot;; padding: 10px; top: 0px; left: 0px; transform: translate3d(-102px, 44px, 0px); border-color: rgb(8, 145, 178); pointer-events: none; visibility: hidden; opacity: 0;"><span style="display:inline-block;margin-right:4px;border-radius:10px;width:10px;height:10px;background-color:#0891b2;"></span>国药控股北京天星普信生物医药有限公司<br>金额: 21元<br>占比: 0.0%</div></div>
+      </div>
+    </div>
+    <details class="report-fold">
+  <summary class="fold-summary"><span class="fold-chevron"></span><span class="fold-title-text">采购 / 出库 TOP 明细表</span><span class="fold-hint">采购 9.11万 · 出库 1,231元 · 5 家供应商 · 展开 TOP 明细</span></summary>
+  <div class="fold-body">
+    <div class="table-wrap tight"><h4 class="table-inline-title">采购 TOP 10</h4>
+      <table class="data-table data-table-dense">
+        <thead><tr><th class="c">#</th><th>耗材名称</th><th class="r">数量</th><th class="r">金额</th><th class="r">占比</th></tr></thead>
+        <tbody>
+          
+          <tr><td class="rank-num">1</td><td class="td-ellipsis" title="粘附载玻片">粘附载玻片</td><td class="r">640</td><td class="r">2.94万</td><td class="r">32.3%</td></tr>
+          <tr><td class="rank-num">2</td><td class="td-ellipsis" title="Film封片机胶带">Film封片机胶带</td><td class="r">10</td><td class="r">2.30万</td><td class="r">25.3%</td></tr>
+          <tr><td class="rank-num">3</td><td class="td-ellipsis" title="一次性刀片">一次性刀片</td><td class="r">1,500</td><td class="r">2.10万</td><td class="r">23.1%</td></tr>
+          <tr><td class="rank-num">4</td><td class="td-ellipsis" title="病理级载玻片">病理级载玻片</td><td class="r">700</td><td class="r">1.12万</td><td class="r">12.3%</td></tr>
+          <tr><td class="rank-num">5</td><td class="td-ellipsis" title="盖玻片">盖玻片</td><td class="r">480</td><td class="r">4,464元</td><td class="r">4.9%</td></tr>
+          <tr><td class="rank-num">6</td><td class="td-ellipsis" title="载玻片">载玻片</td><td class="r">100</td><td class="r">950元</td><td class="r">1.0%</td></tr>
+          <tr><td class="rank-num">7</td><td class="td-ellipsis" title="医用橡胶检查手套（灭菌）">医用橡胶检查手套（灭菌）</td><td class="r">2,000</td><td class="r">600元</td><td class="r">0.7%</td></tr>
+          <tr><td class="rank-num">8</td><td class="td-ellipsis" title="医用检查手套(非灭菌）">医用检查手套(非灭菌）</td><td class="r">1,000</td><td class="r">250元</td><td class="r">0.3%</td></tr>
+          <tr><td class="rank-num">9</td><td class="td-ellipsis" title="一次性使用检查手套（聚乙烯）">一次性使用检查手套（聚乙烯）</td><td class="r">2,000</td><td class="r">80元</td><td class="r">0.1%</td></tr>
+          <tr><td class="rank-num">10</td><td class="td-ellipsis" title="一次性尖接管（滴管）">一次性尖接管（滴管）</td><td class="r">500</td><td class="r">65元</td><td class="r">0.1%</td></tr>
+        </tbody>
+      </table></div>
+    <div class="table-wrap tight"><h4 class="table-inline-title">出库 TOP 10</h4>
+      <table class="data-table data-table-dense">
+        <thead><tr><th class="c">#</th><th>物品名称</th><th class="r">数量</th><th class="r">金额</th></tr></thead>
+        <tbody>
+          
+          <tr><td class="rank-num">1</td><td class="td-ellipsis" title="605042-成像鼓 联想（Lenovo）LJ2655DN 联想(Lenovo)LD2451成像鼓 1支">605042-成像鼓 联想（Lenovo）LJ2655DN 联想(Lenovo)LD2451成像鼓 1支</td><td class="r">1</td><td class="r">569元</td></tr>
+          <tr><td class="rank-num">2</td><td class="td-ellipsis" title="604745-蓝月亮 抑菌99.9%洗手液 500g 1 瓶">604745-蓝月亮 抑菌99.9%洗手液 500g 1 瓶</td><td class="r">20</td><td class="r">276元</td></tr>
+          <tr><td class="rank-num">3</td><td class="td-ellipsis" title="格之格605002-格之格CF230A激光碳粉盒NT-PH230CT黑色1600页1支装">格之格605002-格之格CF230A激光碳粉盒NT-PH230CT黑色1600页1支装</td><td class="r">3</td><td class="r">252元</td></tr>
+          <tr><td class="rank-num">4</td><td class="td-ellipsis" title="604995-通用硒鼓(替换600604/601609/HP1020/1010/Canon LBP2900 格之格NT-C2612A 1支">604995-通用硒鼓(替换600604/601609/HP1020/1010/Canon LBP2900 格之格NT-C2612A 1支</td><td class="r">2</td><td class="r">84元</td></tr>
+          <tr><td class="rank-num">5</td><td class="td-ellipsis" title="604598-电池南孚5#LR6-6B （6节装）">604598-电池南孚5#LR6-6B （6节装）</td><td class="r">2</td><td class="r">25元</td></tr>
+          <tr><td class="rank-num">6</td><td class="td-ellipsis" title="604597-电池 南孚7号 （6节装）">604597-电池 南孚7号 （6节装）</td><td class="r">2</td><td class="r">25元</td></tr>
+        </tbody>
+      </table></div>
+</div>
+</details>
+  </section>
+    
+  <section class="section section-compact insights-section">
+    <div class="section-header section-header-inline">
+      <h2>六、发现与建议</h2>
+      <span class="section-desc">Insights</span>
+      <div class="section-strip"><span class="strip-item">2 条 · 标题即摘要，点开读全文</span></div>
+    </div>
+    
+    <div class="insight-group group-risk">
+      <h3 class="insight-group-title"><svg class="ig-ico" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg><span>风险</span><span class="insight-count">1</span></h3>
+      <div class="insight-grid">
+      
+      <details class="insight-fold insight-tone-danger">
+        <summary class="insight-fold-sum">
+          <span class="insight-title">门诊量显著下降</span>
+          <span class="insight-metric">28.4%</span>
+        </summary>
+        <div class="insight-fold-body">
+          <p class="insight-body">门诊量环比下降 28.4%。需排查是否受节假日、季节因素影响，或存在患者分流问题。</p>
+          
+        </div>
+      </details>
+      </div>
+    </div>
+    
+    <div class="insight-group group-highlight">
+      <h3 class="insight-group-title"><svg class="ig-ico" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg><span>亮点</span><span class="insight-count">1</span></h3>
+      <div class="insight-grid">
+      
+      <details class="insight-fold insight-tone-positive">
+        <summary class="insight-fold-sum">
+          <span class="insight-title">支收比健康</span>
+          <span class="insight-metric">0.0%</span>
+        </summary>
+        <div class="insight-fold-body">
+          <p class="insight-body">当月支收比 0.0%，处于健康区间，成本控制良好。</p>
+          <span class="insight-bench">基准 ≤70%</span>
+        </div>
+      </details>
+      </div>
+    </div>
+    
+  </section>
+    <section class="section section-compact appendix-wrap"><details class="report-fold">
+  <summary class="fold-summary"><span class="fold-chevron"></span><span class="fold-title-text">附录 · 指标口径与公式</span><span class="fold-hint">打印时会自动展开</span></summary>
+  <div class="fold-body">
+    <div class="formula-grid formula-grid-dense">
+      <div class="formula-item"><strong>运营收入合计</strong><span>门诊计奖收入 + 医事服务费（不含药耗）+ 病房计奖收入 + 医事服务费</span></div>
+      <div class="formula-item"><strong>运营支出合计</strong><span>人员支出 + 设备支出 + 非收费医材支出 + 其他消耗支出 + 第三方服务支出</span></div>
+      <div class="formula-item"><strong>支收比</strong><span>科室支出合计 / 科室计奖收入合计 (基准 ≤70%，警戒 80%)</span></div>
+      <div class="formula-item"><strong>人力成本占比</strong><span>（工资 + 奖金 + 夜班费 + 兼职教授）/ 计奖收入 (基准 ≤35%)</span></div>
+      <div class="formula-item"><strong>百元收入卫材消耗</strong><span>各类消耗合计 / 计奖收入 × 100 (基准 ≤25元)</span></div>
+      <div class="formula-item"><strong>注意事项指标</strong><span>（人员经费 + 科室支出）/ 科室计奖收入</span></div>
+    </div></div>
+</details></section>
+  </div>
+  <footer class="report-footer">
+    <div class="footer-line"></div>
+    <p>本报告由「科室运营智能分析系统」自动生成 | 2026-03-29 20:17</p>
+    <p class="footer-note">数据来源：科室运营指标月报、全院排名统计、物资管理系统</p>
+  </footer>
+</div>
+<script>
+var fmtV=function(v){return v>=10000?(v/10000).toFixed(1)+'万':v>=1000?v.toLocaleString():v};
+
+echarts.init(document.getElementById('chart-revenue-expense')).setOption({
+  tooltip:{trigger:'axis',backgroundColor:'rgba(15,23,42,0.92)',borderColor:'transparent',textStyle:{color:'#fff',fontSize:13},
+    formatter:function(p){var h=p[0].axisValue;p.forEach(function(i){h+='<br/>'+i.marker+i.seriesName+': '+(i.value>=10000?(i.value/10000).toFixed(2)+'万':i.value.toLocaleString()+'元')});return h}},
+  legend:{bottom:0,itemGap:24,textStyle:{fontSize:12,color:'#475569'}},
+  grid:{top:20,right:20,bottom:50,left:60,containLabel:false},
+  xAxis:{type:'category',data:["1月","2月","3月","4月","5月","6月","7月","8月","9月","10月","11月","12月"],axisLine:{lineStyle:{color:'#e2e8f0'}},axisTick:{show:false},axisLabel:{color:'#64748b'}},
+  yAxis:{type:'value',scale:true,axisLabel:{color:'#64748b',formatter:fmtV},splitLine:{lineStyle:{color:'#f1f5f9'}},axisLine:{show:false},axisTick:{show:false}},
+  series:[
+    {name:'计奖收入',type:'line',data:[0,0,0,0,0,0,0,0,0,0,0,0],
+     smooth:true,symbol:'circle',symbolSize:8,lineStyle:{width:2.5,color:'#059669'},
+     itemStyle:{color:'#059669'},areaStyle:{color:{type:'linear',x:0,y:0,x2:0,y2:1,colorStops:[{offset:0,color:'rgba(5,150,105,0.12)'},{offset:1,color:'rgba(5,150,105,0)'}]}}},
+    {name:'科室支出',type:'line',data:[0,0,0,0,0,0,0,0,0,0,0,0],
+     smooth:true,symbol:'circle',symbolSize:8,lineStyle:{width:2.5,color:'#dc2626'},
+     itemStyle:{color:'#dc2626'},areaStyle:{color:{type:'linear',x:0,y:0,x2:0,y2:1,colorStops:[{offset:0,color:'rgba(220,38,38,0.08)'},{offset:1,color:'rgba(220,38,38,0)'}]}}}
+  ]
+});
+
+echarts.init(document.getElementById('chart-expense-composition')).setOption({
+  tooltip:{trigger:'item',formatter:function(p){return p.marker+p.name+'<br/>金额: '+(p.value>=10000?(p.value/10000).toFixed(2)+'万':p.value.toLocaleString()+'元')+'<br/>占比: '+p.percent.toFixed(1)+'%'}},
+  legend:{bottom:0,itemGap:16,textStyle:{fontSize:12,color:'#475569'}},
+  series:[{
+    type:'pie',radius:['38%','62%'],center:['50%','45%'],
+    avoidLabelOverlap:true,
+    label:{show:true,formatter:'{b}\n{d}%',fontSize:11,color:'#334155',lineHeight:16},
+    labelLine:{show:true,length:12,length2:16,lineStyle:{color:'#94a3b8'}},
+    emphasis:{label:{fontSize:13,fontWeight:'bold'},itemStyle:{shadowBlur:10,shadowColor:'rgba(0,0,0,0.15)'}},
+    data:[{"name":"各类消耗","value":1833121.689,"itemStyle":{"color":"#2563eb"}},{"name":"人员成本","value":571819.77,"itemStyle":{"color":"#059669"}},{"name":"设备支出","value":533882.57855,"itemStyle":{"color":"#d97706"}},{"name":"第三方费用","value":11574.8,"itemStyle":{"color":"#7c3aed"}}]
+  }]
+});
+
+echarts.init(document.getElementById('chart-workload')).setOption({
+  tooltip:{trigger:'axis',formatter:function(p){return p[0].axisValue+'<br/>门诊量: <b>'+p[0].value+'</b> 人次'}},
+  grid:{top:20,right:20,bottom:40,left:50},
+  xAxis:{type:'category',data:["1月","2月","3月","4月","5月","6月","7月","8月","9月","10月","11月","12月"],axisLine:{lineStyle:{color:'#e2e8f0'}},axisTick:{show:false},axisLabel:{color:'#64748b'}},
+  yAxis:{type:'value',axisLabel:{color:'#64748b'},splitLine:{lineStyle:{color:'#f1f5f9'}},axisLine:{show:false},axisTick:{show:false}},
+  series:[{type:'bar',barWidth:'50%',data:[{"value":663,"itemStyle":{"color":"#93c5fd","borderRadius":[4,4,0,0]}},{"value":475,"itemStyle":{"color":"#2563eb","borderRadius":[4,4,0,0]}},{"value":0,"itemStyle":{"color":"#93c5fd","borderRadius":[4,4,0,0]}},{"value":0,"itemStyle":{"color":"#93c5fd","borderRadius":[4,4,0,0]}},{"value":0,"itemStyle":{"color":"#93c5fd","borderRadius":[4,4,0,0]}},{"value":0,"itemStyle":{"color":"#93c5fd","borderRadius":[4,4,0,0]}},{"value":0,"itemStyle":{"color":"#93c5fd","borderRadius":[4,4,0,0]}},{"value":0,"itemStyle":{"color":"#93c5fd","borderRadius":[4,4,0,0]}},{"value":0,"itemStyle":{"color":"#93c5fd","borderRadius":[4,4,0,0]}},{"value":0,"itemStyle":{"color":"#93c5fd","borderRadius":[4,4,0,0]}},{"value":0,"itemStyle":{"color":"#93c5fd","borderRadius":[4,4,0,0]}},{"value":0,"itemStyle":{"color":"#93c5fd","borderRadius":[4,4,0,0]}}],
+    label:{show:true,position:'top',fontSize:11,color:'#475569',formatter:'{c}'}}]
+});
+
+echarts.init(document.getElementById('chart-gauge')).setOption({
+  series:[{
+    type:'gauge',startAngle:180,endAngle:0,min:0,max:100,
+    splitNumber:5,
+    pointer:{show:true,length:'60%',width:6,itemStyle:{color:'#059669'}},
+    progress:{show:true,width:16,itemStyle:{color:'#059669'}},
+    axisLine:{lineStyle:{width:16,color:[[0.7,'#059669'],[0.8,'#d97706'],[1,'#dc2626']]}},
+    axisTick:{show:false},
+    splitLine:{length:8,lineStyle:{width:2,color:'#94a3b8'}},
+    axisLabel:{distance:22,fontSize:11,color:'#94a3b8',formatter:function(v){return v%50===0||v===70||v===80?v+'%':''}},
+    detail:{valueAnimation:true,formatter:'{value}%',fontSize:22,fontWeight:'bold',color:'#059669',offsetCenter:[0,'18%']},
+    title:{show:true,offsetCenter:[0,'38%'],fontSize:12,color:'#64748b'},
+    data:[{value:0,name:'支收比'}]
+  }]
+});
+
+echarts.init(document.getElementById('chart-procurement-top')).setOption({
+  tooltip:{trigger:'axis',axisPointer:{type:'shadow'},
+    formatter:function(p){var d=p[0];return d.name+'<br/>金额: <b>'+(d.value>=10000?(d.value/10000).toFixed(2)+'万':d.value.toLocaleString()+'元')+'</b>'}},
+  grid:{top:10,right:30,bottom:10,left:10,containLabel:true},
+  xAxis:{type:'value',axisLabel:{color:'#64748b',formatter:fmtV},splitLine:{lineStyle:{color:'#f1f5f9'}},axisLine:{show:false},axisTick:{show:false}},
+  yAxis:{type:'category',data:["粘附载玻片","Film封片机胶带","一次性刀片","病理级载玻片","盖玻片","载玻片","医用橡胶检查手套（灭菌）","医用检查手套(非灭菌）","一次性使用检查手套（聚乙烯）","一次性尖接管（滴管）"],inverse:true,
+    axisLabel:{color:'#334155',fontSize:12,width:120,overflow:'truncate',ellipsis:'..'},
+    axisTick:{show:false},axisLine:{lineStyle:{color:'#e2e8f0'}},
+    triggerEvent:true},
+  series:[{type:'bar',barWidth:'60%',data:[{"value":29440,"itemStyle":{"color":"#2563eb","borderRadius":[0,4,4,0]}},{"value":23000,"itemStyle":{"color":"#059669","borderRadius":[0,4,4,0]}},{"value":21000,"itemStyle":{"color":"#d97706","borderRadius":[0,4,4,0]}},{"value":11200,"itemStyle":{"color":"#7c3aed","borderRadius":[0,4,4,0]}},{"value":4464,"itemStyle":{"color":"#0891b2","borderRadius":[0,4,4,0]}},{"value":950,"itemStyle":{"color":"#be123c","borderRadius":[0,4,4,0]}},{"value":600,"itemStyle":{"color":"#4f46e5","borderRadius":[0,4,4,0]}},{"value":250,"itemStyle":{"color":"#0d9488","borderRadius":[0,4,4,0]}},{"value":80,"itemStyle":{"color":"#2563eb","borderRadius":[0,4,4,0]}},{"value":65,"itemStyle":{"color":"#059669","borderRadius":[0,4,4,0]}}],
+    label:{show:true,position:'right',fontSize:11,color:'#475569',formatter:function(p){return p.value>=10000?(p.value/10000).toFixed(1)+'万':p.value.toLocaleString()}}}]
+});
+
+echarts.init(document.getElementById('chart-supplier')).setOption({
+  tooltip:{trigger:'item',formatter:function(p){return p.marker+p.name+'<br/>金额: '+(p.value>=10000?(p.value/10000).toFixed(2)+'万':p.value.toLocaleString()+'元')+'<br/>占比: '+p.percent.toFixed(1)+'%'}},
+  legend:{type:'scroll',bottom:0,itemGap:12,textStyle:{fontSize:11,color:'#475569'}},
+  series:[{
+    type:'pie',radius:'58%',center:['50%','45%'],
+    avoidLabelOverlap:true,
+    label:{show:true,formatter:'{b}\n{d}%',fontSize:11,color:'#334155',lineHeight:15,overflow:'break'},
+    labelLine:{show:true,length:10,length2:14,lineStyle:{color:'#94a3b8'}},
+    emphasis:{label:{fontSize:13,fontWeight:'bold'},itemStyle:{shadowBlur:10,shadowColor:'rgba(0,0,0,0.15)'}},
+    data:[{"name":"海安康健（北京）科技有限公司","value":67119,"itemStyle":{"color":"#2563eb"}},{"name":"通用技术集团北京永正医药有限公司","value":23000,"itemStyle":{"color":"#059669"}},{"name":"国药集团北京医疗器械有限公司","value":680,"itemStyle":{"color":"#d97706"}},{"name":"上海华椿源贸易中心","value":250,"itemStyle":{"color":"#7c3aed"}},{"name":"国药控股北京天星普信生物医药有限公司","value":21,"itemStyle":{"color":"#0891b2"}}]
+  }]
+});
+
+(function(){
+  function resizeAll(){ document.querySelectorAll('[id^="chart-"]').forEach(function(el){ var c=echarts.getInstanceByDom(el); if(c) c.resize(); }); }
+  window.addEventListener('resize', resizeAll);
+  document.querySelectorAll('details.report-fold').forEach(function(d){
+    d.addEventListener('toggle', function(){ if(d.open) setTimeout(resizeAll, 80); });
+  });
+})();
+</script>
+
+</body><eusoft-chrome-extension-root-en id="eusoft-chrome-extension-id-en" _nghost-ng-c2546567076="" ng-version="18.2.13"><template _ngcontent-ng-c2546567076=""></template><!----><!----><!----><app-word-hint-render _ngcontent-ng-c2546567076="" _nghost-ng-c3319869249=""><template _ngcontent-ng-c3319869249=""></template><!----><!----></app-word-hint-render><app-translate-render _ngcontent-ng-c2546567076="" _nghost-ng-c2607817495=""><template _ngcontent-ng-c2607817495=""></template><!----><translate-analyzer _ngcontent-ng-c2607817495=""><template></template></translate-analyzer></app-translate-render><app-capture-word _ngcontent-ng-c2546567076="" class="eusoft-chrome-extension-capture-word-container ng-tns-c2615027859-0 ng-star-inserted"><template shadowrootmode="open"><style>.eudic-tippy-content-container[_ngcontent-ng-c2546567076]{max-width:250px!important}.eusoft-chrome-extension-popup-menu[_ngcontent-ng-c2546567076]{position:fixed;z-index:2147483647;top:50%}.eusoft-chrome-extension-popup-menu.eusoft-chrome-extension-popup-menu-left[_ngcontent-ng-c2546567076]{left:4px}.eusoft-chrome-extension-popup-menu.eusoft-chrome-extension-popup-menu-right[_ngcontent-ng-c2546567076]{right:4px}.eusoft-chrome-extension-mask-container[_ngcontent-ng-c2546567076]{background-color:transparent;position:fixed;top:0;right:0;bottom:0;left:0;z-index:2147483646}</style><style>.eusoft-eudic-chrome-extension-explain-icon-class{position:fixed!important;visibility:visible!important;z-index:2147483646!important}.eusoft-eudic-chrome-extension-explain-popover-container-class{position:relative!important}.eusoft-eudic-chrome-extension-explain-container-class{position:fixed!important;visibility:visible!important;min-width:100px;height:auto!important;z-index:2147483646!important}.eudic-explain-content-overlay{position:absolute;top:0;left:0;width:100%;height:100%;z-index:2147483647}.eusoft-eudic-chrome-extension-explain-container-border-radius-class{box-shadow:0 2px 5px 1px #403c4329!important;border-radius:10px!important;overflow:hidden!important;background-color:#fff!important;box-sizing:border-box}.eudic-explain-resizer{z-index:2147483646!important;opacity:1;width:16px;height:16px;position:absolute}.eudic-explain-resizer-right{top:0;right:-8px;width:8px;height:100%;cursor:ew-resize}.eudic-explain-resizer-bottom{bottom:-8px;left:0;width:100%;cursor:ns-resize}.eudic-explain-resizer-top{top:-8px;left:0;width:100%;cursor:ns-resize}.eudic-explain-resizer-left{top:0;left:-8px;height:100%;cursor:ew-resize}.eudic-explain-resizer-bottom-right{right:-8px;bottom:-8px;cursor:nwse-resize}.eudic-explain-resizer-bottom-left{left:-8px;bottom:-8px;cursor:nesw-resize}.eudic-explain-content-inner{position:relative}.eudic-toolbar-container{cursor:move;display:flex;flex-direction:row;align-items:center;padding-left:12px;padding-right:12px;justify-content:space-between}.eudic-toolbar-left-actions,.eudic-toolbar-right-actions{display:flex;flex-direction:row;align-items:center}.eudic-toolbar-container-title{font-size:14px;font-family:Helvetica;-webkit-user-select:none;user-select:none;line-height:1;word-break:break-word}.eudic-toolbar-container-title-icon{width:16px;height:16px;margin-right:8px}.eudic-toolbar-right-expand-button,.eudic-toolbar-right-lock-button{margin-right:16px;cursor:pointer;width:16px;height:16px;display:flex;align-items:center}.eudic-toolbar-right-close-button{cursor:pointer;width:16px;height:16px;display:flex;align-items:center}.eudic-toolbar-inner-icon{width:16px;height:16px;display:flex}.eusoft-eudic-chrome-extension-explain-popover-container-class[data-content-script-theme=light] .eusoft-eudic-chrome-extension-explain-container-border-radius-class,.eusoft-eudic-chrome-extension-explain-popover-container-class[data-content-script-theme=light] .eudic-toolbar-container{background-color:#f7f9fc}.eusoft-eudic-chrome-extension-explain-popover-container-class[data-content-script-theme=light] .eudic-toolbar-container-title{color:#202124}.eusoft-eudic-chrome-extension-explain-popover-container-class[data-content-script-theme=dark] .eusoft-eudic-chrome-extension-explain-container-border-radius-class,.eusoft-eudic-chrome-extension-explain-popover-container-class[data-content-script-theme=dark] .eudic-toolbar-container{background-color:#141414}.eusoft-eudic-chrome-extension-explain-popover-container-class[data-content-script-theme=dark] .eudic-toolbar-container-title{color:#e6e6e6}
+</style><style>.eusoft-eudic-translate-failed-container[_ngcontent-ng-c3081775404]{position:fixed!important;bottom:50px!important;right:50px!important;border-radius:5px!important;box-shadow:0 6px 24px #00000014!important;z-index:2147483647!important}.eusoft-eudic-translate-failed-content-script[_ngcontent-ng-c3081775404]{border:1px solid #E8E8E8!important;background-color:#f8fafe!important}html.light-en   [_nghost-ng-c3081775404]   .eusoft-eudic-translate-failed-container[_ngcontent-ng-c3081775404]{border:1px solid #E8E8E8!important;background-color:#f8fafe!important}html.light-fr   [_nghost-ng-c3081775404]   .eusoft-eudic-translate-failed-container[_ngcontent-ng-c3081775404]{border:1px solid #E8E8E8!important;background-color:#f8fafe!important}html.light-de   [_nghost-ng-c3081775404]   .eusoft-eudic-translate-failed-container[_ngcontent-ng-c3081775404]{border:1px solid #E8E8E8!important;background-color:#f8fafe!important}html.light-es   [_nghost-ng-c3081775404]   .eusoft-eudic-translate-failed-container[_ngcontent-ng-c3081775404]{border:1px solid #E8E8E8!important;background-color:#f8fafe!important}html.dark-en   [_nghost-ng-c3081775404]   .eusoft-eudic-translate-failed-container[_ngcontent-ng-c3081775404]{border:1px solid #595959!important;background-color:#212125!important}html.dark-fr   [_nghost-ng-c3081775404]   .eusoft-eudic-translate-failed-container[_ngcontent-ng-c3081775404]{border:1px solid #595959!important;background-color:#212125!important}html.dark-de   [_nghost-ng-c3081775404]   .eusoft-eudic-translate-failed-container[_ngcontent-ng-c3081775404]{border:1px solid #595959!important;background-color:#212125!important}html.dark-es   [_nghost-ng-c3081775404]   .eusoft-eudic-translate-failed-container[_ngcontent-ng-c3081775404]{border:1px solid #595959!important;background-color:#212125!important}html.sepia-en   [_nghost-ng-c3081775404]   .eusoft-eudic-translate-failed-container[_ngcontent-ng-c3081775404]{border:1px solid #E8E8E8!important;background-color:#f8fafe!important}html.sepia-fr   [_nghost-ng-c3081775404]   .eusoft-eudic-translate-failed-container[_ngcontent-ng-c3081775404]{border:1px solid #E8E8E8!important;background-color:#f8fafe!important}html.sepia-de   [_nghost-ng-c3081775404]   .eusoft-eudic-translate-failed-container[_ngcontent-ng-c3081775404]{border:1px solid #E8E8E8!important;background-color:#f8fafe!important}html.sepia-es   [_nghost-ng-c3081775404]   .eusoft-eudic-translate-failed-container[_ngcontent-ng-c3081775404]{border:1px solid #E8E8E8!important;background-color:#f8fafe!important}html.green-en   [_nghost-ng-c3081775404]   .eusoft-eudic-translate-failed-container[_ngcontent-ng-c3081775404]{border:1px solid #E8E8E8!important;background-color:#f8fafe!important}html.green-fr   [_nghost-ng-c3081775404]   .eusoft-eudic-translate-failed-container[_ngcontent-ng-c3081775404]{border:1px solid #E8E8E8!important;background-color:#f8fafe!important}html.green-de   [_nghost-ng-c3081775404]   .eusoft-eudic-translate-failed-container[_ngcontent-ng-c3081775404]{border:1px solid #E8E8E8!important;background-color:#f8fafe!important}html.green-es   [_nghost-ng-c3081775404]   .eusoft-eudic-translate-failed-container[_ngcontent-ng-c3081775404]{border:1px solid #E8E8E8!important;background-color:#f8fafe!important}</style><!----><!----><div class="eusoft-eudic-chrome-extension-explain-popover-container-class ng-tns-c2615027859-0" data-content-script-theme="light"><!----></div><style>.eudic-chrome-extension-inner-icon[_ngcontent-ng-c3424759930]{display:flex;width:100%;height:100%}</style><style>g.inner[_ngcontent-ng-c3362076685]{fill:#d8d8d8}g.inner.checked[_ngcontent-ng-c3362076685]{fill:#1890ff}</style><style>svg[_ngcontent-ng-c1076576952]{width:100%;height:100%}</style></template></app-capture-word><app-translate-failed-retry _ngcontent-ng-c2546567076="" _nghost-ng-c3081775404=""><!----></app-translate-failed-retry><!----><app-mobile-popup-menu _ngcontent-ng-c2546567076="" cdkdrag="" class="cdk-drag eusoft-chrome-extension-popup-menu eusoft-chrome-extension-popup-menu-right ng-star-inserted" id="eusoft-eudic-chrome-extension-popup-menu-en" data-eusoft-scrollable-element="1" style="transform: translate3d(0px, 0px, 0px);"><template shadowrootmode="open"><style>.eudic-tippy-content-container[_ngcontent-ng-c2546567076]{max-width:250px!important}.eusoft-chrome-extension-popup-menu[_ngcontent-ng-c2546567076]{position:fixed;z-index:2147483647;top:50%}.eusoft-chrome-extension-popup-menu.eusoft-chrome-extension-popup-menu-left[_ngcontent-ng-c2546567076]{left:4px}.eusoft-chrome-extension-popup-menu.eusoft-chrome-extension-popup-menu-right[_ngcontent-ng-c2546567076]{right:4px}.eusoft-chrome-extension-mask-container[_ngcontent-ng-c2546567076]{background-color:transparent;position:fixed;top:0;right:0;bottom:0;left:0;z-index:2147483646}</style><style>.eusoft-eudic-translate-failed-container[_ngcontent-ng-c3081775404]{position:fixed!important;bottom:50px!important;right:50px!important;border-radius:5px!important;box-shadow:0 6px 24px #00000014!important;z-index:2147483647!important}.eusoft-eudic-translate-failed-content-script[_ngcontent-ng-c3081775404]{border:1px solid #E8E8E8!important;background-color:#f8fafe!important}html.light-en   [_nghost-ng-c3081775404]   .eusoft-eudic-translate-failed-container[_ngcontent-ng-c3081775404]{border:1px solid #E8E8E8!important;background-color:#f8fafe!important}html.light-fr   [_nghost-ng-c3081775404]   .eusoft-eudic-translate-failed-container[_ngcontent-ng-c3081775404]{border:1px solid #E8E8E8!important;background-color:#f8fafe!important}html.light-de   [_nghost-ng-c3081775404]   .eusoft-eudic-translate-failed-container[_ngcontent-ng-c3081775404]{border:1px solid #E8E8E8!important;background-color:#f8fafe!important}html.light-es   [_nghost-ng-c3081775404]   .eusoft-eudic-translate-failed-container[_ngcontent-ng-c3081775404]{border:1px solid #E8E8E8!important;background-color:#f8fafe!important}html.dark-en   [_nghost-ng-c3081775404]   .eusoft-eudic-translate-failed-container[_ngcontent-ng-c3081775404]{border:1px solid #595959!important;background-color:#212125!important}html.dark-fr   [_nghost-ng-c3081775404]   .eusoft-eudic-translate-failed-container[_ngcontent-ng-c3081775404]{border:1px solid #595959!important;background-color:#212125!important}html.dark-de   [_nghost-ng-c3081775404]   .eusoft-eudic-translate-failed-container[_ngcontent-ng-c3081775404]{border:1px solid #595959!important;background-color:#212125!important}html.dark-es   [_nghost-ng-c3081775404]   .eusoft-eudic-translate-failed-container[_ngcontent-ng-c3081775404]{border:1px solid #595959!important;background-color:#212125!important}html.sepia-en   [_nghost-ng-c3081775404]   .eusoft-eudic-translate-failed-container[_ngcontent-ng-c3081775404]{border:1px solid #E8E8E8!important;background-color:#f8fafe!important}html.sepia-fr   [_nghost-ng-c3081775404]   .eusoft-eudic-translate-failed-container[_ngcontent-ng-c3081775404]{border:1px solid #E8E8E8!important;background-color:#f8fafe!important}html.sepia-de   [_nghost-ng-c3081775404]   .eusoft-eudic-translate-failed-container[_ngcontent-ng-c3081775404]{border:1px solid #E8E8E8!important;background-color:#f8fafe!important}html.sepia-es   [_nghost-ng-c3081775404]   .eusoft-eudic-translate-failed-container[_ngcontent-ng-c3081775404]{border:1px solid #E8E8E8!important;background-color:#f8fafe!important}html.green-en   [_nghost-ng-c3081775404]   .eusoft-eudic-translate-failed-container[_ngcontent-ng-c3081775404]{border:1px solid #E8E8E8!important;background-color:#f8fafe!important}html.green-fr   [_nghost-ng-c3081775404]   .eusoft-eudic-translate-failed-container[_ngcontent-ng-c3081775404]{border:1px solid #E8E8E8!important;background-color:#f8fafe!important}html.green-de   [_nghost-ng-c3081775404]   .eusoft-eudic-translate-failed-container[_ngcontent-ng-c3081775404]{border:1px solid #E8E8E8!important;background-color:#f8fafe!important}html.green-es   [_nghost-ng-c3081775404]   .eusoft-eudic-translate-failed-container[_ngcontent-ng-c3081775404]{border:1px solid #E8E8E8!important;background-color:#f8fafe!important}</style><style>.ant-skeleton-header .ant-skeleton-avatar-lg.ant-skeleton-avatar-circle,.ant-skeleton-header .ant-skeleton-avatar-sm.ant-skeleton-avatar-circle,.ant-skeleton-header .ant-skeleton-avatar.ant-skeleton-avatar-circle{border-radius:50%}.ant-skeleton{display:table;width:100%}.ant-skeleton-header{display:table-cell;padding-right:16px;vertical-align:top}.ant-skeleton-header .ant-skeleton-avatar{display:inline-block;vertical-align:top;background:#bebebe33;width:32px;height:32px;line-height:32px}.ant-skeleton-header .ant-skeleton-avatar-lg{width:40px;height:40px;line-height:40px}.ant-skeleton-header .ant-skeleton-avatar-sm{width:24px;height:24px;line-height:24px}.ant-skeleton-content .ant-skeleton-paragraph>li,.ant-skeleton-content .ant-skeleton-title{width:100%;height:16px;background:#bebebe33;border-radius:2px}.ant-skeleton-content{display:table-cell;width:100%;vertical-align:top}.ant-skeleton-content .ant-skeleton-title+.ant-skeleton-paragraph{margin-top:24px}.ant-skeleton-content .ant-skeleton-paragraph{padding:0}.ant-skeleton-content .ant-skeleton-paragraph>li{list-style:none}.ant-skeleton-content .ant-skeleton-paragraph>li:last-child:not(:first-child):not(:nth-child(2)){width:61%}.ant-skeleton-content .ant-skeleton-paragraph>li+li{margin-top:16px}.ant-skeleton-with-avatar .ant-skeleton-content .ant-skeleton-title{margin-top:12px}.ant-skeleton-with-avatar .ant-skeleton-content .ant-skeleton-title+.ant-skeleton-paragraph{margin-top:28px}.ant-skeleton-round .ant-skeleton-content .ant-skeleton-paragraph>li,.ant-skeleton-round .ant-skeleton-content .ant-skeleton-title{border-radius:100px}.ant-skeleton-active .ant-skeleton-avatar,.ant-skeleton-active .ant-skeleton-button,.ant-skeleton-active .ant-skeleton-image,.ant-skeleton-active .ant-skeleton-input,.ant-skeleton-active .ant-skeleton-paragraph>li,.ant-skeleton-active .ant-skeleton-title{position:relative;z-index:0;overflow:hidden;background:0 0}.ant-skeleton-active .ant-skeleton-avatar:after,.ant-skeleton-active .ant-skeleton-button:after,.ant-skeleton-active .ant-skeleton-image:after,.ant-skeleton-active .ant-skeleton-input:after,.ant-skeleton-active .ant-skeleton-paragraph>li:after,.ant-skeleton-active .ant-skeleton-title:after{position:absolute;top:0;right:-150%;bottom:0;left:-150%;background:linear-gradient(90deg,#bebebe33 25%,#8181813d 37%,#bebebe33 63%);animation:ant-skeleton-loading 1.4s ease infinite;content:""}.ant-skeleton.ant-skeleton-block,.ant-skeleton.ant-skeleton-block .ant-skeleton-button,.ant-skeleton.ant-skeleton-block .ant-skeleton-input{width:100%}.ant-skeleton-element{display:inline-block;width:auto}.ant-skeleton-element .ant-skeleton-button{display:inline-block;vertical-align:top;background:#bebebe33;border-radius:2px;width:64px;min-width:64px;height:32px;line-height:32px}.ant-skeleton-element .ant-skeleton-button.ant-skeleton-button-square{width:32px;min-width:32px}.ant-skeleton-element .ant-skeleton-button.ant-skeleton-button-circle{width:32px;min-width:32px;border-radius:50%}.ant-skeleton-element .ant-skeleton-button.ant-skeleton-button-round{border-radius:32px}.ant-skeleton-element .ant-skeleton-button-lg{width:80px;min-width:80px;height:40px;line-height:40px}.ant-skeleton-element .ant-skeleton-button-lg.ant-skeleton-button-square{width:40px;min-width:40px}.ant-skeleton-element .ant-skeleton-button-lg.ant-skeleton-button-circle{width:40px;min-width:40px;border-radius:50%}.ant-skeleton-element .ant-skeleton-button-lg.ant-skeleton-button-round{border-radius:40px}.ant-skeleton-element .ant-skeleton-button-sm{width:48px;min-width:48px;height:24px;line-height:24px}.ant-skeleton-element .ant-skeleton-button-sm.ant-skeleton-button-square{width:24px;min-width:24px}.ant-skeleton-element .ant-skeleton-button-sm.ant-skeleton-button-circle{width:24px;min-width:24px;border-radius:50%}.ant-skeleton-element .ant-skeleton-button-sm.ant-skeleton-button-round{border-radius:24px}.ant-skeleton-element .ant-skeleton-avatar-lg.ant-skeleton-avatar-circle,.ant-skeleton-element .ant-skeleton-avatar-sm.ant-skeleton-avatar-circle,.ant-skeleton-element .ant-skeleton-avatar.ant-skeleton-avatar-circle,.ant-skeleton-element .ant-skeleton-image-svg.ant-skeleton-image-circle,.ant-skeleton-element .ant-skeleton-image.ant-skeleton-image-circle{border-radius:50%}.ant-skeleton-element .ant-skeleton-avatar{display:inline-block;vertical-align:top;background:#bebebe33;width:32px;height:32px;line-height:32px}.ant-skeleton-element .ant-skeleton-avatar-lg{width:40px;height:40px;line-height:40px}.ant-skeleton-element .ant-skeleton-avatar-sm{width:24px;height:24px;line-height:24px}.ant-skeleton-element .ant-skeleton-input{display:inline-block;vertical-align:top;background:#bebebe33;width:160px;min-width:160px;height:32px;line-height:32px}.ant-skeleton-element .ant-skeleton-input-lg{width:200px;min-width:200px;height:40px;line-height:40px}.ant-skeleton-element .ant-skeleton-input-sm{width:120px;min-width:120px;height:24px;line-height:24px}.ant-skeleton-element .ant-skeleton-image{display:flex;align-items:center;justify-content:center;vertical-align:top;background:#bebebe33;width:96px;height:96px;line-height:96px}.ant-skeleton-element .ant-skeleton-image-path{fill:#bfbfbf}.ant-skeleton-element .ant-skeleton-image-svg{width:48px;height:48px;line-height:48px;max-width:192px;max-height:192px}@keyframes ant-skeleton-loading{0%{transform:translate(-37.5%)}to{transform:translate(37.5%)}}.ant-skeleton-rtl{direction:rtl}.ant-skeleton-rtl .ant-skeleton-header{padding-right:0;padding-left:16px}.ant-skeleton-rtl.ant-skeleton.ant-skeleton-active .ant-skeleton-avatar,.ant-skeleton-rtl.ant-skeleton.ant-skeleton-active .ant-skeleton-content .ant-skeleton-paragraph>li,.ant-skeleton-rtl.ant-skeleton.ant-skeleton-active .ant-skeleton-content .ant-skeleton-title{animation-name:ant-skeleton-loading-rtl}@keyframes ant-skeleton-loading-rtl{0%{background-position:0 50%}to{background-position:100% 50%}}.ant-alert{box-sizing:border-box;margin:0;color:#000000d9;font-size:14px;font-variant:tabular-nums;line-height:1.5715;list-style:none;font-feature-settings:"tnum";position:relative;display:flex;align-items:center;padding:8px 15px;word-wrap:break-word;border-radius:2px}.ant-alert-content{flex:1;min-width:0}.ant-alert-icon{margin-right:8px}.ant-alert-description{display:none;font-size:14px;line-height:22px}.ant-alert-success{background-color:#f6ffed;border:1px solid #b7eb8f}.ant-alert-success .ant-alert-icon{color:#52c41a}.ant-alert-info{background-color:#e6f7ff;border:1px solid #91d5ff}.ant-alert-info .ant-alert-icon{color:#1890ff}.ant-alert-warning{background-color:#fffbe6;border:1px solid #ffe58f}.ant-alert-warning .ant-alert-icon{color:#faad14}.ant-alert-error{background-color:#fff2f0;border:1px solid #ffccc7}.ant-alert-error .ant-alert-icon{color:#ff4d4f}.ant-alert-error .ant-alert-description>pre{margin:0;padding:0}.ant-alert-action{margin-left:8px}.ant-alert-close-icon{margin-left:8px;padding:0;overflow:hidden;font-size:12px;line-height:12px;background-color:transparent;border:none;outline:0;cursor:pointer}.ant-alert-close-icon .anticon-close{color:#00000073;transition:color .3s}.ant-alert-close-icon .anticon-close:hover{color:#000000bf}.ant-alert-close-text{color:#00000073;transition:color .3s}.ant-alert-close-text:hover{color:#000000bf}.ant-alert-with-description{align-items:flex-start;padding:15px 15px 15px 24px}.ant-alert-with-description.ant-alert-no-icon{padding:15px}.ant-alert-with-description .ant-alert-icon{margin-right:15px;font-size:24px}.ant-alert-with-description .ant-alert-message{display:block;margin-bottom:4px;color:#000000d9;font-size:16px}.ant-alert-message{color:#000000d9}.ant-alert-with-description .ant-alert-description{display:block}.ant-alert.ant-alert-motion-leave{overflow:hidden;opacity:1;transition:max-height .3s cubic-bezier(.78,.14,.15,.86),opacity .3s cubic-bezier(.78,.14,.15,.86),padding-top .3s cubic-bezier(.78,.14,.15,.86),padding-bottom .3s cubic-bezier(.78,.14,.15,.86),margin-bottom .3s cubic-bezier(.78,.14,.15,.86)}.ant-alert.ant-alert-motion-leave-active{max-height:0;margin-bottom:0!important;padding-top:0;padding-bottom:0;opacity:0}.ant-alert-banner{margin-bottom:0;border:0;border-radius:0}.ant-alert.ant-alert-rtl{direction:rtl}.ant-alert-rtl .ant-alert-icon{margin-right:auto;margin-left:8px}.ant-alert-rtl .ant-alert-action,.ant-alert-rtl .ant-alert-close-icon{margin-right:8px;margin-left:auto}.ant-alert-rtl.ant-alert-with-description{padding-right:24px;padding-left:15px}.ant-alert-rtl.ant-alert-with-description .ant-alert-icon{margin-right:auto;margin-left:15px}nz-alert{display:block}.ant-alert-icon{line-height:1}.ant-btn,.ant-btn>span{display:inline-block}.ant-btn-group.ant-btn-group-rtl,.ant-btn-rtl{direction:rtl}.ant-btn:before,.ant-btn[disabled]>*,a.ant-btn-disabled>*{pointer-events:none}.ant-btn{line-height:1.5715;position:relative;font-weight:400;white-space:nowrap;text-align:center;border:1px solid #d9d9d9;box-shadow:0 2px #00000004;cursor:pointer;transition:all .3s cubic-bezier(.645,.045,.355,1);-webkit-user-select:none;user-select:none;touch-action:manipulation;height:32px;padding:4px 15px;font-size:14px;border-radius:2px;color:#000000d9;background:#fff}.ant-btn:active>a:only-child:after,.ant-btn:focus>a:only-child:after,.ant-btn:hover>a:only-child:after,.ant-btn>a:only-child:after{background:0 0;top:0;right:0;bottom:0;left:0;position:absolute;content:""}.ant-btn>.anticon{line-height:1}.ant-btn,.ant-btn:active,.ant-btn:focus{outline:0}.ant-btn:not([disabled]):hover{text-decoration:none}.ant-btn:not([disabled]):active{outline:0;box-shadow:none}.ant-btn[disabled]{cursor:not-allowed}.ant-btn-lg{height:40px;padding:6.4px 15px;font-size:16px;border-radius:2px}.ant-btn-sm{height:24px;padding:0 7px;font-size:14px;border-radius:2px}.ant-btn>a:only-child{color:currentcolor}.ant-btn:focus,.ant-btn:hover{color:#40a9ff;border-color:#40a9ff}.ant-btn:focus>a:only-child,.ant-btn:hover>a:only-child{color:currentcolor}.ant-btn:active{color:#096dd9;border-color:#096dd9}.ant-btn:active>a:only-child{color:currentcolor}.ant-btn[disabled],.ant-btn[disabled]:active,.ant-btn[disabled]:focus,.ant-btn[disabled]:hover{color:#00000040;border-color:#d9d9d9;background:#f5f5f5;text-shadow:none;box-shadow:none}.ant-btn[disabled]:active>a:only-child,.ant-btn[disabled]:focus>a:only-child,.ant-btn[disabled]:hover>a:only-child,.ant-btn[disabled]>a:only-child{color:currentcolor}.ant-btn[disabled]:active>a:only-child:after,.ant-btn[disabled]:focus>a:only-child:after,.ant-btn[disabled]:hover>a:only-child:after,.ant-btn[disabled]>a:only-child:after{position:absolute;top:0;right:0;bottom:0;left:0;background:0 0;content:""}.ant-btn:active,.ant-btn:focus,.ant-btn:hover{text-decoration:none;background:#fff}.ant-btn-primary{color:#fff;border-color:#1890ff;background:#1890ff;text-shadow:0 -1px 0 rgba(0,0,0,.12);box-shadow:0 2px #0000000b}.ant-btn-primary>a:only-child{color:currentcolor}.ant-btn-primary>a:only-child:after{position:absolute;top:0;right:0;bottom:0;left:0;background:0 0;content:""}.ant-btn-primary:focus,.ant-btn-primary:hover{color:#fff;border-color:#40a9ff;background:#40a9ff}.ant-btn-primary:focus>a:only-child,.ant-btn-primary:hover>a:only-child{color:currentcolor}.ant-btn-primary:focus>a:only-child:after,.ant-btn-primary:hover>a:only-child:after{position:absolute;top:0;right:0;bottom:0;left:0;background:0 0;content:""}.ant-btn-primary:active{color:#fff;border-color:#096dd9;background:#096dd9}.ant-btn-primary:active>a:only-child{color:currentcolor}.ant-btn-primary:active>a:only-child:after{position:absolute;top:0;right:0;bottom:0;left:0;background:0 0;content:""}.ant-btn-primary[disabled],.ant-btn-primary[disabled]:active,.ant-btn-primary[disabled]:focus,.ant-btn-primary[disabled]:hover{color:#00000040;border-color:#d9d9d9;background:#f5f5f5;text-shadow:none;box-shadow:none}.ant-btn-primary[disabled]:active>a:only-child,.ant-btn-primary[disabled]:focus>a:only-child,.ant-btn-primary[disabled]:hover>a:only-child,.ant-btn-primary[disabled]>a:only-child{color:currentcolor}.ant-btn-primary[disabled]:active>a:only-child:after,.ant-btn-primary[disabled]:focus>a:only-child:after,.ant-btn-primary[disabled]:hover>a:only-child:after,.ant-btn-primary[disabled]>a:only-child:after{position:absolute;top:0;right:0;bottom:0;left:0;background:0 0;content:""}.ant-btn-group .ant-btn-primary:not(:first-child):not(:last-child){border-right-color:#40a9ff;border-left-color:#40a9ff}.ant-btn-group .ant-btn-primary:not(:first-child):not(:last-child):disabled{border-color:#d9d9d9}.ant-btn-group .ant-btn-primary:first-child:not(:last-child){border-right-color:#40a9ff}.ant-btn-group .ant-btn-primary:first-child:not(:last-child)[disabled]{border-right-color:#d9d9d9}.ant-btn-group .ant-btn-primary+.ant-btn-primary,.ant-btn-group .ant-btn-primary:last-child:not(:first-child){border-left-color:#40a9ff}.ant-btn-group .ant-btn-primary+.ant-btn-primary[disabled],.ant-btn-group .ant-btn-primary:last-child:not(:first-child)[disabled]{border-left-color:#d9d9d9}.ant-btn-ghost{color:#000000d9;border-color:#d9d9d9;background:0 0}.ant-btn-ghost>a:only-child{color:currentcolor}.ant-btn-ghost>a:only-child:after{position:absolute;top:0;right:0;bottom:0;left:0;background:0 0;content:""}.ant-btn-ghost:focus,.ant-btn-ghost:hover{color:#40a9ff;border-color:#40a9ff;background:0 0}.ant-btn-ghost:focus>a:only-child,.ant-btn-ghost:hover>a:only-child{color:currentcolor}.ant-btn-ghost:focus>a:only-child:after,.ant-btn-ghost:hover>a:only-child:after{position:absolute;top:0;right:0;bottom:0;left:0;background:0 0;content:""}.ant-btn-ghost:active{color:#096dd9;border-color:#096dd9;background:0 0}.ant-btn-ghost:active>a:only-child{color:currentcolor}.ant-btn-ghost:active>a:only-child:after{position:absolute;top:0;right:0;bottom:0;left:0;background:0 0;content:""}.ant-btn-ghost[disabled],.ant-btn-ghost[disabled]:active,.ant-btn-ghost[disabled]:focus,.ant-btn-ghost[disabled]:hover{color:#00000040;border-color:#d9d9d9;background:#f5f5f5;text-shadow:none;box-shadow:none}.ant-btn-ghost[disabled]:active>a:only-child,.ant-btn-ghost[disabled]:focus>a:only-child,.ant-btn-ghost[disabled]:hover>a:only-child,.ant-btn-ghost[disabled]>a:only-child{color:currentcolor}.ant-btn-ghost[disabled]:active>a:only-child:after,.ant-btn-ghost[disabled]:focus>a:only-child:after,.ant-btn-ghost[disabled]:hover>a:only-child:after,.ant-btn-ghost[disabled]>a:only-child:after{position:absolute;top:0;right:0;bottom:0;left:0;background:0 0;content:""}.ant-btn-dashed{color:#000000d9;border-color:#d9d9d9;background:#fff;border-style:dashed}.ant-btn-dashed>a:only-child{color:currentcolor}.ant-btn-dashed>a:only-child:after{position:absolute;top:0;right:0;bottom:0;left:0;background:0 0;content:""}.ant-btn-dashed:focus,.ant-btn-dashed:hover{color:#40a9ff;border-color:#40a9ff;background:#fff}.ant-btn-dashed:focus>a:only-child,.ant-btn-dashed:hover>a:only-child{color:currentcolor}.ant-btn-dashed:focus>a:only-child:after,.ant-btn-dashed:hover>a:only-child:after{position:absolute;top:0;right:0;bottom:0;left:0;background:0 0;content:""}.ant-btn-dashed:active{color:#096dd9;border-color:#096dd9;background:#fff}.ant-btn-dashed:active>a:only-child{color:currentcolor}.ant-btn-dashed:active>a:only-child:after{position:absolute;top:0;right:0;bottom:0;left:0;background:0 0;content:""}.ant-btn-dashed[disabled],.ant-btn-dashed[disabled]:active,.ant-btn-dashed[disabled]:focus,.ant-btn-dashed[disabled]:hover{color:#00000040;border-color:#d9d9d9;background:#f5f5f5;text-shadow:none;box-shadow:none}.ant-btn-dashed[disabled]:active>a:only-child,.ant-btn-dashed[disabled]:focus>a:only-child,.ant-btn-dashed[disabled]:hover>a:only-child,.ant-btn-dashed[disabled]>a:only-child{color:currentcolor}.ant-btn-dashed[disabled]:active>a:only-child:after,.ant-btn-dashed[disabled]:focus>a:only-child:after,.ant-btn-dashed[disabled]:hover>a:only-child:after,.ant-btn-dashed[disabled]>a:only-child:after{position:absolute;top:0;right:0;bottom:0;left:0;background:0 0;content:""}.ant-btn-danger{color:#fff;border-color:#ff4d4f;background:#ff4d4f;text-shadow:0 -1px 0 rgba(0,0,0,.12);box-shadow:0 2px #0000000b}.ant-btn-danger>a:only-child{color:currentcolor}.ant-btn-danger>a:only-child:after{position:absolute;top:0;right:0;bottom:0;left:0;background:0 0;content:""}.ant-btn-danger:focus,.ant-btn-danger:hover{color:#fff;border-color:#ff7875;background:#ff7875}.ant-btn-danger:focus>a:only-child,.ant-btn-danger:hover>a:only-child{color:currentcolor}.ant-btn-danger:focus>a:only-child:after,.ant-btn-danger:hover>a:only-child:after{position:absolute;top:0;right:0;bottom:0;left:0;background:0 0;content:""}.ant-btn-danger:active{color:#fff;border-color:#d9363e;background:#d9363e}.ant-btn-danger:active>a:only-child{color:currentcolor}.ant-btn-danger:active>a:only-child:after{position:absolute;top:0;right:0;bottom:0;left:0;background:0 0;content:""}.ant-btn-danger[disabled],.ant-btn-danger[disabled]:active,.ant-btn-danger[disabled]:focus,.ant-btn-danger[disabled]:hover{color:#00000040;border-color:#d9d9d9;background:#f5f5f5;text-shadow:none;box-shadow:none}.ant-btn-danger[disabled]:active>a:only-child,.ant-btn-danger[disabled]:focus>a:only-child,.ant-btn-danger[disabled]:hover>a:only-child,.ant-btn-danger[disabled]>a:only-child{color:currentcolor}.ant-btn-danger[disabled]:active>a:only-child:after,.ant-btn-danger[disabled]:focus>a:only-child:after,.ant-btn-danger[disabled]:hover>a:only-child:after,.ant-btn-danger[disabled]>a:only-child:after{position:absolute;top:0;right:0;bottom:0;left:0;background:0 0;content:""}.ant-btn-link{color:#1890ff;border-color:transparent;background:0 0;box-shadow:none}.ant-btn-link>a:only-child{color:currentcolor}.ant-btn-link>a:only-child:after{position:absolute;top:0;right:0;bottom:0;left:0;background:0 0;content:""}.ant-btn-link:focus,.ant-btn-link:hover{color:#40a9ff;background:0 0}.ant-btn-link:focus>a:only-child,.ant-btn-link:hover>a:only-child{color:currentcolor}.ant-btn-link:focus>a:only-child:after,.ant-btn-link:hover>a:only-child:after{position:absolute;top:0;right:0;bottom:0;left:0;background:0 0;content:""}.ant-btn-link:active{color:#096dd9;background:0 0}.ant-btn-link:active>a:only-child{color:currentcolor}.ant-btn-link:active>a:only-child:after{position:absolute;top:0;right:0;bottom:0;left:0;background:0 0;content:""}.ant-btn-link:hover{background:0 0}.ant-btn-link:active,.ant-btn-link:focus,.ant-btn-link:hover{border-color:transparent}.ant-btn-link[disabled],.ant-btn-link[disabled]:active,.ant-btn-link[disabled]:focus,.ant-btn-link[disabled]:hover{color:#00000040;border-color:transparent;background:0 0;text-shadow:none;box-shadow:none}.ant-btn-link[disabled]:active>a:only-child,.ant-btn-link[disabled]:focus>a:only-child,.ant-btn-link[disabled]:hover>a:only-child,.ant-btn-link[disabled]>a:only-child{color:currentcolor}.ant-btn-link[disabled]:active>a:only-child:after,.ant-btn-link[disabled]:focus>a:only-child:after,.ant-btn-link[disabled]:hover>a:only-child:after,.ant-btn-link[disabled]>a:only-child:after{position:absolute;top:0;right:0;bottom:0;left:0;background:0 0;content:""}.ant-btn-text{color:#000000d9;border-color:transparent;background:0 0;box-shadow:none}.ant-btn-text>a:only-child{color:currentcolor}.ant-btn-text>a:only-child:after{position:absolute;top:0;right:0;bottom:0;left:0;background:0 0;content:""}.ant-btn-text:focus,.ant-btn-text:hover{color:#40a9ff}.ant-btn-text:focus>a:only-child,.ant-btn-text:hover>a:only-child{color:currentcolor}.ant-btn-text:focus>a:only-child:after,.ant-btn-text:hover>a:only-child:after{position:absolute;top:0;right:0;bottom:0;left:0;background:0 0;content:""}.ant-btn-text:active{color:#096dd9}.ant-btn-text:active>a:only-child{color:currentcolor}.ant-btn-text:active>a:only-child:after{position:absolute;top:0;right:0;bottom:0;left:0;background:0 0;content:""}.ant-btn-text:focus,.ant-btn-text:hover{color:#000000d9;background:#00000005;border-color:transparent}.ant-btn-text:active{color:#000000d9;background:#00000007;border-color:transparent}.ant-btn-text[disabled],.ant-btn-text[disabled]:active,.ant-btn-text[disabled]:focus,.ant-btn-text[disabled]:hover{color:#00000040;border-color:transparent;background:0 0;text-shadow:none;box-shadow:none}.ant-btn-text[disabled]:active>a:only-child,.ant-btn-text[disabled]:focus>a:only-child,.ant-btn-text[disabled]:hover>a:only-child,.ant-btn-text[disabled]>a:only-child{color:currentcolor}.ant-btn-text[disabled]:active>a:only-child:after,.ant-btn-text[disabled]:focus>a:only-child:after,.ant-btn-text[disabled]:hover>a:only-child:after,.ant-btn-text[disabled]>a:only-child:after{position:absolute;top:0;right:0;bottom:0;left:0;background:0 0;content:""}.ant-btn-dangerous{color:#ff4d4f;border-color:#ff4d4f;background:#fff}.ant-btn-dangerous>a:only-child{color:currentcolor}.ant-btn-dangerous>a:only-child:after{position:absolute;top:0;right:0;bottom:0;left:0;background:0 0;content:""}.ant-btn-dangerous:focus,.ant-btn-dangerous:hover{color:#ff7875;border-color:#ff7875;background:#fff}.ant-btn-dangerous:focus>a:only-child,.ant-btn-dangerous:hover>a:only-child{color:currentcolor}.ant-btn-dangerous:focus>a:only-child:after,.ant-btn-dangerous:hover>a:only-child:after{position:absolute;top:0;right:0;bottom:0;left:0;background:0 0;content:""}.ant-btn-dangerous:active{color:#d9363e;border-color:#d9363e;background:#fff}.ant-btn-dangerous:active>a:only-child{color:currentcolor}.ant-btn-dangerous:active>a:only-child:after{position:absolute;top:0;right:0;bottom:0;left:0;background:0 0;content:""}.ant-btn-dangerous[disabled],.ant-btn-dangerous[disabled]:active,.ant-btn-dangerous[disabled]:focus,.ant-btn-dangerous[disabled]:hover{color:#00000040;border-color:#d9d9d9;background:#f5f5f5;text-shadow:none;box-shadow:none}.ant-btn-dangerous[disabled]:active>a:only-child,.ant-btn-dangerous[disabled]:focus>a:only-child,.ant-btn-dangerous[disabled]:hover>a:only-child,.ant-btn-dangerous[disabled]>a:only-child{color:currentcolor}.ant-btn-dangerous[disabled]:active>a:only-child:after,.ant-btn-dangerous[disabled]:focus>a:only-child:after,.ant-btn-dangerous[disabled]:hover>a:only-child:after,.ant-btn-dangerous[disabled]>a:only-child:after{position:absolute;top:0;right:0;bottom:0;left:0;background:0 0;content:""}.ant-btn-dangerous.ant-btn-primary{color:#fff;border-color:#ff4d4f;background:#ff4d4f;text-shadow:0 -1px 0 rgba(0,0,0,.12);box-shadow:0 2px #0000000b}.ant-btn-dangerous.ant-btn-primary>a:only-child{color:currentcolor}.ant-btn-dangerous.ant-btn-primary>a:only-child:after{position:absolute;top:0;right:0;bottom:0;left:0;background:0 0;content:""}.ant-btn-dangerous.ant-btn-primary:focus,.ant-btn-dangerous.ant-btn-primary:hover{color:#fff;border-color:#ff7875;background:#ff7875}.ant-btn-dangerous.ant-btn-primary:focus>a:only-child,.ant-btn-dangerous.ant-btn-primary:hover>a:only-child{color:currentcolor}.ant-btn-dangerous.ant-btn-primary:focus>a:only-child:after,.ant-btn-dangerous.ant-btn-primary:hover>a:only-child:after{position:absolute;top:0;right:0;bottom:0;left:0;background:0 0;content:""}.ant-btn-dangerous.ant-btn-primary:active{color:#fff;border-color:#d9363e;background:#d9363e}.ant-btn-dangerous.ant-btn-primary:active>a:only-child{color:currentcolor}.ant-btn-dangerous.ant-btn-primary:active>a:only-child:after{position:absolute;top:0;right:0;bottom:0;left:0;background:0 0;content:""}.ant-btn-dangerous.ant-btn-primary[disabled],.ant-btn-dangerous.ant-btn-primary[disabled]:active,.ant-btn-dangerous.ant-btn-primary[disabled]:focus,.ant-btn-dangerous.ant-btn-primary[disabled]:hover{color:#00000040;border-color:#d9d9d9;background:#f5f5f5;text-shadow:none;box-shadow:none}.ant-btn-dangerous.ant-btn-primary[disabled]:active>a:only-child,.ant-btn-dangerous.ant-btn-primary[disabled]:focus>a:only-child,.ant-btn-dangerous.ant-btn-primary[disabled]:hover>a:only-child,.ant-btn-dangerous.ant-btn-primary[disabled]>a:only-child{color:currentcolor}.ant-btn-dangerous.ant-btn-primary[disabled]:active>a:only-child:after,.ant-btn-dangerous.ant-btn-primary[disabled]:focus>a:only-child:after,.ant-btn-dangerous.ant-btn-primary[disabled]:hover>a:only-child:after,.ant-btn-dangerous.ant-btn-primary[disabled]>a:only-child:after{position:absolute;top:0;right:0;bottom:0;left:0;background:0 0;content:""}.ant-btn-dangerous.ant-btn-link{color:#ff4d4f;border-color:transparent;background:0 0;box-shadow:none}.ant-btn-dangerous.ant-btn-link>a:only-child{color:currentcolor}.ant-btn-dangerous.ant-btn-link>a:only-child:after{position:absolute;top:0;right:0;bottom:0;left:0;background:0 0;content:""}.ant-btn-dangerous.ant-btn-link:focus,.ant-btn-dangerous.ant-btn-link:hover{color:#ff7875;border-color:transparent;background:0 0}.ant-btn-dangerous.ant-btn-link:focus>a:only-child,.ant-btn-dangerous.ant-btn-link:hover>a:only-child{color:currentcolor}.ant-btn-dangerous.ant-btn-link:focus>a:only-child:after,.ant-btn-dangerous.ant-btn-link:hover>a:only-child:after{position:absolute;top:0;right:0;bottom:0;left:0;background:0 0;content:""}.ant-btn-dangerous.ant-btn-link:active{color:#d9363e;border-color:transparent;background:0 0}.ant-btn-dangerous.ant-btn-link:active>a:only-child{color:currentcolor}.ant-btn-dangerous.ant-btn-link:active>a:only-child:after{position:absolute;top:0;right:0;bottom:0;left:0;background:0 0;content:""}.ant-btn-dangerous.ant-btn-link[disabled],.ant-btn-dangerous.ant-btn-link[disabled]:active,.ant-btn-dangerous.ant-btn-link[disabled]:focus,.ant-btn-dangerous.ant-btn-link[disabled]:hover{color:#00000040;border-color:transparent;background:0 0;text-shadow:none;box-shadow:none}.ant-btn-dangerous.ant-btn-link[disabled]:active>a:only-child,.ant-btn-dangerous.ant-btn-link[disabled]:focus>a:only-child,.ant-btn-dangerous.ant-btn-link[disabled]:hover>a:only-child,.ant-btn-dangerous.ant-btn-link[disabled]>a:only-child{color:currentcolor}.ant-btn-dangerous.ant-btn-link[disabled]:active>a:only-child:after,.ant-btn-dangerous.ant-btn-link[disabled]:focus>a:only-child:after,.ant-btn-dangerous.ant-btn-link[disabled]:hover>a:only-child:after,.ant-btn-dangerous.ant-btn-link[disabled]>a:only-child:after{position:absolute;top:0;right:0;bottom:0;left:0;background:0 0;content:""}.ant-btn-dangerous.ant-btn-text{color:#ff4d4f;border-color:transparent;background:0 0;box-shadow:none}.ant-btn-dangerous.ant-btn-text>a:only-child{color:currentcolor}.ant-btn-dangerous.ant-btn-text>a:only-child:after{position:absolute;top:0;right:0;bottom:0;left:0;background:0 0;content:""}.ant-btn-dangerous.ant-btn-text:focus,.ant-btn-dangerous.ant-btn-text:hover{color:#ff7875;border-color:transparent;background:#00000005}.ant-btn-dangerous.ant-btn-text:focus>a:only-child,.ant-btn-dangerous.ant-btn-text:hover>a:only-child{color:currentcolor}.ant-btn-dangerous.ant-btn-text:focus>a:only-child:after,.ant-btn-dangerous.ant-btn-text:hover>a:only-child:after{position:absolute;top:0;right:0;bottom:0;left:0;background:0 0;content:""}.ant-btn-dangerous.ant-btn-text:active{color:#d9363e;border-color:transparent;background:#00000007}.ant-btn-dangerous.ant-btn-text:active>a:only-child{color:currentcolor}.ant-btn-dangerous.ant-btn-text:active>a:only-child:after{position:absolute;top:0;right:0;bottom:0;left:0;background:0 0;content:""}.ant-btn-dangerous.ant-btn-text[disabled],.ant-btn-dangerous.ant-btn-text[disabled]:active,.ant-btn-dangerous.ant-btn-text[disabled]:focus,.ant-btn-dangerous.ant-btn-text[disabled]:hover{color:#00000040;border-color:transparent;background:0 0;text-shadow:none;box-shadow:none}.ant-btn-dangerous.ant-btn-text[disabled]:active>a:only-child,.ant-btn-dangerous.ant-btn-text[disabled]:focus>a:only-child,.ant-btn-dangerous.ant-btn-text[disabled]:hover>a:only-child,.ant-btn-dangerous.ant-btn-text[disabled]>a:only-child{color:currentcolor}.ant-btn-dangerous.ant-btn-text[disabled]:active>a:only-child:after,.ant-btn-dangerous.ant-btn-text[disabled]:focus>a:only-child:after,.ant-btn-dangerous.ant-btn-text[disabled]:hover>a:only-child:after,.ant-btn-dangerous.ant-btn-text[disabled]>a:only-child:after{position:absolute;top:0;right:0;bottom:0;left:0;background:0 0;content:""}.ant-btn-icon-only{width:32px;height:32px;padding:2.4px 0;font-size:16px;border-radius:2px;vertical-align:-3px}.ant-btn-icon-only>*{font-size:16px}.ant-btn-icon-only.ant-btn-lg{width:40px;height:40px;padding:4.9px 0;font-size:18px;border-radius:2px}.ant-btn-icon-only.ant-btn-lg>*{font-size:18px}.ant-btn-icon-only.ant-btn-sm{width:24px;height:24px;padding:0;font-size:14px;border-radius:2px}.ant-btn-icon-only.ant-btn-sm>*{font-size:14px}.ant-btn-icon-only>.anticon{display:flex;justify-content:center}.ant-btn-icon-only .anticon-loading{padding:0!important}a.ant-btn-icon-only{vertical-align:-1px}a.ant-btn-icon-only>.anticon{display:inline}.ant-btn-round{height:32px;padding:4px 16px;font-size:14px;border-radius:32px}.ant-btn-round.ant-btn-lg{height:40px;padding:6.4px 20px;font-size:16px;border-radius:40px}.ant-btn-round.ant-btn-sm{height:24px;padding:0 12px;font-size:14px;border-radius:24px}.ant-btn-round.ant-btn-icon-only{width:auto}.ant-btn-circle{min-width:32px;padding-right:0;padding-left:0;text-align:center;border-radius:50%}.ant-btn-circle.ant-btn-lg{min-width:40px;border-radius:50%}.ant-btn-circle.ant-btn-sm{min-width:24px;border-radius:50%}.ant-btn:before{position:absolute;top:-1px;right:-1px;bottom:-1px;left:-1px;z-index:1;display:none;background:#fff;border-radius:inherit;opacity:.35;transition:opacity .2s;content:""}.ant-btn-group,.ant-btn-group>.ant-btn,.ant-btn-group>span>.ant-btn,.ant-btn.ant-btn-loading,.ant-btn:active>span,.ant-btn:focus>span{position:relative}.ant-btn .anticon{transition:margin-left .3s cubic-bezier(.645,.045,.355,1)}.ant-btn .anticon.anticon-minus>svg,.ant-btn .anticon.anticon-plus>svg{shape-rendering:optimizespeed}.ant-btn.ant-btn-loading{cursor:default}.ant-btn.ant-btn-loading:before{display:block}.ant-btn>.ant-btn-loading-icon{transition:width .3s cubic-bezier(.645,.045,.355,1),opacity .3s cubic-bezier(.645,.045,.355,1)}.ant-btn>.ant-btn-loading-icon .anticon{padding-right:8px;animation:none}.ant-btn>.ant-btn-loading-icon .anticon svg{animation:loadingCircle 1s infinite linear}.ant-btn-group{display:inline-flex}.ant-btn-group>.ant-btn:active,.ant-btn-group>.ant-btn:focus,.ant-btn-group>.ant-btn:hover,.ant-btn-group>span>.ant-btn:active,.ant-btn-group>span>.ant-btn:focus,.ant-btn-group>span>.ant-btn:hover{z-index:2}.ant-btn-group>.ant-btn[disabled],.ant-btn-group>span>.ant-btn[disabled]{z-index:0}.ant-btn-group .ant-btn-icon-only{font-size:14px}.ant-btn+.ant-btn-group,.ant-btn-group .ant-btn+.ant-btn,.ant-btn-group .ant-btn+span,.ant-btn-group span+.ant-btn,.ant-btn-group+.ant-btn,.ant-btn-group+.ant-btn-group,.ant-btn-group>span+span{margin-left:-1px}.ant-btn-group .ant-btn-primary+.ant-btn:not(.ant-btn-primary):not([disabled]){border-left-color:transparent}.ant-btn-group .ant-btn{border-radius:0}.ant-btn-group-sm>.ant-btn:only-child,.ant-btn-group-sm>span:only-child>.ant-btn,.ant-btn-group>.ant-btn:only-child,.ant-btn-group>span:only-child>.ant-btn{border-radius:2px}.ant-btn-group-sm>.ant-btn:first-child:not(:last-child),.ant-btn-group-sm>span:first-child:not(:last-child)>.ant-btn,.ant-btn-group>.ant-btn:first-child:not(:last-child),.ant-btn-group>span:first-child:not(:last-child)>.ant-btn{border-top-left-radius:2px;border-bottom-left-radius:2px}.ant-btn-group-sm>.ant-btn:last-child:not(:first-child),.ant-btn-group-sm>span:last-child:not(:first-child)>.ant-btn,.ant-btn-group>.ant-btn:last-child:not(:first-child),.ant-btn-group>span:last-child:not(:first-child)>.ant-btn{border-top-right-radius:2px;border-bottom-right-radius:2px}.ant-btn-group>.ant-btn:first-child,.ant-btn-group>span:first-child>.ant-btn{margin-left:0}.ant-btn-group>.ant-btn-group{float:left}.ant-btn-group>.ant-btn-group:not(:first-child):not(:last-child)>.ant-btn{border-radius:0}.ant-btn-group>.ant-btn-group:first-child:not(:last-child)>.ant-btn:last-child{padding-right:8px;border-top-right-radius:0;border-bottom-right-radius:0}.ant-btn-group>.ant-btn-group:last-child:not(:first-child)>.ant-btn:first-child{padding-left:8px;border-top-left-radius:0;border-bottom-left-radius:0}.ant-btn-group-rtl.ant-btn+.ant-btn-group,.ant-btn-group-rtl.ant-btn-group .ant-btn+.ant-btn,.ant-btn-group-rtl.ant-btn-group .ant-btn+span,.ant-btn-group-rtl.ant-btn-group span+.ant-btn,.ant-btn-group-rtl.ant-btn-group+.ant-btn,.ant-btn-group-rtl.ant-btn-group+.ant-btn-group,.ant-btn-group-rtl.ant-btn-group>span+span,.ant-btn-rtl.ant-btn+.ant-btn-group,.ant-btn-rtl.ant-btn-group .ant-btn+.ant-btn,.ant-btn-rtl.ant-btn-group .ant-btn+span,.ant-btn-rtl.ant-btn-group span+.ant-btn,.ant-btn-rtl.ant-btn-group+.ant-btn,.ant-btn-rtl.ant-btn-group+.ant-btn-group,.ant-btn-rtl.ant-btn-group>span+span{margin-right:-1px;margin-left:auto}.ant-btn-group-rtl.ant-btn-group>.ant-btn:first-child:not(:last-child),.ant-btn-group-rtl.ant-btn-group>span:first-child:not(:last-child)>.ant-btn{border-radius:0 2px 2px 0}.ant-btn-group-rtl.ant-btn-group>.ant-btn:last-child:not(:first-child),.ant-btn-group-rtl.ant-btn-group>span:last-child:not(:first-child)>.ant-btn{border-radius:2px 0 0 2px}.ant-btn-group-rtl.ant-btn-group-sm>.ant-btn:first-child:not(:last-child),.ant-btn-group-rtl.ant-btn-group-sm>span:first-child:not(:last-child)>.ant-btn{border-radius:0 2px 2px 0}.ant-btn-group-rtl.ant-btn-group-sm>.ant-btn:last-child:not(:first-child),.ant-btn-group-rtl.ant-btn-group-sm>span:last-child:not(:first-child)>.ant-btn{border-radius:2px 0 0 2px}.ant-btn-compact-item:not(.ant-btn-compact-first-item):not(.ant-btn-compact-last-item).ant-btn,.ant-btn-compact-vertical-item:not(.ant-btn-compact-vertical-first-item):not(.ant-btn-compact-vertical-last-item){border-radius:0}.ant-btn-compact-item-rtl.ant-btn-compact-last-item.ant-btn-compact-item-rtl:not(.ant-btn-compact-first-item),.ant-btn-compact-item-rtl.ant-btn-sm.ant-btn-compact-last-item.ant-btn-compact-item-rtl.ant-btn-sm:not(.ant-btn-compact-first-item),.ant-btn-compact-item.ant-btn.ant-btn-compact-first-item:not(.ant-btn-compact-last-item):not(.ant-btn-compact-item-rtl),.ant-btn-compact-item.ant-btn.ant-btn-compact-item-rtl.ant-btn-compact-last-item:not(.ant-btn-compact-first-item){border-bottom-right-radius:0;border-top-right-radius:0}.ant-btn-compact-item-rtl.ant-btn-compact-first-item.ant-btn-compact-item-rtl:not(.ant-btn-compact-last-item),.ant-btn-compact-item-rtl.ant-btn-sm.ant-btn-compact-first-item.ant-btn-compact-item-rtl.ant-btn-sm:not(.ant-btn-compact-last-item),.ant-btn-compact-item.ant-btn.ant-btn-compact-item-rtl.ant-btn-compact-first-item:not(.ant-btn-compact-last-item),.ant-btn-compact-item.ant-btn.ant-btn-compact-last-item:not(.ant-btn-compact-first-item):not(.ant-btn-compact-item-rtl){border-bottom-left-radius:0;border-top-left-radius:0}.ant-btn-background-ghost.ant-btn-primary:active>a:only-child:after,.ant-btn-background-ghost.ant-btn-primary:focus>a:only-child:after,.ant-btn-background-ghost.ant-btn-primary:hover>a:only-child:after,.ant-btn-background-ghost.ant-btn-primary>a:only-child:after{position:absolute;top:0;right:0;bottom:0;left:0;background:0 0;content:""}.ant-btn>.anticon+span,.ant-btn>span+.anticon{margin-left:8px}.ant-btn.ant-btn-background-ghost{color:#fff;border-color:#fff}.ant-btn.ant-btn-background-ghost,.ant-btn.ant-btn-background-ghost:active,.ant-btn.ant-btn-background-ghost:focus,.ant-btn.ant-btn-background-ghost:hover{background:0 0}.ant-btn.ant-btn-background-ghost:focus,.ant-btn.ant-btn-background-ghost:hover{color:#40a9ff;border-color:#40a9ff}.ant-btn.ant-btn-background-ghost:active{color:#096dd9;border-color:#096dd9}.ant-btn.ant-btn-background-ghost[disabled]{color:#00000040;background:0 0;border-color:#d9d9d9}.ant-btn-background-ghost.ant-btn-primary{color:#1890ff;border-color:#1890ff;text-shadow:none}.ant-btn-background-ghost.ant-btn-primary>a:only-child{color:currentcolor}.ant-btn-background-ghost.ant-btn-primary:focus,.ant-btn-background-ghost.ant-btn-primary:hover{color:#40a9ff;border-color:#40a9ff}.ant-btn-background-ghost.ant-btn-primary:focus>a:only-child,.ant-btn-background-ghost.ant-btn-primary:hover>a:only-child{color:currentcolor}.ant-btn-background-ghost.ant-btn-primary:active{color:#096dd9;border-color:#096dd9}.ant-btn-background-ghost.ant-btn-primary:active>a:only-child{color:currentcolor}.ant-btn-background-ghost.ant-btn-primary[disabled],.ant-btn-background-ghost.ant-btn-primary[disabled]:active,.ant-btn-background-ghost.ant-btn-primary[disabled]:focus,.ant-btn-background-ghost.ant-btn-primary[disabled]:hover{color:#00000040;border-color:#d9d9d9;background:#f5f5f5;text-shadow:none;box-shadow:none}.ant-btn-background-ghost.ant-btn-danger:active>a:only-child:after,.ant-btn-background-ghost.ant-btn-danger:focus>a:only-child:after,.ant-btn-background-ghost.ant-btn-danger:hover>a:only-child:after,.ant-btn-background-ghost.ant-btn-danger>a:only-child:after,.ant-btn-background-ghost.ant-btn-primary[disabled]:active>a:only-child:after,.ant-btn-background-ghost.ant-btn-primary[disabled]:focus>a:only-child:after,.ant-btn-background-ghost.ant-btn-primary[disabled]:hover>a:only-child:after,.ant-btn-background-ghost.ant-btn-primary[disabled]>a:only-child:after{position:absolute;top:0;right:0;bottom:0;left:0;background:0 0;content:""}.ant-btn-background-ghost.ant-btn-primary[disabled]:active>a:only-child,.ant-btn-background-ghost.ant-btn-primary[disabled]:focus>a:only-child,.ant-btn-background-ghost.ant-btn-primary[disabled]:hover>a:only-child,.ant-btn-background-ghost.ant-btn-primary[disabled]>a:only-child{color:currentcolor}.ant-btn-background-ghost.ant-btn-danger{color:#ff4d4f;border-color:#ff4d4f;text-shadow:none}.ant-btn-background-ghost.ant-btn-danger>a:only-child{color:currentcolor}.ant-btn-background-ghost.ant-btn-danger:focus,.ant-btn-background-ghost.ant-btn-danger:hover{color:#ff7875;border-color:#ff7875}.ant-btn-background-ghost.ant-btn-danger:focus>a:only-child,.ant-btn-background-ghost.ant-btn-danger:hover>a:only-child{color:currentcolor}.ant-btn-background-ghost.ant-btn-danger:active{color:#d9363e;border-color:#d9363e}.ant-btn-background-ghost.ant-btn-danger:active>a:only-child{color:currentcolor}.ant-btn-background-ghost.ant-btn-danger[disabled],.ant-btn-background-ghost.ant-btn-danger[disabled]:active,.ant-btn-background-ghost.ant-btn-danger[disabled]:focus,.ant-btn-background-ghost.ant-btn-danger[disabled]:hover{color:#00000040;border-color:#d9d9d9;background:#f5f5f5;text-shadow:none;box-shadow:none}.ant-btn-background-ghost.ant-btn-danger[disabled]:active>a:only-child:after,.ant-btn-background-ghost.ant-btn-danger[disabled]:focus>a:only-child:after,.ant-btn-background-ghost.ant-btn-danger[disabled]:hover>a:only-child:after,.ant-btn-background-ghost.ant-btn-danger[disabled]>a:only-child:after,.ant-btn-background-ghost.ant-btn-dangerous:active>a:only-child:after,.ant-btn-background-ghost.ant-btn-dangerous:focus>a:only-child:after,.ant-btn-background-ghost.ant-btn-dangerous:hover>a:only-child:after,.ant-btn-background-ghost.ant-btn-dangerous>a:only-child:after{position:absolute;top:0;right:0;bottom:0;left:0;background:0 0;content:""}.ant-btn-background-ghost.ant-btn-danger[disabled]:active>a:only-child,.ant-btn-background-ghost.ant-btn-danger[disabled]:focus>a:only-child,.ant-btn-background-ghost.ant-btn-danger[disabled]:hover>a:only-child,.ant-btn-background-ghost.ant-btn-danger[disabled]>a:only-child{color:currentcolor}.ant-btn-background-ghost.ant-btn-dangerous{color:#ff4d4f;border-color:#ff4d4f;text-shadow:none}.ant-btn-background-ghost.ant-btn-dangerous>a:only-child{color:currentcolor}.ant-btn-background-ghost.ant-btn-dangerous:focus,.ant-btn-background-ghost.ant-btn-dangerous:hover{color:#ff7875;border-color:#ff7875}.ant-btn-background-ghost.ant-btn-dangerous:focus>a:only-child,.ant-btn-background-ghost.ant-btn-dangerous:hover>a:only-child{color:currentcolor}.ant-btn-background-ghost.ant-btn-dangerous:active{color:#d9363e;border-color:#d9363e}.ant-btn-background-ghost.ant-btn-dangerous:active>a:only-child{color:currentcolor}.ant-btn-background-ghost.ant-btn-dangerous[disabled],.ant-btn-background-ghost.ant-btn-dangerous[disabled]:active,.ant-btn-background-ghost.ant-btn-dangerous[disabled]:focus,.ant-btn-background-ghost.ant-btn-dangerous[disabled]:hover{color:#00000040;border-color:#d9d9d9;background:#f5f5f5;text-shadow:none;box-shadow:none}.ant-btn-background-ghost.ant-btn-dangerous.ant-btn-link:active>a:only-child:after,.ant-btn-background-ghost.ant-btn-dangerous.ant-btn-link:focus>a:only-child:after,.ant-btn-background-ghost.ant-btn-dangerous.ant-btn-link:hover>a:only-child:after,.ant-btn-background-ghost.ant-btn-dangerous.ant-btn-link>a:only-child:after,.ant-btn-background-ghost.ant-btn-dangerous[disabled]:active>a:only-child:after,.ant-btn-background-ghost.ant-btn-dangerous[disabled]:focus>a:only-child:after,.ant-btn-background-ghost.ant-btn-dangerous[disabled]:hover>a:only-child:after,.ant-btn-background-ghost.ant-btn-dangerous[disabled]>a:only-child:after{background:0 0;content:"";position:absolute;top:0;right:0;bottom:0;left:0}.ant-btn-background-ghost.ant-btn-dangerous[disabled]:active>a:only-child,.ant-btn-background-ghost.ant-btn-dangerous[disabled]:focus>a:only-child,.ant-btn-background-ghost.ant-btn-dangerous[disabled]:hover>a:only-child,.ant-btn-background-ghost.ant-btn-dangerous[disabled]>a:only-child{color:currentcolor}.ant-btn-background-ghost.ant-btn-dangerous.ant-btn-link{color:#ff4d4f;border-color:transparent;text-shadow:none}.ant-btn-background-ghost.ant-btn-dangerous.ant-btn-link>a:only-child{color:currentcolor}.ant-btn-background-ghost.ant-btn-dangerous.ant-btn-link:focus,.ant-btn-background-ghost.ant-btn-dangerous.ant-btn-link:hover{color:#ff7875;border-color:transparent}.ant-btn-background-ghost.ant-btn-dangerous.ant-btn-link:focus>a:only-child,.ant-btn-background-ghost.ant-btn-dangerous.ant-btn-link:hover>a:only-child{color:currentcolor}.ant-btn-background-ghost.ant-btn-dangerous.ant-btn-link:active{color:#d9363e;border-color:transparent}.ant-btn-background-ghost.ant-btn-dangerous.ant-btn-link:active>a:only-child{color:currentcolor}.ant-btn-background-ghost.ant-btn-dangerous.ant-btn-link[disabled],.ant-btn-background-ghost.ant-btn-dangerous.ant-btn-link[disabled]:active,.ant-btn-background-ghost.ant-btn-dangerous.ant-btn-link[disabled]:focus,.ant-btn-background-ghost.ant-btn-dangerous.ant-btn-link[disabled]:hover{color:#00000040;border-color:#d9d9d9;background:#f5f5f5;text-shadow:none;box-shadow:none}.ant-btn-background-ghost.ant-btn-dangerous.ant-btn-link[disabled]:active>a:only-child,.ant-btn-background-ghost.ant-btn-dangerous.ant-btn-link[disabled]:focus>a:only-child,.ant-btn-background-ghost.ant-btn-dangerous.ant-btn-link[disabled]:hover>a:only-child,.ant-btn-background-ghost.ant-btn-dangerous.ant-btn-link[disabled]>a:only-child{color:currentcolor}.ant-btn-background-ghost.ant-btn-dangerous.ant-btn-link[disabled]:active>a:only-child:after,.ant-btn-background-ghost.ant-btn-dangerous.ant-btn-link[disabled]:focus>a:only-child:after,.ant-btn-background-ghost.ant-btn-dangerous.ant-btn-link[disabled]:hover>a:only-child:after,.ant-btn-background-ghost.ant-btn-dangerous.ant-btn-link[disabled]>a:only-child:after{position:absolute;top:0;right:0;bottom:0;left:0;background:0 0;content:""}.ant-btn-two-chinese-chars:first-letter{letter-spacing:.34em}.ant-btn-two-chinese-chars>:not(.anticon){margin-right:-.34em;letter-spacing:.34em}.ant-btn.ant-btn-block{width:100%}.ant-btn:empty{display:inline-block;width:0;visibility:hidden;content:"\a0"}a.ant-btn{padding-top:.01px!important;line-height:30px}a.ant-btn-disabled{cursor:not-allowed}a.ant-btn-disabled,a.ant-btn-disabled:active,a.ant-btn-disabled:focus,a.ant-btn-disabled:hover{color:#00000040;border-color:transparent;background:0 0;text-shadow:none;box-shadow:none}a.ant-btn-disabled:active>a:only-child,a.ant-btn-disabled:focus>a:only-child,a.ant-btn-disabled:hover>a:only-child,a.ant-btn-disabled>a:only-child{color:currentcolor}a.ant-btn-disabled:active>a:only-child:after,a.ant-btn-disabled:focus>a:only-child:after,a.ant-btn-disabled:hover>a:only-child:after,a.ant-btn-disabled>a:only-child:after{position:absolute;top:0;right:0;bottom:0;left:0;background:0 0;content:""}a.ant-btn-lg{line-height:38px}a.ant-btn-sm{line-height:22px}.ant-btn-compact-item:not(.ant-btn-compact-last-item):not(.ant-btn-compact-item-rtl){margin-right:-1px}.ant-btn-compact-item:not(.ant-btn-compact-last-item).ant-btn-compact-item-rtl{margin-left:-1px}.ant-btn-compact-item:active,.ant-btn-compact-item:focus,.ant-btn-compact-item:hover{z-index:2}.ant-btn-compact-item[disabled]{z-index:0}.ant-btn-icon-only.ant-btn-compact-item{flex:none}.ant-btn-compact-item.ant-btn-primary:not([disabled])+.ant-btn-compact-item.ant-btn-primary:not([disabled]){position:relative}.ant-btn-compact-item.ant-btn-primary:not([disabled])+.ant-btn-compact-item.ant-btn-primary:not([disabled]):after{position:absolute;top:-1px;left:-1px;display:inline-block;width:1px;height:calc(100% + 2px);background-color:#40a9ff;content:" "}.ant-btn-compact-item-rtl.ant-btn-primary:not([disabled])+.ant-btn-compact-item-rtl.ant-btn-primary:not([disabled]):after{right:-1px}.ant-btn-compact-vertical-item:not(.ant-btn-compact-vertical-last-item){margin-bottom:-1px}.ant-btn-compact-vertical-item:active,.ant-btn-compact-vertical-item:focus,.ant-btn-compact-vertical-item:hover{z-index:2}.ant-btn-compact-vertical-item[disabled]{z-index:0}.ant-btn-compact-vertical-item.ant-btn-compact-vertical-first-item:not(.ant-btn-compact-vertical-last-item){border-bottom-right-radius:0;border-bottom-left-radius:0}.ant-btn-compact-vertical-item.ant-btn-compact-vertical-last-item:not(.ant-btn-compact-vertical-first-item){border-top-left-radius:0;border-top-right-radius:0}.ant-btn-compact-vertical-item.ant-btn-primary:not([disabled])+.ant-btn-compact-vertical-item.ant-btn-primary:not([disabled]){position:relative}.ant-btn-compact-vertical-item.ant-btn-primary:not([disabled])+.ant-btn-compact-vertical-item.ant-btn-primary:not([disabled]):after{position:absolute;top:-1px;left:-1px;display:inline-block;width:calc(100% + 2px);height:1px;background-color:#40a9ff;content:" "}.ant-btn-group-rtl.ant-btn-group .ant-btn-primary+.ant-btn-primary,.ant-btn-group-rtl.ant-btn-group .ant-btn-primary:last-child:not(:first-child){border-right-color:#40a9ff;border-left-color:#d9d9d9}.ant-btn-group-rtl.ant-btn-group .ant-btn-primary+.ant-btn-primary[disabled],.ant-btn-group-rtl.ant-btn-group .ant-btn-primary:last-child:not(:first-child)[disabled]{border-right-color:#d9d9d9;border-left-color:#40a9ff}.ant-btn-rtl.ant-btn>.ant-btn-loading-icon .anticon{padding-right:0;padding-left:8px}.ant-btn-rtl.ant-btn>.anticon+span,.ant-btn-rtl.ant-btn>span+.anticon{margin-right:8px;margin-left:0}.ant-avatar,.ant-avatar-lg.ant-avatar-icon>.anticon,.ant-avatar-sm.ant-avatar-icon>.anticon,.ant-avatar.ant-avatar-icon>.anticon{margin:0}.ant-avatar{box-sizing:border-box;padding:0;font-size:14px;font-variant:tabular-nums;list-style:none;font-feature-settings:"tnum";position:relative;display:inline-block;overflow:hidden;color:#fff;white-space:nowrap;text-align:center;vertical-align:middle;background:#ccc;width:32px;height:32px;line-height:32px;border-radius:50%}.ant-avatar-lg-string,.ant-avatar-sm-string,.ant-avatar-string{position:absolute;left:50%;transform-origin:0 center}.ant-avatar-image{background:0 0}.ant-avatar .ant-image-img{display:block}.ant-avatar.ant-avatar-icon{font-size:18px}.ant-avatar-lg{width:40px;height:40px;line-height:40px;border-radius:50%}.ant-avatar-lg.ant-avatar-icon{font-size:24px}.ant-avatar-sm{width:24px;height:24px;line-height:24px;border-radius:50%}.ant-avatar-sm.ant-avatar-icon{font-size:14px}.ant-avatar-square{border-radius:2px}.ant-avatar>img{display:block;width:100%;height:100%;object-fit:cover}.ant-avatar-group{display:inline-flex}.ant-avatar-group .ant-avatar{border:1px solid #fff}.ant-avatar-group .ant-avatar:not(:first-child){margin-left:-8px}.ant-avatar-group-popover .ant-avatar+.ant-avatar{margin-left:3px}.ant-avatar-group-rtl .ant-avatar:not(:first-child){margin-right:-8px;margin-left:0}.ant-avatar-group-popover.ant-popover-rtl .ant-avatar+.ant-avatar{margin-right:3px;margin-left:0}.ant-spin{box-sizing:border-box;margin:0;padding:0;font-variant:tabular-nums;line-height:1.5715;list-style:none;font-feature-settings:"tnum";position:absolute;display:none;color:#1890ff;font-size:0;text-align:center;vertical-align:middle;opacity:0;transition:transform .3s cubic-bezier(.78,.14,.15,.86)}.ant-spin-spinning{position:static;display:inline-block;opacity:1}.ant-spin-nested-loading{position:relative}.ant-spin-nested-loading>div>.ant-spin{position:absolute;top:0;left:0;z-index:4;display:block;width:100%;height:100%;max-height:400px}.ant-spin-nested-loading>div>.ant-spin .ant-spin-dot{position:absolute;top:50%;left:50%;margin:-10px}.ant-spin-nested-loading>div>.ant-spin .ant-spin-text{position:absolute;top:50%;width:100%;padding-top:5px;font-size:14px;text-shadow:0 1px 2px #fff}.ant-spin-nested-loading>div>.ant-spin.ant-spin-show-text .ant-spin-dot{margin-top:-20px}.ant-spin-nested-loading>div>.ant-spin-sm .ant-spin-dot{margin:-7px}.ant-spin-nested-loading>div>.ant-spin-sm .ant-spin-text{padding-top:2px}.ant-spin-nested-loading>div>.ant-spin-sm.ant-spin-show-text .ant-spin-dot{margin-top:-17px}.ant-spin-nested-loading>div>.ant-spin-lg .ant-spin-dot{margin:-16px}.ant-spin-nested-loading>div>.ant-spin-lg .ant-spin-text{padding-top:11px}.ant-spin-nested-loading>div>.ant-spin-lg.ant-spin-show-text .ant-spin-dot{margin-top:-26px}.ant-spin-container{position:relative;transition:opacity .3s}.ant-spin-container:after{position:absolute;top:0;right:0;bottom:0;left:0;z-index:10;display:none\	;width:100%;height:100%;background:#fff;opacity:0;transition:all .3s;content:"";pointer-events:none}.ant-spin-blur{clear:both;opacity:.5;-webkit-user-select:none;user-select:none;pointer-events:none}.ant-spin-blur:after{opacity:.4;pointer-events:auto}.ant-spin-tip{color:#00000073}.ant-spin-dot{position:relative;display:inline-block;font-size:20px;width:1em;height:1em}.ant-spin-dot-item{position:absolute;display:block;width:9px;height:9px;background-color:#1890ff;border-radius:100%;transform:scale(.75);transform-origin:50% 50%;opacity:.3;animation:antSpinMove 1s infinite linear alternate}.ant-spin-dot-item:nth-child(1){top:0;left:0}.ant-spin-dot-item:nth-child(2){top:0;right:0;animation-delay:.4s}.ant-spin-dot-item:nth-child(3){right:0;bottom:0;animation-delay:.8s}.ant-spin-dot-item:nth-child(4){bottom:0;left:0;animation-delay:1.2s}.ant-spin-dot-spin{transform:rotate(0);animation:antRotate 1.2s infinite linear}.ant-spin-sm .ant-spin-dot{font-size:14px}.ant-spin-sm .ant-spin-dot i{width:6px;height:6px}.ant-spin-lg .ant-spin-dot{font-size:32px}.ant-spin-lg .ant-spin-dot i{width:14px;height:14px}.ant-spin.ant-spin-show-text .ant-spin-text{display:block}@media all and (-ms-high-contrast:none),(-ms-high-contrast:active){.ant-spin-blur{background:#fff;opacity:.5}}@keyframes antSpinMove{to{opacity:1}}@keyframes antRotate{to{transform:rotate(360deg)}}.ant-spin-rtl{direction:rtl}.ant-spin-rtl .ant-spin-dot-spin{transform:rotate(-45deg);animation-name:antRotateRtl}@keyframes antRotateRtl{to{transform:rotate(-405deg)}}nz-spin{display:block}.ant-radio,.ant-radio-group,.ant-radio-wrapper{box-sizing:border-box;padding:0;color:#000000d9;font-variant:tabular-nums;line-height:1.5715;list-style:none;font-feature-settings:"tnum"}.ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled):focus-within,.ant-radio-button-wrapper:focus-within,.ant-radio-group-solid .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled):focus-within,.ant-radio-input:focus+.ant-radio-inner{box-shadow:0 0 0 3px #1890ff1f}.ant-radio-group{margin:0;display:inline-block;font-size:0}.ant-radio-group .ant-badge-count{z-index:1}.ant-radio-group>.ant-badge:not(:first-child)>.ant-radio-button-wrapper{border-left:none}.ant-radio-wrapper{margin:0 8px 0 0;font-size:14px;position:relative;display:inline-flex;align-items:baseline;cursor:pointer}.ant-radio-wrapper-disabled{cursor:not-allowed}.ant-radio-wrapper:after{display:inline-block;width:0;overflow:hidden;content:"\a0"}.ant-radio-wrapper.ant-radio-wrapper-in-form-item input[type=radio]{width:14px;height:14px}.ant-radio{margin:0;font-size:14px;position:relative;top:.2em;display:inline-block;outline:0;cursor:pointer}.ant-radio-input:focus+.ant-radio-inner,.ant-radio-wrapper:hover .ant-radio,.ant-radio:hover .ant-radio-inner{border-color:#1890ff}.ant-radio-checked:after{position:absolute;top:0;left:0;width:100%;height:100%;border:1px solid #1890ff;border-radius:50%;visibility:hidden;animation:antRadioEffect .36s ease-in-out;animation-fill-mode:both;content:""}.ant-radio-wrapper:hover .ant-radio:after,.ant-radio:hover:after{visibility:visible}.ant-radio-inner{position:relative;top:0;left:0;display:block;width:16px;height:16px;background-color:#fff;border-color:#d9d9d9;border-style:solid;border-width:1px;border-radius:50%;transition:all .3s}.ant-radio-inner:after{position:absolute;top:50%;left:50%;display:block;width:16px;height:16px;margin-top:-8px;margin-left:-8px;background-color:#1890ff;border-top:0;border-left:0;border-radius:16px;transform:scale(0);opacity:0;transition:all .3s cubic-bezier(.78,.14,.15,.86);content:" "}.ant-radio-input{position:absolute;top:0;right:0;bottom:0;left:0;z-index:1;cursor:pointer;opacity:0}.ant-radio-button-wrapper-disabled,.ant-radio-disabled,.ant-radio-disabled .ant-radio-inner,.ant-radio-disabled .ant-radio-input,.ant-radio-disabled+span{cursor:not-allowed}.ant-radio.ant-radio-disabled .ant-radio-inner{border-color:#d9d9d9}.ant-radio-checked .ant-radio-inner{border-color:#1890ff}.ant-radio-checked .ant-radio-inner:after{transform:scale(.5);opacity:1;transition:all .3s cubic-bezier(.78,.14,.15,.86)}.ant-radio-disabled .ant-radio-inner{background-color:#f5f5f5}.ant-radio-disabled .ant-radio-inner:after{background-color:#0003}.ant-radio-disabled+span{color:#00000040}span.ant-radio+*{padding-right:8px;padding-left:8px}.ant-radio-button-wrapper{position:relative;display:inline-block;height:32px;margin:0;padding:0 15px;color:#000000d9;font-size:14px;line-height:30px;background:#fff;border:1px solid #d9d9d9;border-top-width:1.02px;border-left-width:0;cursor:pointer;transition:color .3s,background .3s,border-color .3s,box-shadow .3s}.ant-radio-button-wrapper a{color:#000000d9}.ant-radio-button-wrapper>.ant-radio-button{position:absolute;top:0;left:0;z-index:-1;width:100%;height:100%}.ant-radio-group-large .ant-radio-button-wrapper{height:40px;font-size:16px;line-height:38px}.ant-radio-group-small .ant-radio-button-wrapper{height:24px;padding:0 7px;line-height:22px}.ant-radio-button-wrapper:not(:first-child):before{position:absolute;top:-1px;left:-1px;display:block;box-sizing:content-box;width:1px;height:100%;padding:1px 0;background-color:#d9d9d9;transition:background-color .3s;content:""}.ant-radio-button-wrapper:first-child{border-left:1px solid #d9d9d9;border-radius:2px 0 0 2px}.ant-radio-button-wrapper:last-child{border-radius:0 2px 2px 0}.ant-radio-button-wrapper:first-child:last-child{border-radius:2px}.ant-radio-button-wrapper:hover{position:relative;color:#1890ff}.ant-radio-button-wrapper .ant-radio-inner,.ant-radio-button-wrapper input[type=radio],.ant-radio-button-wrapper input[type=checkbox]{width:0;height:0;opacity:0;pointer-events:none}.ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled){z-index:1;color:#1890ff;background:#fff;border-color:#1890ff}.ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled):before{background-color:#1890ff}.ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled):first-child{border-color:#1890ff}.ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled):hover{color:#40a9ff;border-color:#40a9ff}.ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled):hover:before{background-color:#40a9ff}.ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled):active{color:#096dd9;border-color:#096dd9}.ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled):active:before{background-color:#096dd9}.ant-radio-group-solid .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled){color:#fff;background:#1890ff;border-color:#1890ff}.ant-radio-group-solid .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled):hover{color:#fff;background:#40a9ff;border-color:#40a9ff}.ant-radio-group-solid .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled):active{color:#fff;background:#096dd9;border-color:#096dd9}.ant-radio-button-wrapper-disabled,.ant-radio-button-wrapper-disabled:first-child,.ant-radio-button-wrapper-disabled:hover{color:#00000040;background-color:#f5f5f5;border-color:#d9d9d9}.ant-radio-button-wrapper-disabled:first-child{border-left-color:#d9d9d9}.ant-radio-button-wrapper-disabled.ant-radio-button-wrapper-checked{color:#00000040;background-color:#e6e6e6;border-color:#d9d9d9;box-shadow:none}@keyframes antRadioEffect{0%{transform:scale(1);opacity:.5}to{transform:scale(1.6);opacity:0}}.ant-radio-group.ant-radio-group-rtl{direction:rtl}.ant-radio-wrapper.ant-radio-wrapper-rtl{margin-right:0;margin-left:8px;direction:rtl}.ant-radio-button-wrapper.ant-radio-button-wrapper-rtl{border-right-width:0;border-left-width:1px}.ant-radio-button-wrapper.ant-radio-button-wrapper-rtl.ant-radio-button-wrapper:not(:first-child):before{right:-1px;left:0}.ant-radio-button-wrapper.ant-radio-button-wrapper-rtl.ant-radio-button-wrapper:first-child{border-right:1px solid #d9d9d9;border-radius:0 2px 2px 0}.ant-radio-button-wrapper-checked:not([class*=" ant-radio-button-wrapper-disabled"]).ant-radio-button-wrapper:first-child{border-right-color:#40a9ff}.ant-radio-button-wrapper.ant-radio-button-wrapper-rtl.ant-radio-button-wrapper:last-child{border-radius:2px 0 0 2px}.ant-radio-button-wrapper.ant-radio-button-wrapper-rtl.ant-radio-button-wrapper-disabled:first-child{border-right-color:#d9d9d9}.ant-radio+span:empty{display:none}.mobile-ouside-container{background-color:#fff;max-width:340px}.menu-container{z-index:2147483647;position:fixed;border-radius:5px}.popup-icon-inner{position:relative;display:block;width:34px;height:34px;min-width:34px;max-width:34px;background-size:34px 34px;cursor:pointer;border-radius:50%;overflow:hidden}.icon-container{position:fixed;opacity:.8;width:34px;height:34px;visibility:visible!important}.icon-main{width:100%;height:100%;display:flex;align-items:center;justify-content:center;z-index:1;border-radius:50%}.capsule-container{position:absolute;width:34px;max-width:34px;min-width:34px;display:flex;flex-direction:column;align-items:center;background-color:#000;border-radius:30px;padding:0;z-index:2;margin-bottom:6px}.capsule-container.top{bottom:100%!important}.capsule-container.bottom{top:40px!important}.icon-other-item{width:34px;height:34px;display:flex;flex-direction:column;align-items:center;justify-content:center;margin:2px 0}.icon-other-item-inner{width:20px!important;height:20px!important;overflow:hidden!important;font-size:20px!important;font-family:system-ui,-apple-system,sans-serif!important}.icon-other-item-inner svg{width:20px!important;height:20px!important}.divider{width:20px;height:1px;background-color:#fff3;margin:-2px 0}.popup-icon{width:18px;height:18px}.icon-container.right{right:0}.menu-container.right{right:2px}.icon-container.left{left:0}.menu-container.left{left:2px}.icon-container:hover{opacity:1}.icon-container.dragging{cursor:move}.left .capsule-container.hidden{transform:translate(-150%)}.left .capsule-container.visible{transform:translate(0)}.right .capsule-container.hidden{transform:translate(150%)}.right .capsule-container.visible{transform:translate(0)}.btn-animated{cursor:pointer;transform:translateZ(0);transition:transform ease-out .25s}.close-dialog-container{max-width:300px;min-width:300px;background-color:#fff;border-radius:5px;box-shadow:0 2px 5px 1px #403c4329!important;display:flex;flex-direction:column;padding:16px}.mobile-title-container{font-size:16px!important;font-weight:700!important;color:#202124}[nz-radio]{display:block;height:32px;line-height:32px;font-weight:400!important}.mobile-action-button-container{display:flex;flex-direction:row;justify-content:flex-end;margin-top:10px;align-items:center;font-weight:400!important}.mobile-action-button{font-size:12px!important}.radio-title{font-size:13px;color:#202124}.mobile-action-tip{font-size:11px;color:#93979e}.mobile-action-space{flex-grow:1}.ok-button{margin-left:5px}
+</style><!----><!----><div class="icon-container right ng-star-inserted"><div class="icon-main btn-animated"><app-icon-svg class="popup-icon-inner" _nghost-ng-c3424759930=""><!----><!----><!----><app-icon-en _ngcontent-ng-c3424759930="" class="eudic-chrome-extension-inner-icon ng-star-inserted" _nghost-ng-c1076576952=""><svg _ngcontent-ng-c1076576952="" version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path _ngcontent-ng-c1076576952="" d="M0 0 C3.82558721 0.00916456 7.65110552 -0.00497488 11.47667837 -0.01591969 C18.94485593 -0.03358956 26.41287154 -0.02991687 33.88105512 -0.01826912 C39.95739685 -0.00918923 46.0336936 -0.00803035 52.11004019 -0.01236439 C52.9789943 -0.01297732 53.8479484 -0.01359025 54.74323446 -0.01422176 C56.50918843 -0.01550082 58.27514238 -0.01679768 60.04109633 -0.01811212 C76.55182641 -0.02948413 93.06246726 -0.0164575 109.5731827 0.00508934 C123.70159186 0.02295724 137.82986949 0.01985218 151.95827627 0.0014143 C168.41498331 -0.02005239 184.87161239 -0.02838581 201.32833147 -0.01613665 C203.08733446 -0.01486262 204.84633747 -0.01360513 206.60534048 -0.01236439 C207.47052103 -0.01174729 208.33570158 -0.01113018 209.22709972 -0.01049438 C215.28730158 -0.00705883 221.34745348 -0.01283083 227.40764761 -0.0222826 C234.80568425 -0.0335687 242.20355141 -0.03032504 249.60156894 -0.00915962 C253.36709498 0.00126278 257.13233975 0.0056259 260.89786291 -0.00775623 C297.84597719 -0.12796836 327.72032925 8.14005281 354.60769033 34.46039867 C380.04378885 60.12155984 386.00416153 92.39384143 385.88058901 127.16520834 C385.87142445 130.99079555 385.88556389 134.81631386 385.89650869 138.64188671 C385.91417857 146.11006427 385.91050587 153.57807988 385.89885813 161.04626346 C385.88977824 167.12260519 385.88861936 173.19890194 385.8929534 179.27524853 C385.89356633 180.14420264 385.89417926 181.01315674 385.89481077 181.9084428 C385.89608983 183.67439677 385.89738669 185.44035072 385.89870113 187.20630467 C385.91007314 203.71703475 385.89704651 220.2276756 385.87549967 236.73839104 C385.85763177 250.8668002 385.86073683 264.99507783 385.87917471 279.12348461 C385.9006414 295.58019165 385.90897482 312.03682073 385.89672565 328.49353981 C385.89545163 330.2525428 385.89419414 332.01154581 385.8929534 333.77054882 C385.89233629 334.63572937 385.89171919 335.50090992 385.89108339 336.39230806 C385.88764783 342.45250992 385.89341983 348.51266182 385.90287161 354.57285595 C385.91415771 361.97089259 385.91091405 369.36875974 385.88974863 376.76677728 C385.87932623 380.53230331 385.8749631 384.29754809 385.88834524 388.06307125 C386.00855737 425.01118553 377.7405362 454.88553759 351.42019033 481.77289867 C325.75902917 507.20899719 293.48674758 513.16936987 258.71538067 513.04579735 C254.88979346 513.03663279 251.06427515 513.05077223 247.2387023 513.06171703 C239.77052474 513.07938691 232.30250912 513.07571421 224.83432555 513.06406647 C218.75798382 513.05498658 212.68168707 513.0538277 206.60534048 513.05816174 C205.73638637 513.05877467 204.86743226 513.0593876 203.97214621 513.06001911 C202.20619224 513.06129817 200.44023828 513.06259503 198.67428434 513.06390947 C182.16355426 513.07528148 165.65291341 513.06225485 149.14219797 513.04070801 C135.01378881 513.02284011 120.88551118 513.02594517 106.7571044 513.04438305 C90.30039736 513.06584974 73.84376828 513.07418316 57.3870492 513.06193399 C55.62804621 513.06065997 53.8690432 513.05940248 52.11004019 513.05816174 C51.24485964 513.05754463 50.37967909 513.05692753 49.48828095 513.05629173 C43.42807908 513.05285617 37.36792718 513.05862817 31.30773306 513.06807995 C23.90969642 513.07936605 16.51182926 513.07612239 9.11381173 513.05495697 C5.34828569 513.04453457 1.58304092 513.04017144 -2.18248224 513.05355358 C-39.13059652 513.17376571 -69.00494859 504.90574454 -95.89230967 478.58539867 C-121.32840818 452.92423751 -127.28878086 420.65195592 -127.16520834 385.88058901 C-127.15604378 382.0550018 -127.17018322 378.22948349 -127.18112803 374.40391064 C-127.1987979 366.93573308 -127.19512521 359.46771746 -127.18347746 351.99953389 C-127.17439757 345.92319216 -127.17323869 339.84689541 -127.17757273 333.77054882 C-127.17818566 332.90159471 -127.17879859 332.0326406 -127.1794301 331.13735455 C-127.18070916 329.37140058 -127.18200602 327.60544662 -127.18332046 325.83949268 C-127.19469247 309.3287626 -127.18166584 292.81812175 -127.160119 276.30740631 C-127.1422511 262.17899715 -127.14535616 248.05071952 -127.16379404 233.92231274 C-127.18526073 217.4656057 -127.19359415 201.00897662 -127.18134499 184.55225754 C-127.18007096 182.79325455 -127.17881347 181.03425154 -127.17757273 179.27524853 C-127.17695563 178.41006798 -127.17633852 177.54488743 -127.17570272 176.65348929 C-127.17226717 170.59328742 -127.17803917 164.53313552 -127.18749094 158.4729414 C-127.19877704 151.07490476 -127.19553338 143.6770376 -127.17436796 136.27902007 C-127.16394556 132.51349403 -127.15958244 128.74824926 -127.17296457 124.9827261 C-127.2931767 88.03461182 -119.02515553 58.16025975 -92.70480967 31.27289867 C-67.0436485 5.83680016 -34.77136691 -0.12357252 0 0 Z " fill="#3154F5" transform="translate(126.64230966567993,-0.5228986740112305)"></path><path _ngcontent-ng-c1076576952="" d="M0 0 C1.04285156 0.55300781 2.08570313 1.10601562 3.16015625 1.67578125 C38.56765647 21.22221418 63.79065133 55.98290908 76 94 C77.70206785 99.93126974 78.93172174 105.92653244 80 112 C80.33644531 113.80404297 80.33644531 113.80404297 80.6796875 115.64453125 C84.59638213 139.97632597 83.07802612 168.81955956 73.75 191.875 C69.90900243 201.77120536 72.31245111 212.24925196 74.4375 222.3125 C82.21195563 260.40079943 82.21195563 260.40079943 73 275 C68.7826014 281.21621531 63.85094559 285.00058104 57 288 C55.91138672 288.47953125 55.91138672 288.47953125 54.80078125 288.96875 C37.76375 295.21662564 17.43651806 289.27713622 0.2890625 286.37109375 C-7.64301531 285.47614435 -13.29795349 286.03622602 -20.625 289.25 C-28.65836988 292.55263528 -36.49031108 295.13769726 -45 297 C-45.66950684 297.14953125 -46.33901367 297.2990625 -47.02880859 297.453125 C-68.03810422 301.96936923 -91.06595847 301.89747443 -112 297 C-112.82870605 296.80664062 -113.65741211 296.61328125 -114.51123047 296.4140625 C-149.39479001 287.95585985 -182.28728038 267.88532358 -204 239 C-204.39783691 238.47712402 -204.79567383 237.95424805 -205.20556641 237.41552734 C-231.23542004 203.01712146 -242.25788664 161.52012088 -237.23095703 118.60400391 C-232.91027122 87.7546628 -220.05589729 59.70881028 -200 36 C-199.55930176 35.47809082 -199.11860352 34.95618164 -198.66455078 34.41845703 C-172.3810588 3.6910376 -133.81615011 -16.2709723 -93.4987793 -19.83666992 C-60.7580752 -21.97673158 -28.8351402 -15.84677601 0 0 Z " fill="#3154F4" transform="translate(334,109)"></path><path _ngcontent-ng-c1076576952="" d="M0 0 C1.04285156 0.55300781 2.08570313 1.10601562 3.16015625 1.67578125 C38.56765647 21.22221418 63.79065133 55.98290908 76 94 C77.70206785 99.93126974 78.93172174 105.92653244 80 112 C80.33644531 113.80404297 80.33644531 113.80404297 80.6796875 115.64453125 C84.59638213 139.97632597 83.07802612 168.81955956 73.75 191.875 C69.90900243 201.77120536 72.31245111 212.24925196 74.4375 222.3125 C82.21195563 260.40079943 82.21195563 260.40079943 73 275 C68.7826014 281.21621531 63.85094559 285.00058104 57 288 C55.91138672 288.47953125 55.91138672 288.47953125 54.80078125 288.96875 C37.76375 295.21662564 17.43651806 289.27713622 0.2890625 286.37109375 C-7.64301531 285.47614435 -13.29795349 286.03622602 -20.625 289.25 C-28.65836988 292.55263528 -36.49031108 295.13769726 -45 297 C-45.66950684 297.14953125 -46.33901367 297.2990625 -47.02880859 297.453125 C-68.03810422 301.96936923 -91.06595847 301.89747443 -112 297 C-112.82870605 296.80664062 -113.65741211 296.61328125 -114.51123047 296.4140625 C-149.39479001 287.95585985 -182.28728038 267.88532358 -204 239 C-204.39783691 238.47712402 -204.79567383 237.95424805 -205.20556641 237.41552734 C-231.23542004 203.01712146 -242.25788664 161.52012088 -237.23095703 118.60400391 C-232.91027122 87.7546628 -220.05589729 59.70881028 -200 36 C-199.55930176 35.47809082 -199.11860352 34.95618164 -198.66455078 34.41845703 C-172.3810588 3.6910376 -133.81615011 -16.2709723 -93.4987793 -19.83666992 C-60.7580752 -21.97673158 -28.8351402 -15.84677601 0 0 Z M-161 61 C-184.14530889 87.27170855 -193.73576153 117.32609712 -192 152 C-190.23117759 174.68174585 -179.90808502 197.00478308 -165 214 C-164.37609375 214.75539063 -163.7521875 215.51078125 -163.109375 216.2890625 C-147.83609306 234.35623748 -125.80845225 246.51825846 -103 252 C-101.73929688 252.33837891 -101.73929688 252.33837891 -100.453125 252.68359375 C-75.2901536 258.49351549 -48.9596064 252.17556718 -25.93823242 242.09741211 C-20.87114358 239.99587471 -16.40167534 239.49621401 -10.9375 239.5625 C-10.08768555 239.56572266 -9.23787109 239.56894531 -8.36230469 239.57226562 C-0.38628387 239.73993841 7.32251319 241.01483645 15.13305664 242.57641602 C20.54914505 243.65387955 25.47510865 244.20750766 31 244 C31.2840457 238.81616605 30.50198056 234.49508075 29.21972656 229.4777832 C24.30064883 209.98001411 23.78370741 192.387441 31.2421875 173.609375 C41.5428004 147.54914931 36.72531346 117.01977291 26 92 C13.29373311 64.13598539 -10.71595401 43.40699074 -38.98828125 32.46875 C-81.30258892 16.68885358 -129.81570373 28.56432747 -161 61 Z " fill="#E7F3FE" transform="translate(334,109)"></path><path _ngcontent-ng-c1076576952="" d="M0 0 C2.875 2.25 2.875 2.25 5 5 C5 6.32 5 7.64 5 9 C6.59654419 8.9685791 6.59654419 8.9685791 8.2253418 8.93652344 C12.18549066 8.86396038 16.1455811 8.81814149 20.10620117 8.78027344 C21.81821586 8.76019495 23.53016228 8.73292608 25.24194336 8.69824219 C27.70704008 8.64955599 30.1712279 8.62699427 32.63671875 8.609375 C33.39836838 8.58872986 34.16001801 8.56808472 34.94474792 8.54681396 C38.69058531 8.54524295 40.79091534 8.8667858 43.98120117 10.89941406 C46.14327755 13.14908212 46.68483545 13.93642521 46.625 17 C46.40460367 20.19276847 46.06973588 20.91547166 43.9375 23.5 C40.3957736 25.30854114 37.92556076 25.30788712 34 25 C33.814375 25.76957031 33.814375 25.76957031 33.625 26.5546875 C29.5240283 41.77954495 21.78291827 55.74569483 13.90454102 69.29272461 C12.8550849 71.16022861 12.8550849 71.16022861 12 74 C12.845625 74.680625 13.69125 75.36125 14.5625 76.0625 C17 79 17 79 17.125 82.5625 C15.78240253 86.66488116 14.82125828 88.00630003 11 90 C7.42015933 89.80473596 4.45091475 89.15350289 1.0625 88 C-2.59588486 88 -2.84443843 88.49553577 -5.375 90.9375 C-15.25833339 100.38536084 -30.00054392 105.78810926 -43.5 106.4375 C-46.63763575 106.316628 -47.82453753 106.10698931 -50.5625 104.4375 C-52.50090068 101.15064668 -53 98.8194882 -53 95 C-51.421875 92.328125 -51.421875 92.328125 -49 90 C-45.890625 89.35546875 -45.890625 89.35546875 -42.25 89.1875 C-35.90158355 88.66788998 -30.85300068 86.95402377 -25.1875 84.0625 C-24.50010742 83.71405029 -23.81271484 83.36560059 -23.10449219 83.0065918 C-19.85299465 81.27057414 -18.07699521 80.11549282 -16 77 C-16.68964844 76.36835938 -17.37929687 75.73671875 -18.08984375 75.0859375 C-25.48612901 68.0447551 -30.82471403 60.81335829 -36 52 C-36.3707666 51.38987061 -36.7415332 50.77974121 -37.12353516 50.15112305 C-39.70477026 45.82402813 -40.76615268 43.0757615 -40 38 C-38.4375 35.5625 -38.4375 35.5625 -36 34 C-31.93153158 33.33425062 -29.90731624 33.36487863 -26.5 35.75 C-23.3827841 39.33277412 -21.29130704 43.66373387 -18.97265625 47.78125 C-15.35447178 53.68498069 -10.89656254 59.10343746 -6 64 C-4.00503552 64.13498245 -4.00503552 64.13498245 -2 63 C-0.01091688 60.37063975 -0.01091688 60.37063975 1.75 57 C2.25889771 56.07852173 2.25889771 56.07852173 2.77807617 55.13842773 C8.08395819 45.3696999 12.63787949 35.21761409 17 25 C16.19677811 25.01110306 15.39355621 25.02220612 14.56599426 25.03364563 C6.98879159 25.13391613 -0.58808851 25.20999892 -8.16578197 25.25906086 C-12.06141191 25.28513253 -15.95649273 25.32048427 -19.85180664 25.37719727 C-23.61252026 25.43160664 -27.37270644 25.46143883 -31.13378334 25.47438622 C-32.56714492 25.48361035 -34.00047828 25.50162371 -35.43361473 25.52865028 C-37.44398106 25.56504759 -39.45488047 25.56704327 -41.46557617 25.56762695 C-42.60919113 25.57873001 -43.75280609 25.58983307 -44.93107605 25.60127258 C-48.97015835 24.80992373 -50.45714784 23.16507562 -53 20 C-53.625 17 -53.625 17 -53 14 C-51.02062095 11.37393853 -49.43493147 9.33204429 -46.11923218 8.56478882 C-43.86903998 8.42176827 -41.67148278 8.43749615 -39.41796875 8.51171875 C-38.60378983 8.51879349 -37.7896109 8.52586823 -36.95075989 8.53315735 C-34.36205357 8.56104402 -31.77554727 8.62376684 -29.1875 8.6875 C-27.42776572 8.7125905 -25.66799737 8.73540236 -23.90820312 8.75585938 C-19.60462704 8.81085128 -15.3026859 8.89708008 -11 9 C-10.86980469 8.04867187 -10.73960937 7.09734375 -10.60546875 6.1171875 C-10 3 -10 3 -8.3125 1.125 C-5.21507874 -0.38185358 -3.40864082 -0.55651279 0 0 Z " fill="#F9F9FB" transform="translate(238,194)"></path><path _ngcontent-ng-c1076576952="" d="M0 0 C0.99 -0.03287109 0.99 -0.03287109 2 -0.06640625 C6.75986783 1.43034906 9.32338392 7.61027033 11.6875 11.69140625 C12.19694908 12.56572296 12.19694908 12.56572296 12.71669006 13.45770264 C13.81517642 15.34448325 14.90799797 17.2344601 16 19.125 C17.5174491 21.74600378 19.03706353 24.36573831 20.55859375 26.984375 C20.93535751 27.6333223 21.31212128 28.28226959 21.70030212 28.95088196 C23.99675317 32.89032389 26.35662295 36.78051464 28.78515625 40.640625 C29.34396484 41.53579834 29.90277344 42.43097168 30.47851562 43.35327148 C31.50307184 44.9843814 32.54130806 46.60701212 33.59570312 48.21899414 C36.75345168 53.2797901 37.67185772 56.58684236 37 62.5625 C35.4375 65.0625 35.4375 65.0625 33 66.5625 C29.5 67.0625 29.5 67.0625 26 66.5625 C23.31341986 64.45680205 21.89932116 62.41148175 20 59.5625 C18.15274772 59.0892707 18.15274772 59.0892707 16.00927734 59.13012695 C15.18857758 59.11033279 14.36787781 59.09053864 13.52230835 59.07014465 C12.63580597 59.06375473 11.74930359 59.05736481 10.8359375 59.05078125 C9.92872955 59.03283005 9.02152161 59.01487885 8.08682251 58.99638367 C5.18292928 58.94210573 2.279202 58.90832927 -0.625 58.875 C-2.59116902 58.84184233 -4.55731609 58.80735413 -6.5234375 58.77148438 C-11.34883888 58.68636935 -16.17418955 58.61964194 -21 58.5625 C-21.29390625 59.35011719 -21.5878125 60.13773437 -21.890625 60.94921875 C-23.18547097 63.99940169 -24.08226066 65.02258202 -27 66.5625 C-29.9375 67.0625 -29.9375 67.0625 -33 66.5625 C-36.10226111 64.2695244 -37.76734159 62.83346867 -38.47265625 58.98046875 C-37.77045104 53.90253848 -35.25178391 50.30144523 -32.5625 46 C-31.37621535 44.05423146 -30.19139947 42.10756693 -29.0078125 40.16015625 C-28.36618164 39.11102051 -27.72455078 38.06188477 -27.06347656 36.98095703 C-24.82992024 33.28073748 -22.65399704 29.55098365 -20.4921875 25.80859375 C-20.11362106 25.15485275 -19.73505463 24.50111176 -19.34501648 23.82756042 C-17.83589913 21.22143014 -16.32681201 18.61533788 -14.82693481 16.00387573 C-13.77450479 14.17365374 -12.71424653 12.34817521 -11.65234375 10.5234375 C-11.04382568 9.46946777 -10.43530762 8.41549805 -9.80834961 7.32958984 C-5.01191602 -0.0097889 -5.01191602 -0.0097889 0 0 Z " fill="#F9F9FB" transform="translate(297,233.4375)"></path><path _ngcontent-ng-c1076576952="" d="M0 0 C3.32859708 3.04875927 5.50435293 6.21910958 7.75 10.125 C8.67039062 11.70667969 8.67039062 11.70667969 9.609375 13.3203125 C11 16 11 16 11 18 C4.07 18 -2.86 18 -10 18 C-6.72221994 11.96590489 -3.43533637 5.94577449 0 0 Z " fill="#395AF6" transform="translate(296,258)"></path></svg></app-icon-en><!----><!----><!----><!----><!----><!----><!----></app-icon-svg></div><div class="capsule-container btn-animated hidden top ng-star-inserted"><div class="icon-other-item"><app-popover-close-icon class="icon-other-item-inner" _nghost-ng-c906546542=""><svg _ngcontent-ng-c906546542="" width="20px" height="20px" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g _ngcontent-ng-c906546542="" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><g _ngcontent-ng-c906546542="" transform="translate(-131.000000, -21.000000)" fill="#D8D8D8" fill-rule="nonzero"><path _ngcontent-ng-c906546542="" d="M141,38.5 C142.027467,38.5 142.992625,38.3040712 143.895473,37.9122137 C144.798321,37.5203562 145.595626,36.9796438 146.287386,36.2900763 C146.979145,35.6005089 147.520855,34.802799 147.912513,33.8969466 C148.304171,32.9910941 148.5,32.024173 148.5,30.9961832 C148.5,29.9681934 148.302899,29.0025445 147.908698,28.0992366 C147.514496,27.1959288 146.972787,26.3982188 146.283571,25.7061069 C145.594354,25.0139949 144.79705,24.4732824 143.891658,24.0839695 C142.986267,23.6946565 142.019837,23.5 140.99237,23.5 C139.96999,23.5 139.006104,23.6946565 138.100712,24.0839695 C137.19532,24.4732824 136.398016,25.0139949 135.7088,25.7061069 C135.019583,26.3982188 134.479145,27.1959288 134.087487,28.0992366 C133.695829,29.0025445 133.5,29.9681934 133.5,30.9961832 C133.5,32.024173 133.695829,32.9910941 134.087487,33.8969466 C134.479145,34.802799 135.019583,35.6005089 135.7088,36.2900763 C136.398016,36.9796438 137.19532,37.5203562 138.100712,37.9122137 C139.006104,38.3040712 139.972533,38.5 141,38.5 Z M141,36.9198473 C140.181078,36.9198473 139.413021,36.7671756 138.695829,36.4618321 C137.978637,36.1564885 137.349186,35.7328244 136.807477,35.1908397 C136.265768,34.648855 135.842319,34.019084 135.537131,33.3015267 C135.231943,32.5839695 135.079349,31.8155216 135.079349,30.9961832 C135.079349,30.1768448 135.231943,29.4083969 135.537131,28.6908397 C135.842319,27.9732824 136.265768,27.3435115 136.807477,26.8015267 C137.349186,26.259542 137.977365,25.8358779 138.692014,25.5305344 C139.406663,25.2251908 140.173449,25.0725191 140.99237,25.0725191 C141.816378,25.0725191 142.586979,25.2251908 143.304171,25.5305344 C144.021363,25.8358779 144.650814,26.259542 145.192523,26.8015267 C145.734232,27.3435115 146.157681,27.9732824 146.462869,28.6908397 C146.768057,29.4083969 146.920651,30.1768448 146.920651,30.9961832 C146.920651,31.8155216 146.768057,32.5839695 146.462869,33.3015267 C146.157681,34.019084 145.734232,34.648855 145.192523,35.1908397 C144.650814,35.7328244 144.022635,36.1564885 143.307986,36.4618321 C142.593337,36.7671756 141.824008,36.9198473 141,36.9198473 Z M138.66531,34.019084 C138.863683,34.019084 139.02645,33.9503817 139.153611,33.8129771 L140.99237,31.9732824 L142.846389,33.8129771 C142.978637,33.9503817 143.143947,34.019084 143.342319,34.019084 C143.530519,34.019084 143.690743,33.9529262 143.822991,33.8206107 C143.955239,33.6882952 144.021363,33.5279898 144.021363,33.3396947 C144.021363,33.1564885 143.952696,32.9936387 143.815361,32.851145 L141.968973,31.0038168 L143.822991,29.148855 C143.960326,29.0114504 144.028993,28.8536896 144.028993,28.6755725 C144.028993,28.4821883 143.961597,28.3193384 143.826806,28.1870229 C143.692014,28.0547074 143.530519,27.9885496 143.342319,27.9885496 C143.159207,27.9885496 142.996439,28.0572519 142.854018,28.1946565 L140.99237,30.0419847 L139.145982,28.2022901 C139.01882,28.0699746 138.858596,28.0038168 138.66531,28.0038168 C138.472024,28.0038168 138.309257,28.0687023 138.177009,28.1984733 C138.044761,28.3282443 137.978637,28.4872774 137.978637,28.6755725 C137.978637,28.8638677 138.047304,29.0216285 138.184639,29.148855 L140.031027,31.0038168 L138.184639,32.8587786 C138.047304,32.9910941 137.978637,33.1513995 137.978637,33.3396947 C137.978637,33.5279898 138.044761,33.6882952 138.177009,33.8206107 C138.309257,33.9529262 138.472024,34.019084 138.66531,34.019084 Z"></path></g></g></svg></app-popover-close-icon></div><div class="divider"></div><div class="icon-other-item"><app-popover-wordhint-icon class="icon-other-item-inner" _nghost-ng-c3362076685=""><svg _ngcontent-ng-c3362076685="" width="20px" height="20px" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g _ngcontent-ng-c3362076685="" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><g _ngcontent-ng-c3362076685="" transform="translate(-131.000000, -52.000000)" fill="#D8D8D8" fill-rule="nonzero" class="inner"><path _ngcontent-ng-c3362076685="" d="M145,54.5 C146.656854,54.5 148,55.8431458 148,57.5 L148,66.5 C148,68.1568542 146.656854,69.5 145,69.5 L137,69.5 C135.343146,69.5 134,68.1568542 134,66.5 L134,57.5 C134,55.8431458 135.343146,54.5 137,54.5 L145,54.5 Z M145,55.94 L137,55.94 C136.1863,55.94 135.518107,56.5629875 135.446375,57.3580082 L135.44,57.5 L135.44,66.5 C135.44,67.3136995 136.062987,67.9818925 136.858008,68.0536248 L137,68.06 L145,68.06 C145.8137,68.06 146.481893,67.4370125 146.553625,66.6419918 L146.56,66.5 L146.56,57.5 C146.56,56.6863005 145.937013,56.0181075 145.141992,55.9463752 L145,55.94 Z M144.185468,59.7 C144.285468,59.7 144.368801,59.7133333 144.435468,59.74 C144.502134,59.7666667 144.555468,59.8 144.595468,59.84 C144.635468,59.88 144.663801,59.9233333 144.680468,59.97 C144.697134,60.0166667 144.708801,60.06 144.715468,60.1 C144.728801,60.1533333 144.722134,60.2333333 144.695468,60.34 C144.668801,60.4466667 144.642134,60.5366667 144.615468,60.61 L143.275468,64.62 C143.222134,64.7933333 143.142134,64.9333333 143.035468,65.04 C142.928801,65.1466667 142.802134,65.2 142.655468,65.2 C142.455468,65.2 142.300468,65.1266667 142.190468,64.98 C142.080468,64.8333333 141.998801,64.6733333 141.945468,64.5 L141.105468,61.67 L140.225468,64.5 C140.165468,64.6866667 140.082134,64.85 139.975468,64.99 C139.868801,65.13 139.722134,65.2 139.535468,65.2 C139.408801,65.2 139.288801,65.15 139.175468,65.05 C139.062134,64.95 138.972134,64.8033333 138.905468,64.61 L137.585468,60.61 C137.558801,60.5366667 137.532134,60.4466667 137.505468,60.34 C137.478801,60.2333333 137.472134,60.1533333 137.485468,60.1 C137.492134,60.06 137.503801,60.0166667 137.520468,59.97 C137.537134,59.9233333 137.565468,59.88 137.605468,59.84 C137.645468,59.8 137.698801,59.7666667 137.765468,59.74 C137.832134,59.7133333 137.915468,59.7 138.015468,59.7 C138.148801,59.7 138.268801,59.74 138.375468,59.82 C138.482134,59.9 138.555468,60.0066667 138.595468,60.14 L139.535468,63.31 L140.505468,60.19 C140.552134,60.05 140.630468,59.9333333 140.740468,59.84 C140.850468,59.7466667 140.972134,59.7 141.105468,59.7 C141.238801,59.7 141.360468,59.745 141.470468,59.835 C141.580468,59.925 141.658801,60.0433333 141.705468,60.19 L142.675468,63.3 L143.605468,60.14 C143.645468,60.0066667 143.718801,59.9 143.825468,59.82 C143.932134,59.74 144.052134,59.7 144.185468,59.7 Z"></path></g></g></svg></app-popover-wordhint-icon></div><div class="divider"></div><div class="icon-other-item"><app-popover-setting-icon class="icon-other-item-inner" _nghost-ng-c3157154270=""><svg _ngcontent-ng-c3157154270="" width="20px" height="20px" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g _ngcontent-ng-c3157154270="" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><g _ngcontent-ng-c3157154270="" transform="translate(-131.000000, -85.000000)" fill="#D8D8D8" fill-rule="nonzero"><path _ngcontent-ng-c3157154270="" d="M139.136774,88.0240194 C140.344842,87.3253269 141.833419,87.3253269 143.041487,88.0240194 L143.041487,88.0240194 L146.226882,89.8663088 C147.43452,90.5647521 148.178261,91.8551917 148.178261,93.2515138 L148.178261,93.2515138 L148.178261,96.9360926 C148.178261,98.3324148 147.43452,99.6228544 146.226882,100.321298 L146.226882,100.321298 L143.041487,102.163587 C141.833419,102.86228 140.344842,102.86228 139.136774,102.163587 L139.136774,102.163587 L135.951379,100.321298 C134.743741,99.6228543 134,98.3324148 134,96.9360926 L134,96.9360926 L134,93.2515138 C134,91.8551917 134.743741,90.5647521 135.951379,89.8663089 L135.951379,89.8663089 Z M142.290509,89.3224922 C141.547039,88.8925026 140.631222,88.8925026 139.887752,89.3224922 L139.887752,89.3224922 L136.702357,91.1647816 C135.958456,91.5950205 135.5,92.3904716 135.5,93.2515138 L135.5,93.2515138 L135.5,96.9360926 C135.5,97.7971349 135.958456,98.5925859 136.702357,99.0228249 L136.702357,99.0228249 L139.887752,100.865114 C140.631222,101.295104 141.547039,101.295104 142.290509,100.865114 L142.290509,100.865114 L145.475904,99.0228249 C146.219805,98.5925859 146.678261,97.7971349 146.678261,96.9360926 L146.678261,96.9360926 L146.678261,93.2515138 C146.678261,92.3904716 146.219805,91.5950205 145.475904,91.1647816 L145.475904,91.1647816 Z M141.068876,92.0208913 C142.764062,92.0208913 144.137752,93.3969725 144.137752,95.0938032 C144.137752,96.7906339 142.764062,98.1667151 141.068876,98.1667151 C139.37369,98.1667151 138,96.7906339 138,95.0938032 C138,93.3969725 139.37369,92.0208913 141.068876,92.0208913 Z M141.068876,93.5208913 C140.202702,93.5208913 139.5,94.2248163 139.5,95.0938032 C139.5,95.9627902 140.202702,96.6667151 141.068876,96.6667151 C141.93505,96.6667151 142.637752,95.9627902 142.637752,95.0938032 C142.637752,94.2248163 141.93505,93.5208913 141.068876,93.5208913 Z"></path></g></g></svg></app-popover-setting-icon></div></div><!----></div><!----><style>.eudic-chrome-extension-inner-icon[_ngcontent-ng-c3424759930]{display:flex;width:100%;height:100%}</style><style>g.inner[_ngcontent-ng-c3362076685]{fill:#d8d8d8}g.inner.checked[_ngcontent-ng-c3362076685]{fill:#1890ff}</style><style>svg[_ngcontent-ng-c1076576952]{width:100%;height:100%}</style></template></app-mobile-popup-menu><!----><!----></eusoft-chrome-extension-root-en></html>

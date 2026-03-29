@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>病理科运营分析平台</title>
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<div class="app-container">
+  <header class="app-header">
+    <h1>病理科运营分析平台</h1>
+    <p>上传月度运营数据 Excel，自动生成可视化分析报告</p>
+  </header>
+
+  <main class="app-main">
+    <section class="upload-section">
+      <h2>上传数据文件</h2>
+
+      
+
+      <form action="/upload" method="POST" enctype="multipart/form-data" class="upload-form">
+        <div class="file-drop" id="fileDrop">
+          <div class="file-drop-icon">&#128196;</div>
+          <p class="file-drop-text">拖拽 Excel 文件到此处，或点击选择文件</p>
+          <p class="file-drop-hint">支持 .xlsx 格式 | 最大 20MB</p>
+          <input type="file" name="datafile" accept=".xlsx,.xls" id="fileInput" required>
+        </div>
+        <div class="file-name" id="fileName"></div>
+        <button type="submit" class="btn btn-primary" id="btnUpload" disabled>
+          开始分析
+        </button>
+      </form>
+
+      <div class="template-download">
+        <a href="/template" class="btn btn-outline">下载 Excel 模板</a>
+        <span class="template-hint">首次使用？先下载模板，按格式填写数据后上传</span>
+      </div>
+    </section>
+
+    
+    <section class="result-section">
+      <h2>分析结果：月病理科 — 2026年2月</h2>
+
+      <div class="result-summary">
+        <div class="summary-card">
+          <span class="summary-label">科室人数</span>
+          <span class="summary-value">47</span>
+        </div>
+        <div class="summary-card">
+          <span class="summary-label">门诊量</span>
+          <span class="summary-value">475</span>
+        </div>
+        <div class="summary-card">
+          <span class="summary-label">发现</span>
+          <span class="summary-value">5 条</span>
+        </div>
+      </div>
+
+      
+      <div class="insights-preview">
+        <h3>关键发现</h3>
+        
+          <div class="insight-row insight-danger">
+            支收比 82.4%，超过 80% 警戒线，需重点控制成本
+          </div>
+        
+          <div class="insight-row insight-warning">
+            收入环比下降 6.9%
+          </div>
+        
+          <div class="insight-row insight-danger">
+            门诊量环比下降 28.4%，降幅显著需关注
+          </div>
+        
+          <div class="insight-row insight-info">
+            支出占比最大的类别为「售类消耗」
+          </div>
+        
+      </div>
+      
+
+      <div class="result-actions">
+        <a href="/preview" target="_blank" class="btn btn-primary">查看完整报告</a>
+        <a href="/export" class="btn btn-success">导出 HTML 报告</a>
+      </div>
+    </section>
+    
+  </main>
+
+  <footer class="app-footer">
+    <p>病理科运营分析平台 v1.0</p>
+  </footer>
+</div>
+
+<script>
+const drop = document.getElementById('fileDrop');
+const input = document.getElementById('fileInput');
+const nameEl = document.getElementById('fileName');
+const btn = document.getElementById('btnUpload');
+
+drop.addEventListener('click', () => input.click());
+drop.addEventListener('dragover', e => { e.preventDefault(); drop.classList.add('dragover'); });
+drop.addEventListener('dragleave', () => drop.classList.remove('dragover'));
+drop.addEventListener('drop', e => {
+  e.preventDefault();
+  drop.classList.remove('dragover');
+  if (e.dataTransfer.files.length) {
+    input.files = e.dataTransfer.files;
+    onFileSelected();
+  }
+});
+input.addEventListener('change', onFileSelected);
+
+function onFileSelected() {
+  if (input.files.length) {
+    nameEl.textContent = input.files[0].name;
+    btn.disabled = false;
+    btn.textContent = '开始分析';
+  }
+}
+
+document.querySelector('.upload-form')?.addEventListener('submit', function() {
+  btn.disabled = true;
+  btn.textContent = '分析中...';
+});
+</script>
+</body>
+</html>

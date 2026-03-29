@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>运营数据大屏<% if (analysis) { %> — <%= analysis.meta.department %><% } %></title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;600;700;800&family=Noto+Sans+SC:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/bigscreen.css">
+<script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
+</head>
+<% 
+function fmtMoney(v) {
+  if (v == null || v === undefined) return '--';
+  if (Math.abs(v) >= 10000) return (v / 10000).toFixed(2) + '万';
+  return v.toLocaleString('zh-CN') + '元';
+}
+function fmtPct(v) {
+  if (v == null) return '--';
+  return (v * 100).toFixed(1) + '%';
+}
+function fmtInt(v) {
+  if (v == null) return '--';
+  return Math.round(v).toLocaleString('zh-CN');
+}
+function momStr(c) {
+  if (c == null) return '';
+  var a = c >= 0 ? 'up' : 'down';
+  var t = (c >= 0 ? '↑ ' : '↓ ') + (Math.abs(c) * 100).toFixed(1) + '%';
+  return { cls: a, text: '环比 ' + t };
+}
+%>
+<body class="bs-body">
+<% if (!analysis) { %>
+  <div class="bs-empty">
+    <h1>运营数据大屏</h1>
+    <p>请先在首页上传月度 Excel，分析完成后即可在此查看全屏驾驶舱视图。</p>
+    <a href="/" class="bs-btn">返回上传页</a>
+  </div>
+<% } else { 
+  var s = analysis.summary;
+  var r = analysis.rankings;
+  var p = analysis.procurement;
+  var mi = momStr(s.income_mom_change);
+  var me = momStr(s.expense_mom_change);
+  if (me.text && s.expense_mom_change != null) {
+    me.cls = s.expense_mom_change <= 0 ? 'up' : 'down';
+  }
+  var mo = momStr(s.outpatient_mom_change);
+%>
+<div class="bs-root" id="bsRoot">
+  <header class="bs-header">
+    <div>
+      <h1 class="bs-title"><span>OPERATIONS</span><%= analysis.meta.department %> · 运营驾驶舱</h1>
+      <p class="bs-meta"><%= analysis.meta.year %>年<%= analysis.meta.month %>月 · 数据已加载</p>
+    </div>
+    <div class="bs-clock" id="bsClock">--:--:--</div>
+    <div class="bs-actions">
+      <button type="button" class="bs-btn" id="bsFs" title="全屏">⛶ 全屏</button>
+      <a href="/preview" target="_blank" class="bs-btn">报告</a>
+      <a href="/" class="bs-btn">首页</a>
+    </div>
+  </header>
+
+  <div class="bs-col bs-col-left">
+    <div class="bs-panel">
+      <div class="bs-panel-title">全院排名 · Rankings</div>
+      <div class="bs-panel-body bs-chip-list">
+        <div class="bs-chip"><span>患者满意度</span><strong><%= r.satisfaction_score != null ? r.satisfaction_score.toFixed(3) : '--' %></strong></div>
+        <div class="bs-chip"><span>满意度排名</span><strong><%= r.satisfaction_rank != null ? '#' + r.satisfaction_rank : '--' %></strong></div>
+        <div class="bs-chip"><span>综合增量排名</span><strong><%= r.change_rank != null ? '第' + r.change_rank + '名' : '--' %></strong></div>
+        <div class="bs-chip"><span>支收比</span><strong><%= r.cost_revenue_ratio != null ? r.cost_revenue_ratio.toFixed(3) : '--' %></strong></div>
+        <div class="bs-chip"><span>增量和</span><strong><%= r.total_change != null ? r.total_change.toFixed(3) : '--' %></strong></div>
+      </div>
+    </div>
+    <div class="bs-panel">
+      <div class="bs-panel-title">耗材概览 · Materials</div>
+      <div class="bs-panel-body bs-chip-list">
+        <div class="bs-chip"><span>采购总额</span><strong><%= fmtMoney(p.total_amount) %></strong></div>
+        <div class="bs-chip"><span>记录笔数</span><strong><%= p.total_count %> 笔</strong></div>
+        <div class="bs-chip"><span>活跃供应商</span><strong><%= Object.keys(p.supplier_distribution || {}).length %> 家</strong></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="bs-center">
+    <div class="bs-core">
+      <div class="bs-core-ring"></div>
+      <div class="bs-core-ring bs-core-ring2"></div>
+      <div class="bs-kpi-grid">
+        <div class="bs-kpi">
+          <div class="bs-kpi-label">计奖收入</div>
+          <div class="bs-kpi-value"><%= fmtMoney(s.total_income) %></div>
+          <% if (mi.text) { %><div class="bs-kpi-sub <%= mi.cls %>"><%= mi.text %></div><% } %>
+        </div>
+        <div class="bs-kpi">
+          <div class="bs-kpi-label">科室支出</div>
+          <div class="bs-kpi-value"><%= fmtMoney(s.total_expense) %></div>
+          <% if (me.text) { %><div class="bs-kpi-sub <%= me.cls %>"><%= me.text %></div><% } %>
+        </div>
+        <div class="bs-kpi">
+          <div class="bs-kpi-label">运营结余</div>
+          <div class="bs-kpi-value"><%= fmtMoney(s.operation_surplus) %></div>
+        </div>
+        <div class="bs-kpi">
+          <div class="bs-kpi-label">支收比</div>
+          <div class="bs-kpi-value"><%= s.cost_revenue_ratio != null ? fmtPct(s.cost_revenue_ratio) : '--' %></div>
+        </div>
+        <div class="bs-kpi">
+          <div class="bs-kpi-label">门诊量</div>
+          <div class="bs-kpi-value"><%= fmtInt(s.total_outpatient) %></div>
+          <% if (mo.text) { %><div class="bs-kpi-sub <%= mo.cls %>"><%= mo.text %></div><% } %>
+        </div>
+        <div class="bs-kpi">
+          <div class="bs-kpi-label">科室人数</div>
+          <div class="bs-kpi-value"><%= fmtInt(s.staff_count) %></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="bs-col bs-col-right">
+    <div class="bs-panel">
+      <div class="bs-panel-title">关键发现 · Insights</div>
+      <div class="bs-panel-body">
+        <% if (analysis.insights && analysis.insights.length) { %>
+          <% analysis.insights.slice(0, 8).forEach(function(ins) { %>
+            <div class="bs-insight"><b><%= ins.title %></b> <% if (ins.metric) { %><span style="color:#38bdf8"><%= ins.metric %></span><% } %> — <%= ins.message %></div>
+          <% }); %>
+        <% } else { %>
+          <div class="bs-insight">暂无自动洞察</div>
+        <% } %>
+      </div>
+    </div>
+    <div class="bs-panel">
+      <div class="bs-panel-title">效率快照 · Efficiency</div>
+      <div class="bs-panel-body bs-chip-list">
+        <% var ef = analysis.efficiency; %>
+        <div class="bs-chip"><span>人力成本占比</span><strong><%= ef.personnel_cost_ratio != null ? fmtPct(ef.personnel_cost_ratio) : '--' %></strong></div>
+        <div class="bs-chip"><span>百元卫材</span><strong><%= ef.consumable_per_100_income != null ? ef.consumable_per_100_income.toFixed(1) + '元' : '--' %></strong></div>
+        <div class="bs-chip"><span>人均月收入</span><strong><%= fmtMoney(ef.per_capita_income) %></strong></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="bs-bottom">
+    <div class="bs-chart-panel">
+      <h4>收入 · 支出趋势</h4>
+      <div id="bs-chart-line" class="bs-chart"></div>
+    </div>
+    <div class="bs-chart-panel">
+      <h4>支出结构</h4>
+      <div id="bs-chart-pie" class="bs-chart"></div>
+    </div>
+    <div class="bs-chart-panel">
+      <h4>门诊量</h4>
+      <div id="bs-chart-bar" class="bs-chart"></div>
+    </div>
+    <div class="bs-chart-panel">
+      <h4>支收比仪表</h4>
+      <div id="bs-chart-gauge" class="bs-chart"></div>
+    </div>
+  </div>
+</div>
+
+<script>window.__BS_DATA__ = <%- JSON.stringify(analysis).replace(/</g, '\\u003c') %>;</script>
+<script src="/js/bigscreen-charts.js"></script>
+<script>
+(function(){
+  function tick() {
+    var el = document.getElementById('bsClock');
+    if (!el) return;
+    var now = new Date();
+    el.textContent = now.toLocaleString('zh-CN', { hour12: false });
+  }
+  tick();
+  setInterval(tick, 1000);
+
+  document.getElementById('bsFs')?.addEventListener('click', function() {
+    var root = document.getElementById('bsRoot');
+    if (!document.fullscreenElement) {
+      (root || document.documentElement).requestFullscreen?.();
+    } else {
+      document.exitFullscreen?.();
+    }
+  });
+
+  if (window.__BS_DATA__) {
+    initBigScreen(window.__BS_DATA__);
+  }
+})();
+</script>
+<% } %>
+</body>
+</html>
