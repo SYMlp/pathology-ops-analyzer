@@ -7,6 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/css/style.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.2/html2pdf.bundle.min.js" defer></script>
 </head>
 <body>
 <div class="app">
@@ -113,15 +114,19 @@
 
     <% if (analysis && typeof reportBody !== 'undefined' && reportBody) { %>
     <style>.app { max-width: 1140px; transition: max-width 0.4s ease-out; }</style>
-    <section class="result-actions" style="margin-bottom: 24px; display: flex; gap: 12px; justify-content: center;">
+    <section class="result-actions" style="margin-bottom: 24px; display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
       <a href="/preview" target="_blank" class="btn btn-primary btn-lg" style="padding: 14px 32px">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 6px;"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
         全屏独立预览
       </a>
       <a href="/export" class="btn btn-success btn-lg" download style="padding: 14px 32px;">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 6px;"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-        下载页面报告
+        下载HTML报告
       </a>
+      <button id="btnPdf" class="btn btn-lg" style="padding: 14px 32px; background: #7c3a2d; color: #fff; border: none; cursor: pointer;">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 6px;"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+        导出PDF
+      </button>
     </section>
 
     <div class="embedded-report-container" style="background: #f8fafc; border-radius: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.06); border: 1px solid #e2e8f0; margin-bottom: 40px; overflow: hidden;">
@@ -179,6 +184,44 @@ document.getElementById('uploadForm')?.addEventListener('submit', function (e) {
   btn.style.pointerEvents = 'none';
   btn.style.opacity = '0.7';
 });
+
+// PDF export
+var pdfBtn = document.getElementById('btnPdf');
+if (pdfBtn) {
+  pdfBtn.addEventListener('click', function () {
+    var el = document.querySelector('.embedded-report-container');
+    if (!el) return alert('暂无报告内容');
+    var label = pdfBtn.textContent;
+    pdfBtn.textContent = '生成中…';
+    pdfBtn.disabled = true;
+    pdfBtn.style.opacity = '0.6';
+
+    // Expand all <details> so content appears in PDF
+    var details = el.querySelectorAll('details');
+    details.forEach(function(d){ d.setAttribute('open',''); });
+
+    var opt = {
+      margin:       [8, 4, 8, 4],
+      filename:     '运营分析报告.pdf',
+      image:        { type: 'jpeg', quality: 0.95 },
+      html2canvas:  { scale: 2, useCORS: true, scrollY: 0, windowWidth: 1100 },
+      jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' },
+      pagebreak:    { mode: ['avoid-all', 'css', 'legacy'] }
+    };
+
+    html2pdf().set(opt).from(el).save().then(function(){
+      pdfBtn.innerHTML = label;
+      pdfBtn.disabled = false;
+      pdfBtn.style.opacity = '';
+    }).catch(function(err){
+      console.error(err);
+      pdfBtn.innerHTML = label;
+      pdfBtn.disabled = false;
+      pdfBtn.style.opacity = '';
+      alert('PDF 导出失败: ' + err.message);
+    });
+  });
+}
 </script>
 </body>
 </html>
