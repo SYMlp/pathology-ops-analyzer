@@ -662,7 +662,7 @@ function efficiencySection(analysis) {
         <div class="eff-value">${fmtPct(ef.operation_margin)}</div><div class="eff-bench">&gt;10%</div>
       </div>
       <div class="eff-card eff-${statusOf(ef.award_cost_ratio, 0.7, 0.8)}">
-        <div class="eff-status"></div><div class="eff-label">全成本支收比<span class="tip-icon" title="科室支出合计 ÷ 科室计奖收入合计。医院标红核心指标，反映科室全口径成本对计奖收入的消耗比率。">?</span></div>
+        <div class="eff-status"></div><div class="eff-label">奖金支收比<span class="tip-icon" title="科室支出合计 ÷ 科室计奖收入合计。以计奖收入为基准的支收比，反映奖金分配视角下科室的成本消耗水平，是医院绩效考核的核心指标。">?</span></div>
         <div class="eff-value">${fmtPct(ef.award_cost_ratio)}</div><div class="eff-bench">≤70%</div>
       </div>
       <div class="eff-card eff-${ef.per_capita_surplus > 0 ? 'good' : 'bad'}">
