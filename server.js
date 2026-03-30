@@ -127,8 +127,9 @@ details .fold-body,details .insight-fold-body{display:block!important;padding:8p
     const { year, month, department } = latestAnalysis.meta;
     const filename = `${department}运营分析_${year}年${month}月.pdf`;
     res.setHeader('Content-Type', 'application/pdf');
+    res.setHeader('Content-Length', pdfBuffer.length);
     res.setHeader('Content-Disposition', `attachment; filename*=UTF-8''${encodeURIComponent(filename)}`);
-    res.send(pdfBuffer);
+    res.end(pdfBuffer);
   } catch (err) {
     console.error('PDF generation error:', err);
     res.status(500).send('PDF 生成失败: ' + err.message);
