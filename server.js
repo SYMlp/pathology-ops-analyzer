@@ -99,23 +99,27 @@ app.get('/pdf', async (req, res) => {
     const html = `<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-body{background:#fff;margin:0}
+body{background:#fff;margin:0;padding:0}
+.report{max-width:100%!important;padding:12px 20px 24px!important;margin:0!important}
+.report-container{max-width:100%!important}
 details{display:block!important}
 details>summary{display:none!important}
 details .fold-body,details .insight-fold-body{display:block!important;padding:8px 0}
 .btn-action,.header-actions{display:none!important}
+.report-header .btn-action{display:none!important}
 </style>
 </head><body>${body}</body></html>`;
 
     const page = await browser.newPage();
+    await page.setViewport({ width: 1200, height: 800 });
     await page.setContent(html, { waitUntil: 'networkidle0', timeout: 30000 });
-    // Wait for ECharts to render
-    await new Promise(r => setTimeout(r, 2000));
+    // Wait for ECharts and fonts to render
+    await new Promise(r => setTimeout(r, 2500));
 
     const pdfBuffer = await page.pdf({
       format: 'A4',
       landscape: true,
-      margin: { top: '8mm', right: '8mm', bottom: '8mm', left: '8mm' },
+      margin: { top: '6mm', right: '6mm', bottom: '6mm', left: '6mm' },
       printBackground: true,
     });
     await browser.close();
