@@ -97,8 +97,9 @@ app.get('/pdf', async (req, res) => {
     }
     const body = generateReportBody(latestAnalysis);
     const html = `<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
+/* System font fallback: ensures CJK characters render in Puppeteer without CDN */
+body,*{font-family:'Microsoft YaHei','PingFang SC','Hiragino Sans GB','SimHei','Noto Sans CJK SC',Arial,sans-serif!important}
 body{background:#fff;margin:0;padding:0}
 .report{max-width:100%!important;padding:12px 20px 24px!important;margin:0!important}
 .report-container{max-width:100%!important}
@@ -112,8 +113,9 @@ details .fold-body,details .insight-fold-body{display:block!important;padding:8p
 
     const page = await browser.newPage();
     await page.setViewport({ width: 1200, height: 800 });
-    await page.setContent(html, { waitUntil: 'networkidle0', timeout: 30000 });
-    // Wait for ECharts and fonts to render
+    // Use 'load' not 'networkidle0' — avoids hanging on failed CDN font requests
+    await page.setContent(html, { waitUntil: 'load', timeout: 30000 });
+    // Extra wait for ECharts canvas rendering
     await new Promise(r => setTimeout(r, 2500));
 
     const pdfBuffer = await page.pdf({
