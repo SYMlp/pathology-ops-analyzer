@@ -79,7 +79,22 @@ app.get('/preview', (req, res) => {
 app.get('/pdf', async (req, res) => {
   if (!latestAnalysis) return res.redirect('/');
   try {
-    const puppeteer = require('puppeteer');
+    let browser;
+    if (process.env.VERCEL) {
+      // Serverless: use lightweight @sparticuz/chromium + puppeteer-core
+      const chromium = require('@sparticuz/chromium');
+      const puppeteer = require('puppeteer-core');
+      browser = await puppeteer.launch({
+        args: chromium.args,
+        defaultViewport: chromium.defaultViewport,
+        executablePath: await chromium.executablePath(),
+        headless: chromium.headless,
+      });
+    } else {
+      // Local: use full puppeteer with bundled Chrome
+      const puppeteer = require('puppeteer');
+      browser = await puppeteer.launch({ headless: true, args: ['--no-sandbox', '--disable-setuid-sandbox'] });
+    }
     const body = generateReportBody(latestAnalysis);
     const html = `<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -92,7 +107,6 @@ details .fold-body,details .insight-fold-body{display:block!important;padding:8p
 </style>
 </head><body>${body}</body></html>`;
 
-    const browser = await puppeteer.launch({ headless: true, args: ['--no-sandbox', '--disable-setuid-sandbox'] });
     const page = await browser.newPage();
     await page.setContent(html, { waitUntil: 'networkidle0', timeout: 30000 });
     // Wait for ECharts to render
