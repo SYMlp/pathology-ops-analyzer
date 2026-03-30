@@ -751,13 +751,16 @@ function materialsSection(analysis) {
   const procItems = p.all_items || [];
   const procRows = procItems.map((v, i) => {
     const price = v.qty ? fmtMoney(v.amount / v.qty) : '-';
-    return `<tr><td class="r rank-num">${i+1}</td><td class="td-name"><div style="white-space:normal;word-break:break-all;">${v.name}</div></td><td class="r num">${v.qty||'-'}</td><td class="r num">${price}</td><td class="r num">${fmtMoney(v.amount)}</td></tr>`;
+    // Use td-ellipsis for truncation and val-trunc for custom hover tooltip
+    const safeName = (v.name||'').replace(/"/g, '&quot;');
+    return `<tr><td class="r rank-num">${i+1}</td><td class="td-name"><div class="td-ellipsis val-trunc" style="max-width: 220px; display: inline-block; vertical-align: middle; border-bottom: none;" title="${safeName}">${v.name}</div></td><td class="r num">${v.qty||'-'}</td><td class="r num">${price}</td><td class="r num">${fmtMoney(v.amount)}</td></tr>`;
   }).join('');
   
   const dispItems = d.all_items || [];
   const dispRows = dispItems.map((v, i) => {
     const price = v.qty ? fmtMoney(v.amount / v.qty) : '-';
-    return `<tr><td class="r rank-num">${i+1}</td><td class="td-name"><div style="white-space:normal;word-break:break-all;">${v.name}</div></td><td class="r num">${v.qty||'-'}</td><td class="r num">${price}</td><td class="r num">${fmtMoney(v.amount)}</td></tr>`;
+    const safeName = (v.name||'').replace(/"/g, '&quot;');
+    return `<tr><td class="r rank-num">${i+1}</td><td class="td-name"><div class="td-ellipsis val-trunc" style="max-width: 220px; display: inline-block; vertical-align: middle; border-bottom: none;" title="${safeName}">${v.name}</div></td><td class="r num">${v.qty||'-'}</td><td class="r num">${price}</td><td class="r num">${fmtMoney(v.amount)}</td></tr>`;
   }).join('');
 
   return `
