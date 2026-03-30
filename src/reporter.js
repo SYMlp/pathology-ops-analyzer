@@ -300,7 +300,7 @@ function chartScripts(analysis) {
   });
 
   return `
-<script src="https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js"></script>
+<script src="https://cdn.staticfile.net/echarts/5.5.0/echarts.min.js"></script>
 <script>
 setTimeout(() => {
 if (typeof echarts === 'undefined') return console.error('ECharts missed!');

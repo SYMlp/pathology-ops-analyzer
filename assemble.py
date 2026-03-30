@@ -86,7 +86,7 @@ function chartScripts(analysis) {
   if (suppPieData.length === 0) suppPieData.push({name:'暂无数据', value:1, itemStyle:{color:"#ccc"}});
 
   return `
-<script src="https://fastly.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js"></script>
+<script src="https://cdn.staticfile.net/echarts/5.5.0/echarts.min.js"></script>
 <script>
 setTimeout(() => {
 if (typeof echarts === 'undefined') return console.error('ECharts missed!');
