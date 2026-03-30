@@ -76,32 +76,45 @@ app.get('/preview', (req, res) => {
   res.send(html);
 });
 
-app.get('/pdf', (req, res) => {
+app.get('/pdf', async (req, res) => {
   if (!latestAnalysis) return res.redirect('/');
-  const body = generateReportBody(latestAnalysis);
-  // Render report with all <details> forced open and auto-print trigger
-  const html = `<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><title>运营分析报告 - PDF</title>
+  try {
+    const puppeteer = require('puppeteer');
+    const body = generateReportBody(latestAnalysis);
+    const html = `<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 body{background:#fff;margin:0}
 details{display:block!important}
 details>summary{display:none!important}
 details .fold-body,details .insight-fold-body{display:block!important;padding:8px 0}
 .btn-action,.header-actions{display:none!important}
-@media print{
-  @page{size:A4 landscape;margin:8mm}
-  body{-webkit-print-color-adjust:exact;print-color-adjust:exact}
-}
 </style>
-</head><body>
-${body}
-<script>
-window.addEventListener('load',function(){
-  // Wait for ECharts to finish rendering
-  setTimeout(function(){ window.print(); }, 1500);
-});
-<\/script>
-</body></html>`;
-  res.send(html);
+</head><body>${body}</body></html>`;
+
+    const browser = await puppeteer.launch({ headless: true, args: ['--no-sandbox', '--disable-setuid-sandbox'] });
+    const page = await browser.newPage();
+    await page.setContent(html, { waitUntil: 'networkidle0', timeout: 30000 });
+    // Wait for ECharts to render
+    await new Promise(r => setTimeout(r, 2000));
+
+    const pdfBuffer = await page.pdf({
+      format: 'A4',
+      landscape: true,
+      margin: { top: '8mm', right: '8mm', bottom: '8mm', left: '8mm' },
+      printBackground: true,
+    });
+    await browser.close();
+
+    const { year, month, department } = latestAnalysis.meta;
+    const filename = `${department}运营分析_${year}年${month}月.pdf`;
+    res.setHeader('Content-Type', 'application/pdf');
+    res.setHeader('Content-Disposition', `attachment; filename*=UTF-8''${encodeURIComponent(filename)}`);
+    res.send(pdfBuffer);
+  } catch (err) {
+    console.error('PDF generation error:', err);
+    res.status(500).send('PDF 生成失败: ' + err.message);
+  }
 });
 
 app.get('/template', async (req, res) => {
