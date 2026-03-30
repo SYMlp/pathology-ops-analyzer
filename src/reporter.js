@@ -748,11 +748,17 @@ function materialsSection(analysis) {
   const totalDisp = d.total_amount || 0;
   const suppliers = p.supplier_distribution ? Object.keys(p.supplier_distribution).length : 0;
   
+  const procItems = p.all_items || [];
+  const procRows = procItems.map((v, i) => `<tr><td class="r rank-num">${i+1}</td><td class="td-name"><div class="td-ellipsis" title="${v.name}">${v.name}</div></td><td class="r num">${v.qty||'-'}</td><td class="r num">${fmtMoney(v.amount)}</td></tr>`).join('');
+  
+  const dispItems = d.all_items || [];
+  const dispRows = dispItems.map((v, i) => `<tr><td class="r rank-num">${i+1}</td><td class="td-name"><div class="td-ellipsis" title="${v.name}">${v.name}</div></td><td class="r num">${v.qty||'-'}</td><td class="r num">${fmtMoney(v.amount)}</td></tr>`).join('');
+
   return `
   <section class="section section-compact">
     <div class="section-header section-header-inline">
-      <h2>五、物资明细</h2>
-      <span class="section-desc">Materials</span>
+      <h2>五、出库入库明细</h2>
+      <span class="section-desc">Inventory</span>
       <div class="section-strip">
         <span class="strip-item">采 <strong>${fmtMoney(totalProc)}</strong></span><span class="strip-sep">·</span>
         <span class="strip-item">发 <strong>${fmtMoney(totalDisp)}</strong></span><span class="strip-sep">·</span>
@@ -766,14 +772,40 @@ function materialsSection(analysis) {
     </div>
     <div class="grid-2 grid-tight">
       <div class="chart-card chart-card-sm">
-        <h3>采购入库 TOP</h3>
+        <h3>采购入库 TOP 10</h3>
         <div id="chart-procurement-top" class="chart-box" style="height: 280px;"></div>
       </div>
       <div class="chart-card chart-card-sm">
-        <h3>领用出库 TOP</h3>
+        <h3>领用出库 TOP 10</h3>
         <div id="chart-dispatch-top" class="chart-box" style="height: 280px;"></div>
       </div>
     </div>
+
+    <details class="report-fold" style="margin-top:20px;">
+      <summary class="fold-summary"><span class="fold-chevron"></span><span class="fold-title-text">参阅：当月出库入库完整明细表</span><span class="fold-hint">点击展开明细</span></summary>
+      <div class="fold-body">
+        <div class="grid-2 grid-tight" style="gap:20px;">
+          <div class="table-wrap tight">
+            <div class="table-inline-title">当月采购入库账单明细</div>
+            <div class="table-scroller">
+              <table class="data-table">
+                <thead><tr><th style="width:40px" class="c">排名</th><th>品名</th><th class="r">数量</th><th class="r">总金额</th></tr></thead>
+                <tbody>${procRows || '<tr><td colspan="4" class="c td-hint">暂无记录</td></tr>'}</tbody>
+              </table>
+            </div>
+          </div>
+          <div class="table-wrap tight">
+            <div class="table-inline-title">当月领用出库账单明细</div>
+            <div class="table-scroller">
+              <table class="data-table">
+                <thead><tr><th style="width:40px" class="c">排名</th><th>品名</th><th class="r">数量</th><th class="r">总金额</th></tr></thead>
+                <tbody>${dispRows || '<tr><td colspan="4" class="c td-hint">暂无记录</td></tr>'}</tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </details>
   </section>`;
 }
 

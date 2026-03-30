@@ -218,7 +218,7 @@ function buildWorkloadAnalysis(indicators, cm, pm) {
 
 function buildProcurementAnalysis(procurement) {
   if (!procurement?.length) {
-    return { total_amount: 0, total_count: 0, top_items: [], supplier_distribution: {} };
+    return { total_amount: 0, total_count: 0, top_items: [], all_items: [], supplier_distribution: {} };
   }
   const totalAmount = procurement.reduce((s, r) => s + (r.amount || r.subtotal || 0), 0);
   const byItem = {};
@@ -233,17 +233,19 @@ function buildProcurementAnalysis(procurement) {
     const s = r.supplier || '未知';
     bySupplier[s] = (bySupplier[s] || 0) + (r.amount || r.subtotal || 0);
   });
+  const allItems = Object.values(byItem).sort((a, b) => b.amount - a.amount);
   return {
     total_amount: totalAmount,
     total_count: procurement.length,
-    top_items: Object.values(byItem).sort((a, b) => b.amount - a.amount).slice(0, 10),
+    top_items: allItems.slice(0, 10),
+    all_items: allItems,
     supplier_distribution: bySupplier,
   };
 }
 
 function buildDispatchAnalysis(dispatch) {
   if (!dispatch?.length) {
-    return { total_amount: 0, total_count: 0, top_items: [] };
+    return { total_amount: 0, total_count: 0, top_items: [], all_items: [] };
   }
   const totalAmount = dispatch.reduce((s, r) => s + (r.amount || 0), 0);
   const byItem = {};
@@ -253,10 +255,12 @@ function buildDispatchAnalysis(dispatch) {
     byItem[name].amount += (r.amount || 0);
     byItem[name].qty    += (r.qty || 0);
   });
+  const allItems = Object.values(byItem).sort((a, b) => b.amount - a.amount);
   return {
     total_amount: totalAmount,
     total_count: dispatch.length,
-    top_items: Object.values(byItem).sort((a, b) => b.amount - a.amount).slice(0, 10),
+    top_items: allItems.slice(0, 10),
+    all_items: allItems,
   };
 }
 

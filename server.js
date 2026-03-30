@@ -81,7 +81,6 @@ app.get('/pdf', async (req, res) => {
   try {
     let browser;
     if (process.env.VERCEL) {
-      // Serverless: use lightweight @sparticuz/chromium + puppeteer-core
       const chromium = require('@sparticuz/chromium');
       const puppeteer = require('puppeteer-core');
       browser = await puppeteer.launch({
@@ -91,32 +90,33 @@ app.get('/pdf', async (req, res) => {
         headless: chromium.headless,
       });
     } else {
-      // Local: use full puppeteer with bundled Chrome
       const puppeteer = require('puppeteer');
       browser = await puppeteer.launch({ headless: true, args: ['--no-sandbox', '--disable-setuid-sandbox'] });
     }
-    const body = generateReportBody(latestAnalysis);
-    const html = `<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8">
-<style>
-/* System font fallback: ensures CJK characters render in Puppeteer without CDN */
-body,*{font-family:'Microsoft YaHei','PingFang SC','Hiragino Sans GB','SimHei','Noto Sans CJK SC',Arial,sans-serif!important}
-body{background:#fff;margin:0;padding:0}
-.report{max-width:100%!important;padding:12px 20px 24px!important;margin:0!important}
-.report-container{max-width:100%!important}
-details{display:block!important}
-details>summary{display:none!important}
-details .fold-body,details .insight-fold-body{display:block!important;padding:8px 0}
-.btn-action,.header-actions{display:none!important}
-.report-header .btn-action{display:none!important}
-</style>
-</head><body>${body}</body></html>`;
 
     const page = await browser.newPage();
     await page.setViewport({ width: 1200, height: 800 });
-    // Use 'load' not 'networkidle0' — avoids hanging on failed CDN font requests
-    await page.setContent(html, { waitUntil: 'load', timeout: 30000 });
-    // Extra wait for ECharts canvas rendering
-    await new Promise(r => setTimeout(r, 2500));
+
+    // Navigate to the live preview page — renders identically to the user's browser
+    const localPort = process.env.PORT || PORT;
+    await page.goto(`http://localhost:${localPort}/preview`, {
+      waitUntil: 'networkidle0',
+      timeout: 30000,
+    });
+
+    // Expand all collapsed sections
+    await page.evaluate(() => {
+      document.querySelectorAll('details').forEach(d => d.setAttribute('open', ''));
+    });
+
+    // Hide action buttons for clean PDF
+    await page.addStyleTag({ content: `
+      .btn-action, .header-actions, .report-header .btn-action { display:none!important }
+      .report { max-width:100%!important; padding:12px 20px 24px!important; margin:0!important }
+    `});
+
+    // Wait for ECharts to finish rendering after expansion
+    await new Promise(r => setTimeout(r, 2000));
 
     const pdfBuffer = await page.pdf({
       format: 'A4',
