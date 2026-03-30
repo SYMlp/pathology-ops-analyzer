@@ -749,10 +749,16 @@ function materialsSection(analysis) {
   const suppliers = p.supplier_distribution ? Object.keys(p.supplier_distribution).length : 0;
   
   const procItems = p.all_items || [];
-  const procRows = procItems.map((v, i) => `<tr><td class="r rank-num">${i+1}</td><td class="td-name"><div class="td-ellipsis" title="${v.name}">${v.name}</div></td><td class="r num">${v.qty||'-'}</td><td class="r num">${fmtMoney(v.amount)}</td></tr>`).join('');
+  const procRows = procItems.map((v, i) => {
+    const price = v.qty ? fmtMoney(v.amount / v.qty) : '-';
+    return `<tr><td class="r rank-num">${i+1}</td><td class="td-name"><div style="white-space:normal;word-break:break-all;">${v.name}</div></td><td class="r num">${v.qty||'-'}</td><td class="r num">${price}</td><td class="r num">${fmtMoney(v.amount)}</td></tr>`;
+  }).join('');
   
   const dispItems = d.all_items || [];
-  const dispRows = dispItems.map((v, i) => `<tr><td class="r rank-num">${i+1}</td><td class="td-name"><div class="td-ellipsis" title="${v.name}">${v.name}</div></td><td class="r num">${v.qty||'-'}</td><td class="r num">${fmtMoney(v.amount)}</td></tr>`).join('');
+  const dispRows = dispItems.map((v, i) => {
+    const price = v.qty ? fmtMoney(v.amount / v.qty) : '-';
+    return `<tr><td class="r rank-num">${i+1}</td><td class="td-name"><div style="white-space:normal;word-break:break-all;">${v.name}</div></td><td class="r num">${v.qty||'-'}</td><td class="r num">${price}</td><td class="r num">${fmtMoney(v.amount)}</td></tr>`;
+  }).join('');
 
   return `
   <section class="section section-compact">
@@ -789,8 +795,8 @@ function materialsSection(analysis) {
             <div class="table-inline-title">当月采购入库账单明细</div>
             <div class="table-scroller">
               <table class="data-table">
-                <thead><tr><th style="width:40px" class="c">排名</th><th>品名</th><th class="r">数量</th><th class="r">总金额</th></tr></thead>
-                <tbody>${procRows || '<tr><td colspan="4" class="c td-hint">暂无记录</td></tr>'}</tbody>
+                <thead><tr><th style="width:40px" class="c">排名</th><th>品名</th><th class="r">数量</th><th class="r">单价</th><th class="r">总金额</th></tr></thead>
+                <tbody>${procRows || '<tr><td colspan="5" class="c td-hint">暂无记录</td></tr>'}</tbody>
               </table>
             </div>
           </div>
@@ -798,8 +804,8 @@ function materialsSection(analysis) {
             <div class="table-inline-title">当月领用出库账单明细</div>
             <div class="table-scroller">
               <table class="data-table">
-                <thead><tr><th style="width:40px" class="c">排名</th><th>品名</th><th class="r">数量</th><th class="r">总金额</th></tr></thead>
-                <tbody>${dispRows || '<tr><td colspan="4" class="c td-hint">暂无记录</td></tr>'}</tbody>
+                <thead><tr><th style="width:40px" class="c">排名</th><th>品名</th><th class="r">数量</th><th class="r">单价</th><th class="r">总金额</th></tr></thead>
+                <tbody>${dispRows || '<tr><td colspan="5" class="c td-hint">暂无记录</td></tr>'}</tbody>
               </table>
             </div>
           </div>
