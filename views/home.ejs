@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>病理数据平台</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<div class="app portal-app">
+  <nav class="nav">
+    <div class="nav-brand">
+      <div class="nav-logo">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 002 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0022 16z"/><polyline points="7.5 4.21 12 6.81 16.5 4.21"/><polyline points="7.5 19.79 7.5 14.6 3 12"/><polyline points="21 12 16.5 14.6 16.5 19.79"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+      </div>
+      <span>病理数据平台</span>
+    </div>
+  </nav>
+
+  <main class="portal-main">
+    <header class="portal-hero">
+      <h1>选择分析模块</h1>
+      <p class="portal-hero-desc">两项独立流程：科室运营多维报告与工作报表柱状图可视化。各司其职，互不混用表格模板。</p>
+    </header>
+
+    <div class="portal-grid">
+      <a href="/ops" class="portal-card">
+        <div class="portal-thumb portal-thumb--ops" aria-hidden="true">
+          <div class="portal-mini-stage">
+            <div class="portal-mini-frame portal-mini-frame--ops">
+              <div class="app portal-mini-app">
+                <nav class="nav">
+                  <div class="nav-brand">
+                    <div class="nav-logo">
+                      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 002 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0022 16z"/><polyline points="7.5 4.21 12 6.81 16.5 4.21"/><polyline points="7.5 19.79 7.5 14.6 3 12"/><polyline points="21 12 16.5 14.6 16.5 19.79"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+                    </div>
+                    <span>科室运营分析</span>
+                  </div>
+                  <div class="nav-links">
+                    <span class="nav-link portal-mini-muted">首页</span>
+                    <span class="nav-link portal-mini-muted">工作报表</span>
+                    <span class="nav-link portal-mini-muted">下载模板</span>
+                  </div>
+                </nav>
+                <section class="hero">
+                  <div class="hero-content">
+                    <h1>科室月度运营<br>数据分析平台</h1>
+                    <p class="hero-sub">上传 Excel 运营数据…</p>
+                  </div>
+                  <div class="hero-visual">
+                    <div class="hero-card hc-1"><span>支收比</span><strong>69%</strong></div>
+                    <div class="hero-card hc-2"><span>门诊量</span><strong>+12%</strong></div>
+                    <div class="hero-card hc-3"><span>满意度</span><strong>#3</strong></div>
+                  </div>
+                </section>
+                <section class="upload-section">
+                  <div class="upload-form">
+                    <div class="upload-zone portal-mini-upload">
+                      <div class="upload-icon">
+                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                      </div>
+                      <p class="upload-text">拖拽 Excel 文件到此处</p>
+                      <p class="upload-hint">或点击选择 · .xlsx · 最大 20MB</p>
+                    </div>
+                    <span class="btn btn-primary btn-lg portal-mini-btn"><span>开始分析</span></span>
+                  </div>
+                  <div class="portal-mini-stepstrip">
+                    <span class="portal-mini-sn">1 下载模板</span>
+                    <span class="portal-mini-sa">→</span>
+                    <span class="portal-mini-sn">2 填写数据</span>
+                    <span class="portal-mini-sa">→</span>
+                    <span class="portal-mini-sn">3 上传</span>
+                    <span class="portal-mini-sa">→</span>
+                    <span class="portal-mini-sn">4 导出</span>
+                  </div>
+                </section>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="portal-card-body">
+          <h2 class="portal-card-title">科室运营分析</h2>
+          <p class="portal-card-desc">上传月度运营 Excel，生成经济运行、效率指标、全院排名与采购等综合报告；支持独立 HTML / PDF。</p>
+          <span class="portal-card-cta">进入科室运营<span class="portal-card-arrow">→</span></span>
+        </div>
+      </a>
+
+      <a href="/workload" class="portal-card">
+        <div class="portal-thumb portal-thumb--bars" aria-hidden="true">
+          <div class="portal-mini-stage">
+            <div class="portal-mini-frame portal-mini-frame--workload">
+              <div class="app portal-mini-app">
+                <nav class="nav">
+                  <div class="nav-brand">
+                    <div class="nav-logo">
+                      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 002 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0022 16z"/><polyline points="7.5 4.21 12 6.81 16.5 4.21"/><polyline points="7.5 19.79 7.5 14.6 3 12"/><polyline points="21 12 16.5 14.6 16.5 19.79"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+                    </div>
+                    <span>月度工作报表</span>
+                  </div>
+                  <div class="nav-links">
+                    <span class="nav-link portal-mini-muted">平台首页</span>
+                    <span class="nav-link portal-mini-muted">科室运营</span>
+                    <span class="nav-link portal-mini-muted">下载模板</span>
+                  </div>
+                </nav>
+                <section class="hero portal-mini-hero-wl">
+                  <div class="hero-content">
+                    <h1>工作量 / 收入 / 会诊<br>柱状图可视化</h1>
+                    <p class="hero-sub">专用 Excel 三 Sheet，上传后生成对比柱状图…</p>
+                  </div>
+                </section>
+                <section class="upload-section">
+                  <div class="upload-form">
+                    <div class="upload-zone portal-mini-upload">
+                      <div class="upload-icon">
+                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                      </div>
+                      <p class="upload-text">拖拽「月度工作报表」Excel 到此处</p>
+                      <p class="upload-hint">或点击选择 · .xlsx · 最大 20MB</p>
+                    </div>
+                    <span class="btn btn-primary btn-lg portal-mini-btn"><span>生成图表</span></span>
+                  </div>
+                </section>
+                <div class="portal-mini-chart">
+                  <div class="portal-mini-chart-cap">对比柱状图（示意）</div>
+                  <div class="portal-mini-chart-bars">
+                    <div class="portal-mini-chart-col">
+                      <div class="portal-mini-chart-bar" style="height:46px;background:#3b82f6"></div>
+                      <span>A</span>
+                    </div>
+                    <div class="portal-mini-chart-col">
+                      <div class="portal-mini-chart-bar" style="height:62px;background:#22c55e"></div>
+                      <span>B</span>
+                    </div>
+                    <div class="portal-mini-chart-col">
+                      <div class="portal-mini-chart-bar" style="height:38px;background:#f59e0b"></div>
+                      <span>C</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="portal-card-body">
+          <h2 class="portal-card-title">工作报表 · 柱状图</h2>
+          <p class="portal-card-desc">使用工作报表专用模板（工作量、收入、会诊），上传后生成对比柱状图与导出选项。</p>
+          <span class="portal-card-cta">进入工作报表<span class="portal-card-arrow">→</span></span>
+        </div>
+      </a>
+    </div>
+  </main>
+
+  <footer class="app-footer">
+    <p>病理数据平台 v2.1</p>
+  </footer>
+</div>
+</body>
+</html>
