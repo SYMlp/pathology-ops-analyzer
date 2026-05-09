@@ -13,18 +13,22 @@
 
 ## 使用
 
+门户首页为 `/`，可从两个入口进入：**科室运营分析**（`/ops`，上传运营大表）与 **工作报表柱状图**（`/workload`，专用工作报表模板）。
+
 ```bash
 npm install
-npm start          # 启动平台 http://localhost:3200
+npm start          # 门户 http://localhost:3200 · 科室运营 http://localhost:3200/ops
 npm run generate-template  # 单独生成 Excel 模板
 ```
 
 ## 部署到 Vercel
 
+**线上地址：** https://syw.lsrabbit.space （门户 `/`，科室运营 `/ops`，工作报表 `/workload`）
+
 ```bash
 npm i -g vercel
 cd pathology-ops-analyzer
-vercel
+vercel --prod
 ```
 
 ## Excel 模板

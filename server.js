@@ -84,9 +84,13 @@ function loadWorkload() {
 }
 app.get('/favicon.ico', (req, res) => res.status(204).end());
 app.get('/', (req, res) => {
+  res.render('home');
+});
+
+app.get('/ops', (req, res) => {
   const analysis = loadAnalysis();
   const reportBody = analysis ? generateReportBody(analysis) : null;
-  res.render('index', { analysis, reportBody, error: null });
+  res.render('ops', { analysis, reportBody, error: null });
 });
 
 app.post('/upload', upload.single('datafile'), async (req, res) => {
@@ -102,19 +106,19 @@ app.post('/upload', upload.single('datafile'), async (req, res) => {
 
     try { fs.unlinkSync(filePath); } catch (_) {}
 
-    res.redirect('/');
+    res.redirect('/ops');
   } catch (err) {
     if (req.file?.path) {
       try { fs.unlinkSync(req.file.path); } catch (_) {}
     }
     const analysis = loadAnalysis();
-    res.render('index', { analysis, reportBody: analysis ? generateReportBody(analysis) : null, error: err.message });
+    res.render('ops', { analysis, reportBody: analysis ? generateReportBody(analysis) : null, error: err.message });
   }
 });
 
 app.get('/export', (req, res) => {
   const analysis = loadAnalysis();
-  if (!analysis) return res.redirect('/');
+  if (!analysis) return res.redirect('/ops');
 
   const html = generateReport(analysis);
   const { year, month, department } = analysis.meta;
@@ -127,14 +131,14 @@ app.get('/export', (req, res) => {
 
 app.get('/preview', (req, res) => {
   const analysis = loadAnalysis();
-  if (!analysis) return res.redirect('/');
+  if (!analysis) return res.redirect('/ops');
   const html = generateReport(analysis);
   res.send(html);
 });
 
 app.get('/pdf', async (req, res) => {
   const analysis = loadAnalysis();
-  if (!analysis) return res.redirect('/');
+  if (!analysis) return res.redirect('/ops');
   try {
     let browser;
     if (process.env.VERCEL) {
@@ -307,9 +311,10 @@ app.get('/workload/pdf', async (req, res) => {
 
 if (!process.env.VERCEL) {
   app.listen(PORT, () => {
-    console.log(`\n  科室运营分析平台已启动`);
-    console.log(`  访问地址: http://localhost:${PORT}`);
-    console.log(`  模板下载: http://localhost:${PORT}/template`);
+    console.log(`\n  病理数据平台已启动`);
+    console.log(`  门户首页: http://localhost:${PORT}/`);
+    console.log(`  科室运营: http://localhost:${PORT}/ops`);
+    console.log(`  运营模板: http://localhost:${PORT}/template`);
     console.log(`  工作报表: http://localhost:${PORT}/workload\n`);
   });
 }
