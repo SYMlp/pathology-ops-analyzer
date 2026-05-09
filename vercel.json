@@ -4,16 +4,20 @@
     {
       "src": "server.js",
       "use": "@vercel/node",
-      "config": { "maxLambdaSize": "50mb" }
+      "config": {
+        "maxLambdaSize": "50mb",
+        "includeFiles": ["views/**", "public/**"]
+      }
     }
   ],
   "routes": [
-    {
-      "handle": "filesystem"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/server.js"
+    { "handle": "filesystem" },
+    { "src": "/(.*)", "dest": "/server.js" }
+  ],
+  "functions": {
+    "server.js": {
+      "memory": 1024,
+      "maxDuration": 60
     }
-  ]
+  }
 }

@@ -9,6 +9,9 @@ const { parseExcel } = require('./src/parser');
 const { analyze, postAnalyze } = require('./src/analyzer');
 const { generateReport, generateReportBody } = require('./src/reporter');
 const { generateTemplate } = require('./src/template-generator');
+const { generateWorkloadTemplate } = require('./src/workload-template');
+const { parseWorkloadExcel } = require('./src/workload-parser');
+const { generateWorkloadReport, generateWorkloadReportBody } = require('./src/workload-reporter');
 
 const app = express();
 const PORT = process.env.PORT || 3200;
@@ -30,11 +33,60 @@ const upload = multer({
 });
 
 let latestAnalysis = null;
+let latestWorkload = null;
+
+const STATE_DIR = process.env.VERCEL ? os.tmpdir() : path.join(__dirname, 'uploads');
+const ANALYSIS_STATE_FILE = path.join(STATE_DIR, '_analysis-state.json');
+const WORKLOAD_STATE_FILE = path.join(STATE_DIR, '_workload-state.json');
+
+function persistAnalysis(data) {
+  try {
+    fs.writeFileSync(ANALYSIS_STATE_FILE, JSON.stringify(data));
+  } catch (e) {
+    console.warn('persist analysis state failed:', e.message);
+  }
+}
+
+function loadAnalysis() {
+  if (latestAnalysis) return latestAnalysis;
+  try {
+    if (fs.existsSync(ANALYSIS_STATE_FILE)) {
+      const raw = fs.readFileSync(ANALYSIS_STATE_FILE, 'utf8');
+      latestAnalysis = JSON.parse(raw);
+      return latestAnalysis;
+    }
+  } catch (e) {
+    console.warn('load analysis state failed:', e.message);
+  }
+  return null;
+}
+
+function persistWorkload(data) {
+  try {
+    fs.writeFileSync(WORKLOAD_STATE_FILE, JSON.stringify(data));
+  } catch (e) {
+    console.warn('persist workload state failed:', e.message);
+  }
+}
+
+function loadWorkload() {
+  if (latestWorkload) return latestWorkload;
+  try {
+    if (fs.existsSync(WORKLOAD_STATE_FILE)) {
+      const raw = fs.readFileSync(WORKLOAD_STATE_FILE, 'utf8');
+      latestWorkload = JSON.parse(raw);
+      return latestWorkload;
+    }
+  } catch (e) {
+    console.warn('load workload state failed:', e.message);
+  }
+  return null;
+}
 app.get('/favicon.ico', (req, res) => res.status(204).end());
 app.get('/', (req, res) => {
-  let reportBody = null;
-  if (latestAnalysis) reportBody = generateReportBody(latestAnalysis);
-  res.render('index', { analysis: latestAnalysis, reportBody, error: null });
+  const analysis = loadAnalysis();
+  const reportBody = analysis ? generateReportBody(analysis) : null;
+  res.render('index', { analysis, reportBody, error: null });
 });
 
 app.post('/upload', upload.single('datafile'), async (req, res) => {
@@ -46,6 +98,7 @@ app.post('/upload', upload.single('datafile'), async (req, res) => {
     const result = analyze(parsed);
     postAnalyze(result);
     latestAnalysis = result;
+    persistAnalysis(result);
 
     try { fs.unlinkSync(filePath); } catch (_) {}
 
@@ -54,15 +107,17 @@ app.post('/upload', upload.single('datafile'), async (req, res) => {
     if (req.file?.path) {
       try { fs.unlinkSync(req.file.path); } catch (_) {}
     }
-    res.render('index', { analysis: latestAnalysis, reportBody: latestAnalysis ? generateReportBody(latestAnalysis) : null, error: err.message });
+    const analysis = loadAnalysis();
+    res.render('index', { analysis, reportBody: analysis ? generateReportBody(analysis) : null, error: err.message });
   }
 });
 
 app.get('/export', (req, res) => {
-  if (!latestAnalysis) return res.redirect('/');
+  const analysis = loadAnalysis();
+  if (!analysis) return res.redirect('/');
 
-  const html = generateReport(latestAnalysis);
-  const { year, month, department } = latestAnalysis.meta;
+  const html = generateReport(analysis);
+  const { year, month, department } = analysis.meta;
   const filename = `${department}运营分析_${year}年${month}月_${dayjs().format('MMDD')}.html`;
 
   res.setHeader('Content-Type', 'text/html; charset=utf-8');
@@ -71,13 +126,15 @@ app.get('/export', (req, res) => {
 });
 
 app.get('/preview', (req, res) => {
-  if (!latestAnalysis) return res.redirect('/');
-  const html = generateReport(latestAnalysis);
+  const analysis = loadAnalysis();
+  if (!analysis) return res.redirect('/');
+  const html = generateReport(analysis);
   res.send(html);
 });
 
 app.get('/pdf', async (req, res) => {
-  if (!latestAnalysis) return res.redirect('/');
+  const analysis = loadAnalysis();
+  if (!analysis) return res.redirect('/');
   try {
     let browser;
     if (process.env.VERCEL) {
@@ -97,25 +154,18 @@ app.get('/pdf', async (req, res) => {
     const page = await browser.newPage();
     await page.setViewport({ width: 1200, height: 800 });
 
-    // Navigate to the live preview page — renders identically to the user's browser
-    const localPort = process.env.PORT || PORT;
-    await page.goto(`http://localhost:${localPort}/preview`, {
-      waitUntil: 'networkidle0',
-      timeout: 30000,
-    });
+    const html = generateReport(analysis);
+    await page.setContent(html, { waitUntil: 'networkidle0', timeout: 30000 });
 
-    // Expand all collapsed sections
     await page.evaluate(() => {
       document.querySelectorAll('details').forEach(d => d.setAttribute('open', ''));
     });
 
-    // Hide action buttons for clean PDF
     await page.addStyleTag({ content: `
       .btn-action, .header-actions, .report-header .btn-action { display:none!important }
       .report { max-width:100%!important; padding:12px 20px 24px!important; margin:0!important }
     `});
 
-    // Wait for ECharts to finish rendering after expansion
     await new Promise(r => setTimeout(r, 2000));
 
     const pdfBuffer = await page.pdf({
@@ -126,7 +176,7 @@ app.get('/pdf', async (req, res) => {
     });
     await browser.close();
 
-    const { year, month, department } = latestAnalysis.meta;
+    const { year, month, department } = analysis.meta;
     const filename = `${department}运营分析_${year}年${month}月.pdf`;
     res.setHeader('Content-Type', 'application/pdf');
     res.setHeader('Content-Length', pdfBuffer.length);
@@ -152,15 +202,115 @@ app.get('/template', async (req, res) => {
 });
 
 app.get('/api/analysis', (req, res) => {
-  if (!latestAnalysis) return res.status(404).json({ error: '暂无分析数据' });
-  res.json(latestAnalysis);
+  const analysis = loadAnalysis();
+  if (!analysis) return res.status(404).json({ error: '暂无分析数据' });
+  res.json(analysis);
+});
+
+app.get('/workload', (req, res) => {
+  const data = loadWorkload();
+  const workloadReportBody = data ? generateWorkloadReportBody(data, { downloadButtons: true }) : null;
+  res.render('workload', { workloadAnalysis: data, workloadReportBody, error: null });
+});
+
+app.post('/workload/upload', upload.single('datafile'), async (req, res) => {
+  try {
+    if (!req.file) throw new Error('请选择文件上传');
+    const filePath = req.file.path;
+    const parsed = await parseWorkloadExcel(filePath);
+    latestWorkload = parsed;
+    persistWorkload(parsed);
+    try {
+      fs.unlinkSync(filePath);
+    } catch (_) {}
+    res.redirect('/workload');
+  } catch (err) {
+    if (req.file?.path) {
+      try {
+        fs.unlinkSync(req.file.path);
+      } catch (_) {}
+    }
+    const data = loadWorkload();
+    const workloadReportBody = data ? generateWorkloadReportBody(data, { downloadButtons: true }) : null;
+    res.render('workload', { workloadAnalysis: data, workloadReportBody, error: err.message });
+  }
+});
+
+app.get('/workload/template', async (req, res) => {
+  try {
+    const templateDir = process.env.VERCEL ? os.tmpdir() : path.join(__dirname, 'templates');
+    const filePath = path.join(templateDir, '月度工作报表模板.xlsx');
+    await generateWorkloadTemplate(filePath);
+    res.download(filePath, '病理科月度工作报表模板.xlsx');
+  } catch (err) {
+    res.status(500).send('工作报表模板生成失败: ' + err.message);
+  }
+});
+
+app.get('/workload/export', (req, res) => {
+  const data = loadWorkload();
+  if (!data) return res.redirect('/workload');
+  const html = generateWorkloadReport(data);
+  const period = (data.meta && data.meta.period) || '';
+  const filename = `病理科工作报表_${period || dayjs().format('YYYY-MM')}_${dayjs().format('MMDD')}.html`;
+  res.setHeader('Content-Type', 'text/html; charset=utf-8');
+  res.setHeader('Content-Disposition', `attachment; filename*=UTF-8''${encodeURIComponent(filename)}`);
+  res.send(html);
+});
+
+app.get('/workload/preview', (req, res) => {
+  const data = loadWorkload();
+  if (!data) return res.redirect('/workload');
+  res.send(generateWorkloadReport(data));
+});
+
+app.get('/workload/pdf', async (req, res) => {
+  const data = loadWorkload();
+  if (!data) return res.redirect('/workload');
+  try {
+    let browser;
+    if (process.env.VERCEL) {
+      const chromium = require('@sparticuz/chromium');
+      const puppeteer = require('puppeteer-core');
+      browser = await puppeteer.launch({
+        args: chromium.args,
+        defaultViewport: chromium.defaultViewport,
+        executablePath: await chromium.executablePath(),
+        headless: chromium.headless,
+      });
+    } else {
+      const puppeteer = require('puppeteer');
+      browser = await puppeteer.launch({ headless: true, args: ['--no-sandbox', '--disable-setuid-sandbox'] });
+    }
+    const page = await browser.newPage();
+    await page.setViewport({ width: 1280, height: 1800 });
+    const html = generateWorkloadReport(data);
+    await page.setContent(html, { waitUntil: 'networkidle0', timeout: 30000 });
+    await new Promise(r => setTimeout(r, 1500));
+    const pdfBuffer = await page.pdf({
+      format: 'A4',
+      printBackground: true,
+      margin: { top: '8mm', right: '8mm', bottom: '8mm', left: '8mm' },
+    });
+    await browser.close();
+    const period = (data.meta && data.meta.period) || '';
+    const filename = `病理科工作报表_${period || 'export'}.pdf`;
+    res.setHeader('Content-Type', 'application/pdf');
+    res.setHeader('Content-Length', pdfBuffer.length);
+    res.setHeader('Content-Disposition', `attachment; filename*=UTF-8''${encodeURIComponent(filename)}`);
+    res.end(pdfBuffer);
+  } catch (err) {
+    console.error('Workload PDF error:', err);
+    res.status(500).send('PDF 生成失败: ' + err.message);
+  }
 });
 
 if (!process.env.VERCEL) {
   app.listen(PORT, () => {
     console.log(`\n  科室运营分析平台已启动`);
     console.log(`  访问地址: http://localhost:${PORT}`);
-    console.log(`  模板下载: http://localhost:${PORT}/template\n`);
+    console.log(`  模板下载: http://localhost:${PORT}/template`);
+    console.log(`  工作报表: http://localhost:${PORT}/workload\n`);
   });
 }
 

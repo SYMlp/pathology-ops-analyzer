@@ -6,6 +6,7 @@
   "scripts": {
     "start": "node server.js",
     "generate-template": "node src/template-generator.js",
+    "generate-workload-template": "node src/workload-template.js",
     "dev": "node --watch server.js"
   },
   "dependencies": {
