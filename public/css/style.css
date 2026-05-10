@@ -288,8 +288,11 @@ body {
 .portal-hero-desc { font-size: 15px; color: var(--text-2); line-height: 1.65; }
 .portal-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 24px;
+}
+@media (max-width: 1180px) {
+  .portal-grid { grid-template-columns: repeat(2, 1fr); }
 }
 .portal-card {
   display: flex;
@@ -316,6 +319,15 @@ body {
 }
 .portal-thumb--bars { background: linear-gradient(180deg, #eff6ff 0%, #f8fafc 100%); }
 .portal-thumb--ops { background: linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%); }
+.portal-thumb--compare { background: linear-gradient(180deg, #fff7ed 0%, #fef3c7 100%); }
+.portal-thumb--compare .portal-compare-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  padding: 18px 24px;
+  box-sizing: border-box;
+}
 
 .portal-mini-stage {
   position: absolute;

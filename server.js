@@ -12,6 +12,8 @@ const { generateTemplate } = require('./src/template-generator');
 const { generateWorkloadTemplate } = require('./src/workload-template');
 const { parseWorkloadExcel } = require('./src/workload-parser');
 const { generateWorkloadReport, generateWorkloadReportBody } = require('./src/workload-reporter');
+const { parseCompareExcel } = require('./src/compare-parser');
+const { generateCompareReport, generateCompareReportBody } = require('./src/compare-reporter');
 
 const app = express();
 const PORT = process.env.PORT || 3200;
@@ -34,10 +36,12 @@ const upload = multer({
 
 let latestAnalysis = null;
 let latestWorkload = null;
+let latestCompare = null;
 
 const STATE_DIR = process.env.VERCEL ? os.tmpdir() : path.join(__dirname, 'uploads');
 const ANALYSIS_STATE_FILE = path.join(STATE_DIR, '_analysis-state.json');
 const WORKLOAD_STATE_FILE = path.join(STATE_DIR, '_workload-state.json');
+const COMPARE_STATE_FILE = path.join(STATE_DIR, '_compare-state.json');
 
 function persistAnalysis(data) {
   try {
@@ -79,6 +83,28 @@ function loadWorkload() {
     }
   } catch (e) {
     console.warn('load workload state failed:', e.message);
+  }
+  return null;
+}
+
+function persistCompare(data) {
+  try {
+    fs.writeFileSync(COMPARE_STATE_FILE, JSON.stringify(data));
+  } catch (e) {
+    console.warn('persist compare state failed:', e.message);
+  }
+}
+
+function loadCompare() {
+  if (latestCompare) return latestCompare;
+  try {
+    if (fs.existsSync(COMPARE_STATE_FILE)) {
+      const raw = fs.readFileSync(COMPARE_STATE_FILE, 'utf8');
+      latestCompare = JSON.parse(raw);
+      return latestCompare;
+    }
+  } catch (e) {
+    console.warn('load compare state failed:', e.message);
   }
   return null;
 }
@@ -309,13 +335,77 @@ app.get('/workload/pdf', async (req, res) => {
   }
 });
 
+app.get('/compare', (req, res) => {
+  const data = loadCompare();
+  const compareReportBody = data ? generateCompareReportBody(data) : null;
+  res.render('compare', { compareData: data, compareReportBody, error: null });
+});
+
+app.post('/compare/upload', upload.array('datafiles', 24), async (req, res) => {
+  try {
+    const files = req.files || [];
+    if (files.length < 2) {
+      throw new Error('至少需要上传 2 个月份的 Excel 文件才能做对比');
+    }
+
+    const monthly = [];
+    for (const f of files) {
+      try {
+        const parsed = await parseCompareExcel(f.path);
+        if (!parsed.meta || !parsed.meta.sortKey) {
+          throw new Error(`文件 ${f.originalname} 无法识别月份（请检查表格首行是否含"YYYY年M月"）`);
+        }
+        monthly.push(parsed);
+      } finally {
+        try { fs.unlinkSync(f.path); } catch (_) {}
+      }
+    }
+    monthly.sort((a, b) => a.meta.sortKey - b.meta.sortKey);
+
+    latestCompare = monthly;
+    persistCompare(monthly);
+    res.redirect('/compare');
+  } catch (err) {
+    if (req.files) {
+      for (const f of req.files) {
+        try { fs.unlinkSync(f.path); } catch (_) {}
+      }
+    }
+    const data = loadCompare();
+    res.render('compare', {
+      compareData: data,
+      compareReportBody: data ? generateCompareReportBody(data) : null,
+      error: err.message,
+    });
+  }
+});
+
+app.get('/compare/preview', (req, res) => {
+  const data = loadCompare();
+  if (!data) return res.redirect('/compare');
+  res.send(generateCompareReport(data));
+});
+
+app.get('/compare/export', (req, res) => {
+  const data = loadCompare();
+  if (!data) return res.redirect('/compare');
+  const html = generateCompareReport(data);
+  const first = data[0].meta.period;
+  const last = data[data.length - 1].meta.period;
+  const filename = `病理科多月对比_${first}-${last}.html`;
+  res.setHeader('Content-Type', 'text/html; charset=utf-8');
+  res.setHeader('Content-Disposition', `attachment; filename*=UTF-8''${encodeURIComponent(filename)}`);
+  res.send(html);
+});
+
 if (!process.env.VERCEL) {
   app.listen(PORT, () => {
     console.log(`\n  病理数据平台已启动`);
     console.log(`  门户首页: http://localhost:${PORT}/`);
     console.log(`  科室运营: http://localhost:${PORT}/ops`);
     console.log(`  运营模板: http://localhost:${PORT}/template`);
-    console.log(`  工作报表: http://localhost:${PORT}/workload\n`);
+    console.log(`  工作报表: http://localhost:${PORT}/workload`);
+    console.log(`  多月对比: http://localhost:${PORT}/compare\n`);
   });
 }
 
